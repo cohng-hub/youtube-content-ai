@@ -15,8 +15,19 @@ def get_universal_topic_info(topic):
     t = topic.strip()
     lower_t = t.lower()
     
-    # 1. Disaster / Tragedy / Collapse / Accident (재난, 참사, 사고, 붕괴, 침몰, 폭발)
-    if any(k in lower_t for k in ['붕괴', '침몰', '폭발', '참사', '사고', '재난', '비극', '파괴', '화재', '추락', '사망', '피해', '파멸', '삼풍', '타이타닉', '세월호', '체르노빌']):
+    # 1. Health / Body / Brain / Diet / Medical / Psychology (건강, 배고픔, 수면, 호르몬, 뇌, 섭취, 다이어트, 의학)
+    if any(k in lower_t for k in ['배고픔', '식습관', '다이어트', '지방', '혈당', '호르몬', '뇌', '수면', '스트레스', '도파민', '심리', '위', '장', '피로', '운동', '근육', '통증', '건강', '의학', '치료', '신경', '비만', '카페인', '커피', '영양', '식사', '체중']):
+        return {
+            'cat': 'health',
+            'sub': 'health_body_brain',
+            'en_subject': f'{t} biological mechanism',
+            'kr_name': f'{t}',
+            'loc_en': 'bright modern medical lab studio',
+            'loc_kr': '깨끗하고 감각적인 현대 의학 & 건강 스튜디오'
+        }
+
+    # 2. Disaster / Tragedy / Collapse / Accident (재난, 참사, 사고, 붕괴, 침몰, 폭발)
+    elif any(k in lower_t for k in ['붕괴', '침몰', '폭발', '참사', '사고', '재난', '비극', '파괴', '화재', '추락', '사망', '피해', '파멸', '삼풍', '타이타닉', '세월호', '체르노빌']):
         sub = 'disaster'
         if any(k in lower_t for k in ['붕괴', '삼풍', '건물', '아파트', '빌딩']):
             en_sub = f'{t} building structure'
@@ -48,77 +59,81 @@ def get_universal_topic_info(topic):
             'loc_kr': loc_kr
         }
 
-    # 2. Technology / Science / Medical / AI / Hardware (기술, 과학, 의학, 치료, IT)
-    elif any(k in lower_t for k in ['기술', '원리', '치료', '공학', '배터리', '반도체', '아이폰', '폰', '갤럭시', 'ai', '로봇', '과학', '우주', '블랙홀', '뇌', '디스크', '의학', '수술', '엔진', '카메라', '발열', '신경', '도수치료']):
-        en_sub = f'{t} technology system'
-        kr_name = f'{t} 시스템'
-        loc_en = 'bright modern tech laboratory studio'
-        loc_kr = '하이테크 스튜디오 및 전문 클리닉'
-
+    # 3. Technology / Science / Medical / AI / Hardware (기술, 과학, 공학, 배터리, 반도체, IT)
+    elif any(k in lower_t for k in ['기술', '원리', '공학', '배터리', '반도체', '아이폰', '폰', '갤럭시', 'ai', '로봇', '과학', '우주', '블랙홀', '수술', '엔진', '카메라', '발열']):
         return {
             'cat': 'technology',
             'sub': 'tech_science',
-            'en_subject': en_sub,
-            'kr_name': kr_name,
-            'loc_en': loc_en,
-            'loc_kr': loc_kr
+            'en_subject': f'{t} technology system',
+            'kr_name': f'{t} 시스템',
+            'loc_en': 'bright modern tech laboratory studio',
+            'loc_kr': '하이테크 스튜디오'
         }
 
-    # 3. Megastructure / Architecture / Construction (건축, 토목, 타워, 공항, 내진설계)
+    # 4. Megastructure / Architecture / Construction (건축, 토목, 타워, 공항, 내진설계)
     elif any(k in lower_t for k in ['타워', '공항', '터널', '교량', '지반', '건축', '토목', '내진', '댐', '빌딩', '스카이라인', '활주로', '해저', '인천공항', '롯데월드타워']):
-        en_sub = f'{t} megastructure'
-        kr_name = f'{t} 건축 구조물'
-        loc_en = 'urban skyline at sunset golden hour'
-        loc_kr = '노을빛 도심 스카이라인'
-
         return {
             'cat': 'construction',
             'sub': 'megastructure',
-            'en_subject': en_sub,
-            'kr_name': kr_name,
-            'loc_en': loc_en,
-            'loc_kr': loc_kr
+            'en_subject': f'{t} megastructure',
+            'kr_name': f'{t} 건축 구조물',
+            'loc_en': 'urban skyline at sunset golden hour',
+            'loc_kr': '노을빛 도심 스카이라인'
         }
 
-    # 4. History / Mystery / Archives (역사, 궁궐, 조선, 비밀, 벙커, 유적, 피라미드)
-    elif any(k in lower_t for k in ['역사', '조선', '왕', '비밀', '벙커', '유적', '보물', '피라미드', '유물', '전설', '음모', '미스터리', '사건', '실록', '발굴']):
-        en_sub = f'{t} historical site'
-        kr_name = f'{t} 역사적 현장'
-        loc_en = 'historical archive lighting'
-        loc_kr = '신비로운 분위기의 역사적 공간'
-
+    # 5. History ONLY for explicit historical keywords (조선, 궁궐, 고대, 피라미드, 왕조, 실록, 구석기)
+    elif any(k in lower_t for k in ['역사', '조선', '궁궐', '왕조', '고구려', '신라', '백제', '고대', '피라미드', '유물', '유적지', '실록', '구석기', '고려']):
         return {
             'cat': 'history',
-            'sub': 'history_mystery',
-            'en_subject': en_sub,
-            'kr_name': kr_name,
-            'loc_en': loc_en,
-            'loc_kr': loc_kr
+            'sub': 'history_archives',
+            'en_subject': f'{t} historical site',
+            'kr_name': f'{t} 역사적 현장',
+            'loc_en': 'historical archive lighting',
+            'loc_kr': '신비로운 분위기의 역사적 공간'
         }
 
-    # 5. General / Life / Animals / Everyday (일반, 일상, 동물, 음식, 문화 등 세상의 모든 주제)
+    # 6. General / Life / Animals / Everyday (세상의 모든 주제)
     else:
-        en_sub = f'{t} subject'
-        kr_name = f'{t}'
-        loc_en = 'cinematic studio backdrop'
-        loc_kr = '감각적이고 드라마틱한 스튜디오'
-
         return {
             'cat': 'general',
             'sub': 'general_life',
-            'en_subject': en_sub,
-            'kr_name': kr_name,
-            'loc_en': loc_en,
-            'loc_kr': loc_kr
+            'en_subject': f'{t} subject',
+            'kr_name': f'{t}',
+            'loc_en': 'cinematic studio backdrop',
+            'loc_kr': '감각적이고 드라마틱한 스튜디오'
         }
 
 def generate_title_candidates(topic_clean, info):
     """
-    그 어떤 주제를 입력해도 100% 어울리는 고성능 YouTube 훅 공식 Title 후보 3가지 생성
+    주제 분야(Health, Tech, Construction, History, Disaster, General)에 100% 매칭되는 YouTube 훅 공식 Title 3선
     """
     cat = info.get('cat', 'general')
     
-    if cat == 'disaster':
+    if cat == 'health':
+        return [
+            {
+                "num": "01",
+                "type": "생체 메커니즘 훅형",
+                "title": f"{topic_clean} — 56초 만에 밝혀지는 뇌 호르몬 오작동의 전말",
+                "ctr": "예상 CTR 13.9% (최고치)",
+                "desc": "식사 후 가짜 허기가 지는 신경 생리학적 원리를 시각화하여 완독 유도."
+            },
+            {
+                "num": "02",
+                "type": "원인 해부 훅형",
+                "title": f"밥 먹은 지 1시간 만에 허기가 지는 진짜 이유 — {topic_clean} 해부",
+                "ctr": "예상 CTR 12.4%",
+                "desc": "혈당 스파이크와 도파민 갈망의 비하인드를 3D로 밝혀 시청 고정."
+            },
+            {
+                "num": "03",
+                "type": "실용 솔루션 훅형",
+                "title": f"{topic_clean} — 10분 만에 가짜 갈망 신호 차단하는 핵심 포인트",
+                "ctr": "예상 CTR 11.0%",
+                "desc": "실생활에서 즉시 활용할 수 있는 건강한 생체 리듬 회복 팁 전달."
+            }
+        ]
+    elif cat == 'disaster':
         return [
             {
                 "num": "01",
@@ -147,14 +162,14 @@ def generate_title_candidates(topic_clean, info):
             {
                 "num": "01",
                 "type": "혁신 메커니즘 훅형",
-                "title": f"{topic_clean} — 초미세 나노 원리에 숨겨진 놀라운 진실",
+                "title": f"{topic_clean} — 초미세 원리에 숨겨진 놀라운 진실 56초 해부",
                 "ctr": "예상 CTR 13.6% (최고치)",
-                "desc": "일상 제품 뒤에 숨겨진 반도체/의학/AI 공학 원리 시각화."
+                "desc": "제품 뒤에 숨겨진 공학/AI/과학 원리 시각화."
             },
             {
                 "num": "02",
                 "type": "역발상 기술 훅형",
-                "title": f"한계를 돌파한 {topic_clean} 속 숨겨진 핵심 원리 56초 해부",
+                "title": f"한계를 돌파한 {topic_clean} 속 숨겨진 핵심 원리",
                 "ctr": "예상 CTR 12.1%",
                 "desc": "고정관념을 깨부수는 3D 슬로우모션 공학 연출로 완독 유도."
             },
@@ -233,7 +248,7 @@ def generate_title_candidates(topic_clean, info):
             {
                 "num": "03",
                 "type": "가치 재발견 훅형",
-                "title": f"{topic_clean}에 숨겨진 3가지 핵심 핵심 포인트",
+                "title": f"{topic_clean}에 숨겨진 3가지 핵심 포인트",
                 "ctr": "예상 CTR 10.2%",
                 "desc": "시청자의 공감과 실생활 흥미를 끌어내는 정리."
             }
@@ -241,7 +256,7 @@ def generate_title_candidates(topic_clean, info):
 
 def generate_video_storyboard(topic, scene_count=7):
     """
-    그 어떤 주제(Topic)라도 100% 동적으로 분석하여 콘티, 제목, 설명란, 씬 프롬프트를 생성하는 유니버설 엔진
+    그 어떤 주제(Health, Tech, Construction, Disaster, History, General)라도 주제 영역에 100% 매칭되는 비디오 대본 & AI 프롬프트 생성
     """
     topic_clean = topic.strip()
     info = get_universal_topic_info(topic_clean)
@@ -257,8 +272,45 @@ def generate_video_storyboard(topic, scene_count=7):
     title_candidates = generate_title_candidates(topic_clean, info)
     best_title = title_candidates[0]['title'] + " #Shorts"
 
-    # Universal Dynamic Scene Script Generators based on Domain Category
-    if cat == 'disaster':
+    # Universal Domain Specific Scene Generators
+    if cat == 'health':
+        raw_scenes = [
+            ("00:00 ~ 00:08",
+             f"밥을 분명 잘 먹었는데 식후 1시간 만에 갑자기 허기가 지는 순간, 우리 몸과 뇌 속에서는 {topic_clean}(이)라는 신호 오작동이 일어나고 있습니다.",
+             f"현대적인 건강 클리닉 스튜디오 조명 아래 신체 및 뇌 신경망 신호가 반짝이는 시네마틱 세로 9:16 오프닝.",
+             f"Cinematic vertical 9:16 shot of modern health wellness lab, glowing neural brain signals indicating {en_sub}, hyper-realistic 8k, slow motion 24fps"),
+            
+            ("00:08 ~ 00:16",
+             "겉으로는 배가 고픈 것 같지만, 실제 뇌 입체 청사진과 혈당 수치 레이어 속에서는 진짜 영양 결핍이 아닌 도파민 갈망이 일어난 것이죠.",
+             "인체 뇌 내부 도파민 수용체와 혈당 레이어가 3D 인포그래픽으로 펼쳐지는 연출.",
+             f"Detailed 3D cross-section animation of human brain and blood glucose level layer representing {en_sub}, glowing cyan blueprint style, vertical 9:16"),
+            
+            ("00:16 ~ 00:24",
+             "정제 탄수화물로 혈당이 급격히 올랐다 떨어지는 스파이크 현상이나 감정적 스트레스가 이 가짜 갈망 신호를 폭발시킵니다.",
+             "혈관 내 당분 입자가 스파이크를 일으키며 뇌 신호가 붉은색으로 긴박하게 요동치는 3D 마크로 클로즈업.",
+             f"Macro 3D simulation shot of glucose spike inside blood vessel triggering brain signal tension for {en_sub}, extreme detail, vertical 9:16"),
+            
+            ("00:24 ~ 00:32",
+             "하지만 전문가들은 발상을 전환합니다. 10분 동안 미지근한 물 한 잔을 마시고 뇌의 신경 전달 물질을 재설정하는 것이죠.",
+             "3D 모션 그래픽으로 수분 입자가 투입되며 요동치던 뇌 신호가 푸른빛으로 빠르게 안정을 되찾는 생체 시뮬레이션.",
+             "3D physics animation of water hydration calming down brain neural spike, cool blue soothing waves, vertical 9:16"),
+            
+            ("00:32 ~ 00:40",
+             "단 10분의 대기 시간 동안 렙틴 호르몬과 인슐린 수치가 일정하게 맞춰지며 가짜 허기는 거짓말처럼 사라지게 됩니다.",
+             "호르몬 분비 그래프와 대사 수치가 안정권으로 정돈되는 3D 인포그래픽 연출.",
+             "3D motion graphics showcasing hormone levels balancing smoothly into green safe zone, vertical 9:16"),
+            
+            ("00:40 ~ 00:48",
+             "진짜 배고픔과 가짜 신호를 구별하는 것만으로도 무너진 대사 리듬과 일상의 활력을 완벽하게 회복할 수 있습니다.",
+             "생기 있고 활력 넘치는 인물이 건강한 미소를 지으며 카메라를 향해 걸어오는 감성 시네마틱 샷.",
+             f"Cinematic hero shot of a healthy energetic person in bright sunny room reflecting wellness, golden hour light, vertical 9:16"),
+            
+            ("00:48 ~ 00:56",
+             f"내 몸의 호르몬 흐름을 이해하는 지혜. 이것이 오늘날 우리가 {topic_clean}(을)를 정확히 알아야 할 이유입니다.",
+             "아침 일출 햇살이 건강한 라이프스타일을 감싸 안아 따뜻한 여운을 전하는 파이널 아웃트로.",
+             "Cinematic outro shot of peaceful wellness room at sunrise with golden sun rays, 4k 60fps, vertical 9:16")
+        ]
+    elif cat == 'disaster':
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"많은 분들이 알고 계신 {topic_clean}, 하지만 비극 이전 {kr_name}(은)는 세상에서 가장 평화롭고 완벽한 모습이었습니다.",
@@ -303,7 +355,7 @@ def generate_video_storyboard(topic, scene_count=7):
              f"Cinematic studio macro shot of pristine {en_sub}, sleek metallic reflection, dark minimalist studio background, hyper-realistic 8k, vertical 9:16"),
             
             ("00:08 ~ 00:16",
-             "얇은 겉모습 내부 칩셋 및 바이오 메커니즘 속에는 초미세 3D 나노 회로가 치밀하게 배치되어 있죠.",
+             "얇은 겉모습 내부 칩셋 및 시스템 속에는 초미세 3D 나노 회로가 치밀하게 배치되어 있죠.",
              f"{kr_name} 내부로 카메라가 정밀 줌인하는 3D 입체 청사진 연출.",
              f"Detailed 3D cross-section animation inside {en_sub}, glowing blue circuit traces, Octane render, vertical 9:16"),
             
@@ -372,13 +424,13 @@ def generate_video_storyboard(topic, scene_count=7):
     elif cat == 'history':
         raw_scenes = [
             ("00:00 ~ 00:08",
-             f"역사 속 비밀로 남아있는 {topic_clean}, 하지만 그 첫 모습 뒤에는 놀라운 기록이 숨어 있습니다.",
+             f"역사 속 기록물에 전해지는 {topic_clean}, 하지만 그 첫 모습 뒤에는 역사적 팩트가 숨어 있습니다.",
              f"신비로운 조명 속에 드러나는 {kr_name}의 시네마틱 오프닝 (손상 없음).",
              f"Cinematic opening shot introducing pristine {en_sub}, dramatic historic studio lighting, hyper-realistic 8k, vertical 9:16"),
             
             ("00:08 ~ 00:16",
-             "화려했던 궁궐과 고서적 기록물 뒤에는 아무도 주목하지 않았던 치밀한 청사진이 존재했죠.",
-             f"{kr_name} 입체 고지도 및 3D 그래픽 인포그래픽 시각화.",
+             "궁궐과 고서적 기록물 뒤에는 아무도 주목하지 않았던 치밀한 역사적 청사진이 존재했죠.",
+             f"{kr_name} 입체 고지도 및 3D 인포그래픽 시각화.",
              f"3D infographic motion graphics revealing hidden archives and internal structure of {en_sub}, glowing golden lines, vertical 9:16"),
             
             ("00:16 ~ 00:24",
@@ -392,7 +444,7 @@ def generate_video_storyboard(topic, scene_count=7):
              "Golden light vectors connecting ancient knowledge nodes, heroic atmosphere, vertical 9:16"),
             
             ("00:32 ~ 00:40",
-             "수많은 땀과 과학적 집념이 빚어낸 이 기록은 시대를 뛰어넘어 거대한 가치로 자리 잡았죠.",
+             "수많은 땀과 과학적 집념이 빚어낸 이 기록은 시대를 뛰어넘어 거대한 유산으로 자리 잡았죠.",
              "웅장한 역사 유적 랜드마크가 정면으로 드러나는 시네마틱 비주얼.",
              f"3D motion graphics showcasing completed achievement of {en_sub}, warm golden aura, vertical 9:16"),
             
@@ -406,41 +458,41 @@ def generate_video_storyboard(topic, scene_count=7):
              "아침 일출 햇살이 전하는 감동적인 쇼츠 파이널 아웃트로.",
              f"Cinematic outro shot of {en_sub} backdrop at sunrise with golden sun rays, 4k 60fps, vertical 9:16")
         ]
-    else: # General / Life / Animals / Everyday
+    else: # General / Universal (모든 일상, 문화, 동물, 주식, 트렌드 주제)
         raw_scenes = [
             ("00:00 ~ 00:08",
-             f"우리가 일상에서 접하는 {topic_clean}, 남들은 당연하다 생각하지만 첫 모습 뒤에는 특별한 상식이 숨어 있습니다.",
-             f"상징적인 {kr_name}의 메인 비주얼이 드라마틱한 조명 속에 드러나는 세로 9:16 오프닝 (손상 없음).",
-             f"Cinematic opening shot introducing pristine {en_sub}, dramatic studio lighting, perfect condition, hyper-realistic 8k, vertical 9:16"),
+             f"우리가 일상에서 접하는 {topic_clean}, 남들은 당연하다 생각하지만 그 본질 뒤에는 뜻밖의 원리가 숨어 있습니다.",
+             f"상징적인 {kr_name}의 메인 비주얼이 드라마틱한 조명 속에 드러나는 세로 9:16 오프닝.",
+             f"Cinematic opening shot introducing pristine {en_sub}, dramatic studio lighting, hyper-realistic 8k, vertical 9:16"),
             
             ("00:08 ~ 00:16",
-             "그 화려한 겉모습 뒤에는 아무도 몰랐던 치밀한 전략과 3D 구조가 존재합니다.",
+             "그 겉모습 뒤에는 아무도 몰랐던 치밀한 3D 구조와 핵심 수치가 존재합니다.",
              f"인포그래픽 애니메이션이 3D 오버레이로 레이어별 펼쳐지는 연출.",
-             f"3D infographic motion graphics revealing hidden mechanics and internal layers of {en_sub}, glowing lines, vertical 9:16"),
+             f"3D infographic motion graphics revealing hidden mechanics and internal layers of {en_sub}, glowing cyan lines, vertical 9:16"),
             
             ("00:16 ~ 00:24",
-             "하지만 초기 방식대로 진행했을 땐 뜻밖의 고정관념과 한계라는 거대한 벽에 직면했었죠.",
+             "하지만 기존 방식대로 접근했을 땐 고정관념과 구조적 한계라는 벽에 부딪히기 쉽습니다.",
              "복잡하게 뒤얽힌 타래와 장애물이 시각적으로 압박을 가하는 개념적 3D 시뮬레이션.",
-             "Macro conceptual 3D render showing complex network breaking apart under structural limit, vertical 9:16"),
+             "Macro conceptual 3D render showing complex network breaking apart under limit, vertical 9:16"),
             
             ("00:24 ~ 00:32",
-             "주인공들은 발상을 완전히 뒤집습니다. '남들이 안 가본 거꾸로 길을 파고들자!'",
-             "전략가들이 하이테크 회로도/홀로그램 청사진을 뒤집어 새로운 해법을 시각화하는 영웅적 장면.",
-             "Strategists working in high-tech boardroom, holographic ideas expanding, heroic lighting, vertical 9:16"),
+             "전문가들은 발상을 완전히 뒤집습니다. 남들이 보지 못했던 거꾸로 된 길을 파고든 것이죠.",
+             "전략가들이 하이테크 청사진을 뒤집어 새로운 해법을 시각화하는 영웅적 장면.",
+             "Strategists working in high-tech studio, holographic ideas expanding, heroic lighting, vertical 9:16"),
             
             ("00:32 ~ 00:40",
-             "핵심 효율을 10배 올린 구조와 장기적 가치를 사전에 미리 확보해 낸 것입니다.",
+             "핵심 효율을 10배 끌어올린 메커니즘과 장기적 가치를 완벽히 확보해 낸 것입니다.",
              "네온 레이저 라인이 효율적 경로를 따라 순식간에 연결되는 3D 모션 그래픽.",
              "3D motion graphics showing glowing neon lines connecting key efficiency nodes, blue laser flow, vertical 9:16"),
             
             ("00:40 ~ 00:48",
-             "단순한 운이 아니라, 시대를 앞서간 역발상 선택이 만든 압도적이고 명확한 결과물입니다.",
-             "카메라가 상승하며 완벽하게 완성된 위업의 랜드마크가 일출 속에서 빛나는 시네마틱 샷.",
+             "단순한 운이 아니라, 시대를 앞서간 역발상 분석이 만든 압도적이고 명확한 결과물입니다.",
+             "카메라가 상승하며 완벽하게 완성된 결과물이 일출 속에서 빛나는 시네마틱 샷.",
              f"Smooth orbital camera shot revealing completed successful achievement of {en_sub}, golden hour light, vertical 9:16"),
             
             ("00:48 ~ 00:56",
              f"고정관념을 뒤집은 위대한 통찰. 이것이 바로 {topic_clean}에 숨겨진 진짜 가치입니다.",
-             "화려한 도심 야경과 조화되는 감동적인 쇼츠 아웃트로.",
+             "화려한 도심 조명과 어우러지는 감동적인 쇼츠 아웃트로.",
              f"Cinematic outro shot of {en_sub} backdrop at night with glowing city lights, 4k 60fps, vertical 9:16")
         ]
 
@@ -452,12 +504,12 @@ def generate_video_storyboard(topic, scene_count=7):
         target_scenes = list(raw_scenes)
         target_scenes.extend([
             ("00:56 ~ 01:04",
-             f"더 자세한 {topic_clean}에 관한 메커니즘과 비하인드 팩트 심층 분석.",
+             f"더 자세한 {topic_clean}에 관한 메커니즘과 심층 분석 데이터.",
              f"{kr_name} 내부 3D 인포그래픽 그래픽 및 하이테크 스튜디오 렌더링.",
              f"Detailed 3D studio breakdown of {en_sub}, holographic telemetry data, vertical 9:16"),
             ("01:04 ~ 01:12",
-             "전문가들과 연구팀이 밝혀낸 핵심 시뮬레이션 결론.",
-             f"{kr_name} 연구실 및 실험 장비의 시네마틱 연출.",
+             "전문 연구진과 분석팀이 밝혀낸 핵심 결론.",
+             f"{kr_name} 데이터 연구소의 시네마틱 연출.",
              f"Cinematic high-tech research lab analyzing {en_sub} data, 8k, vertical 9:16"),
             ("01:12 ~ 01:20",
              f"구독과 좋아요로 더 많은 흥미로운 {topic_clean} 지식을 받아보세요.",
@@ -494,7 +546,7 @@ def generate_video_storyboard(topic, scene_count=7):
             "camera_movement": cam
         })
 
-    # Universal Description Formatting (Full Narration Text without truncation)
+    # Universal Description Formatting
     timestamps_text = "\n".join([f"• {s['time']} : {s['narration']}" for s in scenes])
     description_formatted = f"""📌 {topic_clean} — 8초 비디오 AI 기획 리포트
 
@@ -528,13 +580,14 @@ def generate_video_storyboard(topic, scene_count=7):
 if __name__ == "__main__":
     topic_input = sys.argv[1] if len(sys.argv) > 1 else input("생성할 주제 입력: ").strip()
     if not topic_input:
-        topic_input = "조선시대 왕들의 수라상 비밀"
+        topic_input = "거짓 배고픔의 비밀"
     
     result = generate_video_storyboard(topic_input)
     
     print(f"\n========================================================")
     print(f"🎬 [8초 비디오 대본 & AI 프롬프트 자동 생성 결과]")
     print(f"========================================================\n")
+    print(f"📌 주제: {result['topic']} (카테고리: {result['category']})")
     print(f"⏱️ 전체 분량: {result['total_duration']}\n")
     print(f"📌 추천 제목 3선:")
     for t in result['title_candidates']:
@@ -547,6 +600,6 @@ if __name__ == "__main__":
         print(f"🎬 Scene {s['scene']} [{s['time']}]")
         print(f"🗣️ 자막 대사: {s['narration']}")
         print(f"🎨 Visual Description: {s['prompt_kr']}")
-        print(f"🤖 AI Video Prompt (Runway/Kling/Luma - 9:16 Shorts):")
-        print(f"   {s['prompt_en']}")
+        print(f"📹 Camera Move: {s['camera_movement']}")
+        print(f"🤖 AI Video Prompt (9:16 Shorts): {s['prompt_en']}")
     print(f"--------------------------------------------------------\n")
