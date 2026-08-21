@@ -652,30 +652,196 @@ function renderPlannerStudio(data) {
 
 function generateFallbackData(topic, sceneCount) {
     const cleanTopic = topic.trim();
-    return {
-        title_candidates: [
+    const t = cleanTopic.toLowerCase();
+    
+    let sub = "general";
+    if (t.includes("삼풍") || t.includes("백화점") || t.includes("붕괴") || t.includes("아파트") || t.includes("건물") || t.includes("빌딩")) {
+        sub = "building_collapse";
+    } else if (t.includes("침몰") || t.includes("타이타닉") || t.includes("세월호") || t.includes("배") || t.includes("함선")) {
+        sub = "ship_sinking";
+    } else if (t.includes("체르노빌") || t.includes("원전") || t.includes("폭발") || t.includes("화재") || t.includes("가스")) {
+        sub = "nuclear_explosion";
+    } else if (t.includes("치료") || t.includes("척추") || t.includes("관절") || t.includes("몸") || t.includes("의학") || t.includes("디스크")) {
+        sub = "spine_joint";
+    } else if (t.includes("폰") || t.includes("아이폰") || t.includes("카메라") || t.includes("배터리") || t.includes("반도체") || t.includes("ai")) {
+        sub = "tech_device";
+    } else if (t.includes("타워") || t.includes("공항") || t.includes("터널") || t.includes("교량") || t.includes("지반") || t.includes("건축")) {
+        sub = "megastructure";
+    }
+
+    let titleCandidates = [];
+    if (sub === 'building_collapse') {
+        titleCandidates = [
             {
                 num: "01",
-                type: "어그로 & 공포 훅형",
-                title: `${cleanTopic} — 남들은 몰랐던 충격적 팩트 (알고 보니 계획대로)`,
-                ctr: "예상 CTR 13.5% (최고치)",
-                desc: "시청자의 인지적 호기심과 의구심을 자극하여 초반 3초 이탈률 차단."
+                type: "경각심 & 비극 훅형",
+                title: `${cleanTopic} — 56초 만에 밝혀지는 붕괴 비극의 전말`,
+                ctr: "예상 CTR 13.8% (최고치)",
+                desc: "도심 속 붕괴 비극의 참사와 원인을 직관적으로 제시하여 초반 3초 시청 고정."
             },
             {
                 num: "02",
-                type: "역발상 & 딜레마 훅형",
-                title: `남들은 불안해한 ${cleanTopic} — 완벽한 역발상 기술의 비하인드`,
-                ctr: "예상 CTR 11.8%",
-                desc: "일반적 고정관념을 뒤집는 공학적 해법 제시로 지속 완독 유도."
+                type: "구조 결함 & 원인 훅형",
+                title: `절대 무너지지 않는다던 건물 — ${cleanTopic}에 숨겨진 하중 결함의 순간`,
+                ctr: "예상 CTR 12.2%",
+                desc: "콘크리트 기둥 및 슬래브 구조 결함의 치명적 비하인드를 해부하여 완독 유도."
             },
             {
                 num: "03",
-                type: "대조 비교 & 팩트 훅형",
-                title: `해외 실패 참사 vs ${cleanTopic} — 한 끗 차이가 만든 명암`,
-                ctr: "예상 CTR 10.4%",
-                desc: "타국 사례와 국내 해법을 대비시켜 대중적 자부심 및 댓글 반응 유도."
+                type: "안전 경각심 & 교훈 훅형",
+                title: `${cleanTopic} 참사가 오늘날 우리에게 남긴 묵직한 경고`,
+                ctr: "예상 CTR 10.9%",
+                desc: "인재(人災)에 대한 안전 경각심과 재발 방지 메시지로 진정성 및 댓글 소통 유도."
             }
-        ],
+        ];
+    } else if (sub === 'ship_sinking') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "해양 비극 & 오프닝 훅형",
+                title: `${cleanTopic} — 칠흑 같은 어둠 속 침몰 참사의 전말`,
+                ctr: "예상 CTR 14.0% (최고치)",
+                desc: "장엄했던 항해부터 비극적 침몰까지 56초 씬으로 구성하여 시청 몰입 유도."
+            },
+            {
+                num: "02",
+                type: "구조적 결함 훅형",
+                title: `불침선이라 불리던 ${cleanTopic} — 방수 격벽의 치명적 결함`,
+                ctr: "예상 CTR 12.4%",
+                desc: "격벽 위로 바닷물이 차오르는 구조적 한계를 3D로 보여주며 지속 시청 유도."
+            },
+            {
+                num: "03",
+                type: "인간의 오만 & 경고 훅형",
+                title: `${cleanTopic} 참사가 남긴 묵직한 경고 — 바다는 알고 있다`,
+                ctr: "예상 CTR 10.7%",
+                desc: "완벽에 대한 인간 오만의 비극적 결과와 아련한 여운으로 깊은 감동 전파."
+            }
+        ];
+    } else if (sub === 'nuclear_explosion') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "재난 참사 훅형",
+                title: `${cleanTopic} — 칠흑 같은 밤 1,000톤 원자로가 폭발한 이유`,
+                ctr: "예상 CTR 14.2% (최고치)",
+                desc: "평화롭던 원전에서 발생한 1차·2차 폭발의 순간을 시네마틱으로 선사."
+            },
+            {
+                num: "02",
+                type: "과학 원인 훅형",
+                title: `세계 최강 안전성이라 자랑하던 ${cleanTopic} — 제어봉의 치명적 비극`,
+                ctr: "예상 CTR 12.5%",
+                desc: "흑연 제어봉과 고압 수증기 폭증의 과학적 원인을 요약 해부."
+            },
+            {
+                num: "03",
+                type: "역사적 경고 훅형",
+                title: `${cleanTopic} 폭발이 증명한 보이지 않는 방사능의 위험성`,
+                ctr: "예상 CTR 11.0%",
+                desc: "소방대원들의 헌신과 환경적 비극 메시지로 묵직한 진정성 전달."
+            }
+        ];
+    } else if (sub === 'spine_joint') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "의학 진실 훅형",
+                title: `${cleanTopic} — 뚝! 소리에 숨겨진 놀라운 의학적 진실 56초 해부`,
+                ctr: "예상 CTR 13.5% (최고치)",
+                desc: "몸에 무리가 갈까 봐 두려워하는 시청자 호기심을 즉시 해소하는 직관적 훅."
+            },
+            {
+                num: "02",
+                type: "인체 메커니즘 훅형",
+                title: `남들은 무섭다는 ${cleanTopic} — 관절 캡슐 기포가 터지는 원리`,
+                ctr: "예상 CTR 12.1%",
+                desc: "관절액 속 질소 기포 압력이 순간 파열 해소되는 3D 슬로우모션 연출."
+            },
+            {
+                num: "03",
+                type: "건강 상식 훅형",
+                title: `${cleanTopic} 받을 때 뼈 소리 안 나면 효과가 없는 걸까?`,
+                ctr: "예상 CTR 10.6%",
+                desc: "대중이 가장 궁금해하는 건강 상식 질문으로 댓글 참여 폭발 유도."
+            }
+        ];
+    } else if (sub === 'tech_device') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "테크 혁신 훅형",
+                title: `${cleanTopic} — 극심한 발열 폭주를 억제한 나노 공학의 정수`,
+                ctr: "예상 CTR 13.6% (최고치)",
+                desc: "손끝에 닿는 완제품 뒤에 숨겨진 실리콘 반도체와 냉각 기술 해부."
+            },
+            {
+                "num": "02",
+                type: "역발상 기술 훅형",
+                title: `0.1mm 구리 챔버로 칩셋 온도를 잡아낸 ${cleanTopic} 역발상 공법`,
+                ctr: "예상 CTR 12.3%",
+                desc: "냉매 기화 원리와 AI 뉴럴 엔진 전력 제어의 3D 챔버 비주얼 연출."
+            },
+            {
+                num: "03",
+                type: "성능 팩트 훅형",
+                title: `${cleanTopic} — 작고 얇은 폼팩터에서 성능이 3배 폭발한 이유`,
+                ctr: "예상 CTR 10.7%",
+                desc: "제품 림 조명 리빌과 압도적 안정성의 기술 집념 강조."
+            }
+        ];
+    } else if (sub === 'megastructure') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "토목 공학 훅형",
+                title: `${cleanTopic} — 남들은 불안해하지만 알고 보면 완벽한 역발상 공법`,
+                ctr: "예상 CTR 13.5% (최고치)",
+                desc: "거대한 구조물이 수십 톤 하중을 견뎌내는 지하 모래기둥/내진 댐퍼 해부."
+            },
+            {
+                num: "02",
+                type: "지반 침하 해부 훅형",
+                title: `수십 년간 꺼지던 진흙 땅 위 서 있는 ${cleanTopic}의 기술적 비밀`,
+                ctr: "예상 CTR 12.2%",
+                desc: "목표 하중보다 더 무거운 흙을 올려 사전 침하를 미리 당겨놓은 3D 모션."
+            },
+            {
+                num: "03",
+                type: "대조 비교 훅형",
+                title: `해외 실패 참사 사례 vs ${cleanTopic} — 한 끗 차이가 만든 명암`,
+                ctr: "예상 CTR 10.4%",
+                desc: "타국 실패 공법과 국내 랜드마크 지반 공학의 극적 대조."
+            }
+        ];
+    } else {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "비하인드 팩트 훅형",
+                title: `${cleanTopic} — 우리가 몰랐던 흥미진진한 56초의 비밀`,
+                ctr: "예상 CTR 13.0% (최고치)",
+                desc: "주제 고유의 상징적 메인 비주얼 뒤에 숨겨진 뜻밖의 사실 전달."
+            },
+            {
+                num: "02",
+                type: "고정관념 파괴 훅형",
+                title: `남들은 당연하다 여긴 ${cleanTopic} — 완전히 거꾸로 뒤집은 발상`,
+                ctr: "예상 CTR 11.5%",
+                desc: "초기 한계를 극복하고 핵심 효율을 10배 끌어올린 역발상 스토리."
+            },
+            {
+                num: "03",
+                type: "가치 재발견 훅형",
+                title: `${cleanTopic}에 숨겨진 3가지 핵심 성공 포인트`,
+                ctr: "예상 CTR 10.2%",
+                desc: "시대를 앞서간 선택이 만든 명확한 결실과 묵직한 인사이트."
+            }
+        ];
+    }
+
+    return {
+        title_candidates: titleCandidates,
         description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/\s+/g, '')} #유튜브기획`,
         total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
         scenes: [
@@ -683,7 +849,7 @@ function generateFallbackData(topic, sceneCount) {
                 scene: 1,
                 time: "00:00 ~ 00:08",
                 narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
-                prompt_kr: `밝은 조명 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
+                prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
                 prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
             },
             {

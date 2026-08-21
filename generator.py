@@ -154,33 +154,180 @@ def get_english_topic_info(topic):
             'loc_kr': '드라마틱한 스튜디오'
         }
 
-def generate_title_candidates(topic_clean, kr_name):
+def generate_title_candidates(topic_clean, info):
     """
-    고성능 YouTube 훅 공식 기반 Title 후보 3가지 분석 및 추천
+    주제 분야(Subtype)별 100% 맞춤형 YouTube 훅 공식 Title 후보 3가지 분석 및 추천
     """
-    return [
-        {
-            "num": "01",
-            "type": "어그로 & 공포 훅형",
-            "title": f"{topic_clean}에 숨겨진 충격 진실 — 알고 보니 계획대로였습니다",
-            "ctr": "예상 CTR 13.5% (최고치)",
-            "desc": "국제공항/건물/구조물의 직관적 의구심을 자극하여 3초 이탈률 완전 차단."
-        },
-        {
-            "num": "02",
-            "type": "역발상 & 딜레마 훅형",
-            "title": f"남들은 위기라 생각한 {topic_clean} — 완벽한 역발상 기술의 비하인드",
-            "ctr": "예상 CTR 11.8%",
-            "desc": "일반 상식을 거꾸로 뒤집는 시청자 호기심 자극 문구로 본문 시청 유도."
-        },
-        {
-            "num": "03",
-            "type": "대조 비교 & 팩트 훅형",
-            "title": f"해외 실패 참사 사례 vs {topic_clean} — 한 끗 차이가 만든 명암",
-            "ctr": "예상 CTR 10.4%",
-            "desc": "타 국가 실패 사례와 국내 기술력의 극적 대조로 시청자 자부심 및 소통 극대화."
-        }
-    ]
+    sub = info.get('sub', 'general')
+    
+    if sub == 'building_collapse':
+        return [
+            {
+                "num": "01",
+                "type": "경각심 & 비극 훅형",
+                "title": f"{topic_clean} — 56초 만에 밝혀지는 붕괴 비극의 전말",
+                "ctr": "예상 CTR 13.8% (최고치)",
+                "desc": "도심 속 붕괴 비극의 참사와 원인을 직관적으로 제시하여 초반 3초 시청 고정."
+            },
+            {
+                "num": "02",
+                "type": "구조 결함 & 원인 훅형",
+                "title": f"절대 무너지지 않는다던 건물 — {topic_clean}에 숨겨진 하중 결함의 순간",
+                "ctr": "예상 CTR 12.2%",
+                "desc": "콘크리트 기둥 및 슬래브 구조 결함의 치명적 비하인드를 해부하여 완독 유도."
+            },
+            {
+                "num": "03",
+                "type": "안전 경각심 & 교훈 훅형",
+                "title": f"{topic_clean} 참사가 오늘날 우리에게 남긴 묵직한 경고",
+                "ctr": "예상 CTR 10.9%",
+                "desc": "인재(人災)에 대한 안전 경각심과 재발 방지 메시지로 진정성 및 댓글 소통 유도."
+            }
+        ]
+    elif sub == 'ship_sinking':
+        return [
+            {
+                "num": "01",
+                "type": "해양 비극 & 오프닝 훅형",
+                "title": f"{topic_clean} — 칠흑 같은 어둠 속 침몰 참사의 전말",
+                "ctr": "예상 CTR 14.0% (최고치)",
+                "desc": "장엄했던 항해부터 비극적 침몰까지 56초 씬으로 구성하여 시청 몰입 유도."
+            },
+            {
+                "num": "02",
+                "type": "구조적 결함 훅형",
+                "title": f"불침선이라 불리던 {topic_clean} — 방수 격벽의 치명적 결함",
+                "ctr": "예상 CTR 12.4%",
+                "desc": "격벽 위로 바닷물이 차오르는 구조적 한계를 3D로 보여주며 지속 시청 유도."
+            },
+            {
+                "num": "03",
+                "type": "인간의 오만 & 경고 훅형",
+                "title": f"{topic_clean} 참사가 남긴 묵직한 경고 — 바다는 알고 있다",
+                "ctr": "예상 CTR 10.7%",
+                "desc": "완벽에 대한 인간 오만의 비극적 결과와 아련한 여운으로 깊은 감동 전파."
+            }
+        ]
+    elif sub == 'nuclear_explosion':
+        return [
+            {
+                "num": "01",
+                "type": "재난 참사 훅형",
+                "title": f"{topic_clean} — 칠흑 같은 밤 1,000톤 원자로가 폭발한 이유",
+                "ctr": "예상 CTR 14.2% (최고치)",
+                "desc": "평화롭던 원전에서 발생한 1차·2차 폭발의 순간을 시네마틱으로 선사."
+            },
+            {
+                "num": "02",
+                "type": "과학 원인 훅형",
+                "title": f"세계 최강 안전성이라 자랑하던 {topic_clean} — 제어봉의 치명적 비극",
+                "ctr": "예상 CTR 12.5%",
+                "desc": "흑연 제어봉과 고압 수증기 폭증의 과학적 원인을 요약 해부."
+            },
+            {
+                "num": "03",
+                "type": "역사적 경고 훅형",
+                "title": f"{topic_clean} 폭발이 증명한 보이지 않는 방사능의 위험성",
+                "ctr": "예상 CTR 11.0%",
+                "desc": "소방대원들의 헌신과 환경적 비극 메시지로 묵직한 진정성 전달."
+            }
+        ]
+    elif sub == 'spine_joint':
+        return [
+            {
+                "num": "01",
+                "type": "의학 진실 훅형",
+                "title": f"{topic_clean} — 뚝! 소리에 숨겨진 놀라운 의학적 진실 56초 해부",
+                "ctr": "예상 CTR 13.5% (최고치)",
+                "desc": "몸에 무리가 갈까 봐 두려워하는 시청자 호기심을 즉시 해소하는 직관적 훅."
+            },
+            {
+                "num": "02",
+                "type": "인체 메커니즘 훅형",
+                "title": f"남들은 무섭다는 {topic_clean} — 관절 캡슐 기포가 터지는 원리",
+                "ctr": "예상 CTR 12.1%",
+                "desc": "관절액 속 질소 기포 압력이 순간 파열 해소되는 3D 슬로우모션 연출."
+            },
+            {
+                "num": "03",
+                "type": "건강 상식 훅형",
+                "title": f"{topic_clean} 받을 때 뼈 소리 안 나면 효과가 없는 걸까?",
+                "ctr": "예상 CTR 10.6%",
+                "desc": "대중이 가장 궁금해하는 건강 상식 질문으로 댓글 참여 폭발 유도."
+            }
+        ]
+    elif sub in ['smartphone', 'tech_device', 'technology']:
+        return [
+            {
+                "num": "01",
+                "type": "테크 혁신 훅형",
+                "title": f"{topic_clean} — 극심한 발열 폭주를 억제한 나노 공학의 정수",
+                "ctr": "예상 CTR 13.6% (최고치)",
+                "desc": "손끝에 닿는 완제품 뒤에 숨겨진 실리콘 반도체와 냉각 기술 해부."
+            },
+            {
+                "num": "02",
+                "type": "역발상 기술 훅형",
+                "title": f"0.1mm 구리 챔버로 칩셋 온도를 잡아낸 {topic_clean} 역발상 공법",
+                "ctr": "예상 CTR 12.3%",
+                "desc": "냉매 기화 원리와 AI 뉴럴 엔진 전력 제어의 3D 챔버 비주얼 연출."
+            },
+            {
+                "num": "03",
+                "type": "성능 팩트 훅형",
+                "title": f"{topic_clean} — 작고 얇은 폼팩터에서 성능이 3배 폭발한 이유",
+                "ctr": "예상 CTR 10.7%",
+                "desc": "제품 림 조명 리빌과 압도적 안정성의 기술 집념 강조."
+            }
+        ]
+    elif sub in ['skyscraper', 'airport_runway', 'megastructure', 'construction']:
+        return [
+            {
+                "num": "01",
+                "type": "토목 공학 훅형",
+                "title": f"{topic_clean} — 남들은 불안해하지만 알고 보면 완벽한 역발상 공법",
+                "ctr": "예상 CTR 13.5% (최고치)",
+                "desc": "거대한 구조물이 수십 톤 하중을 견뎌내는 지하 모래기둥/내진 댐퍼 해부."
+            },
+            {
+                "num": "02",
+                "type": "지반 침하 해부 훅형",
+                "title": f"수십 년간 꺼지던 진흙 땅 위 서 있는 {topic_clean}의 기술적 비밀",
+                "ctr": "예상 CTR 12.2%",
+                "desc": "목표 하중보다 더 무거운 흙을 올려 사전 침하를 미리 당겨놓은 3D 모션."
+            },
+            {
+                "num": "03",
+                "type": "대조 비교 훅형",
+                "title": f"해외 실패 참사 사례 vs {topic_clean} — 한 끗 차이가 만든 명암",
+                "ctr": "예상 CTR 10.4%",
+                "desc": "타국 실패 공법과 국내 랜드마크 지반 공학의 극적 대조."
+            }
+        ]
+    else:
+        return [
+            {
+                "num": "01",
+                "type": "비하인드 팩트 훅형",
+                "title": f"{topic_clean} — 우리가 몰랐던 흥미진진한 56초의 비밀",
+                "ctr": "예상 CTR 13.0% (최고치)",
+                "desc": "주제 고유의 상징적 메인 비주얼 뒤에 숨겨진 뜻밖의 사실 전달."
+            },
+            {
+                "num": "02",
+                "type": "고정관념 파괴 훅형",
+                "title": f"남들은 당연하다 여긴 {topic_clean} — 완전히 거꾸로 뒤집은 발상",
+                "ctr": "예상 CTR 11.5%",
+                "desc": "초기 한계를 극복하고 핵심 효율을 10배 끌어올린 역발상 스토리."
+            },
+            {
+                "num": "03",
+                "type": "가치 재발견 훅형",
+                "title": f"{topic_clean}에 숨겨진 3가지 핵심 성공 포인트",
+                "ctr": "예상 CTR 10.2%",
+                "desc": "시대를 앞서간 선택이 만든 명확한 결실과 묵직한 인사이트."
+            }
+        ]
 
 def generate_video_storyboard(topic, scene_count=7):
     """
@@ -195,8 +342,8 @@ def generate_video_storyboard(topic, scene_count=7):
     loc_en = info['loc_en']
     loc_kr = info['loc_kr']
 
-    # Title Candidates
-    title_candidates = generate_title_candidates(topic_clean, kr_name)
+    # Title Candidates (100% Topic Subtype Dynamic!)
+    title_candidates = generate_title_candidates(topic_clean, info)
     best_title = title_candidates[0]['title'] + " #Shorts"
 
     # Raw Scene Script Database per Subtype
