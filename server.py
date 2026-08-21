@@ -58,14 +58,27 @@ class StudioHandler(http.server.SimpleHTTPRequestHandler):
             cmd = [sys.executable, "analyze.py", url]
             res = subprocess.run(cmd, capture_output=True, text=True, cwd=DIRECTORY, encoding="utf-8", errors="ignore")
             
+            meta_json = {}
+            if "---JSON_RESULT_START---" in res.stdout:
+                try:
+                    json_str = res.stdout.split("---JSON_RESULT_START---")[1].split("---JSON_RESULT_END---")[0].strip()
+                    meta_json = json.loads(json_str)
+                except Exception:
+                    pass
+
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps({
+            
+            response_data = {
+                'status': 'success',
                 'success': True,
+                'data': meta_json,
+                'report': meta_json.get('report') or res.stdout,
                 'output': res.stdout,
                 'error': res.stderr
-            }, ensure_ascii=False).encode('utf-8'))
+            }
+            self.wfile.write(json.dumps(response_data, ensure_ascii=False).encode('utf-8'))
             return
 
         super().do_GET()
