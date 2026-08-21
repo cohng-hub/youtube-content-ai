@@ -90,7 +90,8 @@ def generate_video_storyboard(topic, scene_count=7):
         raw_sents = re.split(r'[\.\?\!\n]+', facts_summary)
         for s in raw_sents:
             s_clean = s.strip()
-            if len(s_clean) > 20 and not any(bad in s_clean for bad in ['http', 'www', '클릭', '구독']):
+            # Filter out URL, hashtags, navigation noise
+            if len(s_clean) > 15 and not any(bad in s_clean for bad in ['http', 'www', '클릭', '구독', '#', '홈 >', '원본 영상', '보기']):
                 fact_sentences.append(s_clean)
 
     # Clean up web facts for script narration
@@ -98,7 +99,7 @@ def generate_video_storyboard(topic, scene_count=7):
     for s in fact_sentences:
         s = re.sub(r'^(이번 글에서는|오늘 글에서는|이 글에서는|본 글에서는|블로그|포스팅|알아보겠습니다|살펴보겠습니다|작성한|공개합니다)\s*', '', s)
         s = re.sub(r'\s*(알아보겠습니다|살펴보겠습니다|정리해 드립니다|확인해 보세요)\.?$', '', s)
-        s = s.strip()
+        s = re.sub(r'^[#\-·\s]+', '', s).strip()
         if len(s) > 12:
             cleaned_facts.append(s)
 
@@ -114,38 +115,38 @@ def generate_video_storyboard(topic, scene_count=7):
     raw_scenes = [
         ("00:00 ~ 00:08",
          f"{topic_clean}, 다들 한 번쯤 궁금하셨죠? {f1}",
-         f"{topic_clean}의 실제 핵심 모습을 입체적인 3D 메카닉 & 3D 청사진 시네마틱 렌더링으로 웅장하게 보여주는 세로 9:16 오프닝.",
-         f"Hyper-realistic 3D Octane render of {topic_clean}, glowing cyan 3D blueprint overlay, Unreal Engine 5 cinematic lighting, masterpiece 8k, slow motion 24fps, vertical 9:16"),
+         f"{topic_clean}의 위상과 지형을 감각적으로 보여주는 3D 입체 미니어처 모형 & 지형 도면 줌인 세로 9:16 오프닝.",
+         f"Hyper-realistic 3D isometric mini model view of {topic_clean}, glowing 3D topographic map elevation lines, Octane render, 3D digital twin style, cinematic lighting, 8k, vertical 9:16"),
         
         ("00:08 ~ 00:16",
          f"실제 팩트를 확인해 보면: {f2}",
-         f"{topic_clean}의 내부 3D 입체 단면과 3D 모션 그래픽 인포그래픽 레이어가 분리되며 정밀하게 확장되는 연출.",
-         f"Detailed 3D exploded view animation of {topic_clean}, glowing 3D blueprint data overlay, Cinema 4D 3D render style, photorealistic, vertical 9:16"),
+         f"{topic_clean}의 실제 위치와 3D 입체 단면 레이어가 공중으로 분리되어 확장되는 모션 그래픽 연출.",
+         f"3D isometric exploded view of {topic_clean}, floating translucent 3D blueprint data layers, Cinema 4D animation style, glowing cyan vectors, photorealistic 8k, vertical 9:16"),
         
         ("00:16 ~ 00:24",
          f"여기서 더 중요한 사실은, {f3}",
-         f"{topic_clean}의 결정적 핵심 상호작용 지점에 3D 마크로 클로즈업 렌더링이 들어가며 3D 물리 하중과 응력이 시각화되는 장면.",
-         f"Macro 3D simulation shot showing structural physics and tension inside {topic_clean}, hyper-detailed 3D render, glowing red stress vectors, vertical 9:16"),
+         f"{topic_clean}의 핵심 요충 지점에 카메라가 3D 마크로 줌인하며 빨간색 3D 하이라이트 광원이 솟구치는 인상적인 연출.",
+         f"Macro 3D tilt-shift lens camera zoom into key location of {topic_clean}, glowing red 3D pinpoint beacon, hyper-detailed 3D miniature environment, vertical 9:16"),
         
         ("00:24 ~ 00:32",
          f"핵심 원인은 바로 이겁니다! {f4}",
-         f"{topic_clean}의 핵심 메커니즘과 해법이 푸른색 3D 입체 에너지가 퍼져 나가며 풀리는 3D 트랜스포메이션 시각 효과.",
-         f"Dynamic 3D physics transformation animation resolving core issue in {topic_clean}, glowing blue 3D energy wave, ultra-detailed 3D Octane render, vertical 9:16"),
+         f"{topic_clean}의 핵심 네트워크와 흐름이 푸른색 3D 빔으로 연결되며 펼쳐지는 입체 그래픽 트랜스포메이션.",
+         f"3D dynamic digital twin transformation showing glowing blue energy beams connecting network nodes across {topic_clean}, Unreal Engine 5 render, vertical 9:16"),
         
         ("00:32 ~ 00:40",
-         f"이 팩트를 이해하는 순간 {topic_clean}(이)가 만드는 결과와 변화가 3D 홀로그램 그래프로 깔끔하게 정리됩니다.",
-         f"{topic_clean}의 핵심 수치와 데이터 팩트가 입체 3D 홀로그램 인포그래픽 그래프로 정돈되는 시각화.",
-         f"3D holographic motion graphics summarizing key metrics of {topic_clean}, futuristic 3D UI graph balancing into green safe zone, vertical 9:16"),
+         f"이 팩트를 이해하는 순간 {topic_clean}(이)가 만드는 결과와 변화가 3D 입체 지형 인포그래픽으로 한눈에 정리됩니다.",
+         f"{topic_clean}의 핵심 수치와 비교 데이터가 3D 입체 파이프 & 홀로그램 인포그래픽으로 정돈되는 시각화.",
+         f"3D holographic spatial infographic presenting key statistics of {topic_clean}, futuristic 3D UI graphs floating over terrain, 8k vertical 9:16"),
         
         ("00:40 ~ 00:48",
          f"결국 {f5}",
-         f"{topic_clean}의 완성된 자태가 3D 입체 스튜디오 조명 아래 매끄럽게 회전하며 웅장한 가치를 드러내는 하이라이트 샷.",
-         f"Cinematic 3D hero reveal shot of completed {topic_clean} rotating 360 degrees under studio rim light, masterpiece 3D render, 8k vertical 9:16"),
+         f"{topic_clean}의 전체 입체 구도가 스튜디오 림 조명 아래 웅장하게 파노라마 360도로 회전하는 3D 히어로 샷.",
+         f"Cinematic 3D hero panorama shot of {topic_clean} 3D model rotating 360 degrees under dramatic golden rim lights, masterpiece 3D render, vertical 9:16"),
         
         ("00:48 ~ 00:56",
          f"{topic_clean}에 관한 명확한 팩트와 진실! 오늘 알게 된 새로운 사실을 꼭 기억해보세요.",
-         f"{topic_clean}의 상징적 메인 오브제가 따뜻한 3D 일출 햇살 광원을 받으며 묵직한 인사이트와 여운을 전하는 파이널 아웃트로.",
-         f"Inspiring 3D cinematic outro shot of {topic_clean} backdrop at golden hour sunrise, warm sun rays breaking through, peaceful 3D environment, 4k 60fps vertical 9:16")
+         f"{topic_clean}의 입체 3D 공간 위로 따뜻한 아침 일출 햇살이 내리쬐며 묵직한 인사이트와 여운을 전하는 아웃트로.",
+         f"Inspiring 3D cinematic outro shot of {topic_clean} digital model at golden hour sunrise, warm sun rays breaking through mist, peaceful 3D environment, 4k 60fps vertical 9:16")
     ]
 
     if scene_count == 5:
