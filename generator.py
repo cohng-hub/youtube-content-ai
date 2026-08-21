@@ -103,38 +103,38 @@ def generate_video_storyboard(topic, scene_count=7):
         if len(s) > 12:
             cleaned_facts.append(s)
 
-    f1 = cleaned_facts[0] if len(cleaned_facts) > 0 else f"{topic_clean}에 관한 핵심 원인이 궁금하셨나요?"
-    f2 = cleaned_facts[1] if len(cleaned_facts) > 1 else f"실제 조사 및 데이터 분석에 따르면 겉으로 보이는 모습 뒤에 명확한 원인이 숨어 있습니다."
-    f3 = cleaned_facts[2] if len(cleaned_facts) > 2 else f"전문가 분석에 따르면 핵심 과정과 수치 변화가 결정적인 요인으로 작용합니다."
-    f4 = cleaned_facts[3] if len(cleaned_facts) > 3 else f"이 지점을 정확히 파악하면 그동안 몰랐던 진실이 명쾌하게 풀리게 됩니다."
-    f5 = cleaned_facts[4] if len(cleaned_facts) > 4 else f"결국 제대로 된 팩트를 확인하는 것만으로도 완전한 지식을 얻을 수 있습니다."
+    f1 = cleaned_facts[0] if len(cleaned_facts) > 0 else f"{topic_clean} 속에 숨겨진 뜻밖의 사실이 존재합니다."
+    f2 = cleaned_facts[1] if len(cleaned_facts) > 1 else f"겉으로 보이는 모습 뒤에는 명확하고 강력한 진짜 원인이 작동하고 있습니다."
+    f3 = cleaned_facts[2] if len(cleaned_facts) > 2 else f"실제 핵심 데이터와 구조를 살펴보면 예상치 못한 반전이 분명하게 들어맞죠."
+    f4 = cleaned_facts[3] if len(cleaned_facts) > 3 else f"그렇다면 왜 남들과 다른 이런 차이가 발생하는 걸까요?"
+    f5 = cleaned_facts[4] if len(cleaned_facts) > 4 else f"본질을 꿰뚫어 보는 순간 그동안 몰랐던 진실이 비로소 명쾌하게 연결됩니다."
 
     title_candidates = generate_title_candidates(topic_clean, facts_summary)
     best_title = title_candidates[0]['title'] + " #Shorts"
 
     raw_scenes = [
         ("00:00 ~ 00:08",
-         f"{topic_clean}, 다들 한 번쯤 궁금하셨죠? {f1}",
-         f"{topic_clean}의 위상과 지형을 감각적으로 보여주는 3D 입체 미니어처 모형 & 지형 도면 줌인 세로 9:16 오프닝.",
+         f"여기 우리가 당연하게 여겼던 {topic_clean} 속 뜻밖의 반전이 있습니다. {f1}",
+         f"{topic_clean}의 핵심 지형과 위상을 감각적으로 보여주는 3D 입체 미니어처 모형 오프닝 샷.",
          f"Hyper-realistic 3D isometric mini model view of {topic_clean}, glowing 3D topographic map elevation lines, Octane render, 3D digital twin style, cinematic lighting, 8k, vertical 9:16"),
         
         ("00:08 ~ 00:16",
-         f"실제 팩트를 확인해 보면: {f2}",
+         f"그런데 이게 단순히 어쩌다 일어난 우연이 아닙니다. 전부 명확한 원인이 얽혀있죠. {f2}",
          f"{topic_clean}의 실제 위치와 3D 입체 단면 레이어가 공중으로 분리되어 확장되는 모션 그래픽 연출.",
          f"3D isometric exploded view of {topic_clean}, floating translucent 3D blueprint data layers, Cinema 4D animation style, glowing cyan vectors, photorealistic 8k, vertical 9:16"),
         
         ("00:16 ~ 00:24",
-         f"여기서 더 중요한 사실은, {f3}",
-         f"{topic_clean}의 핵심 요충 지점에 카메라가 3D 마크로 줌인하며 빨간색 3D 하이라이트 광원이 솟구치는 인상적인 연출.",
+         f"실제 데이터를 더 깊이 들어가 보면 상황은 생각보다 훨씬 정교합니다. {f3}",
+         f"{topic_clean}의 핵심 요충 지점에 카메라가 3D 마크로 줌인하며 빨간색 3D 하이라이트 광원이 솟구치는 연출.",
          f"Macro 3D tilt-shift lens camera zoom into key location of {topic_clean}, glowing red 3D pinpoint beacon, hyper-detailed 3D miniature environment, vertical 9:16"),
         
         ("00:24 ~ 00:32",
-         f"핵심 원인은 바로 이겁니다! {f4}",
+         f"그렇다면 왜 이런 현상이 지속되는 걸까요? {f4}",
          f"{topic_clean}의 핵심 네트워크와 흐름이 푸른색 3D 빔으로 연결되며 펼쳐지는 입체 그래픽 트랜스포메이션.",
          f"3D dynamic digital twin transformation showing glowing blue energy beams connecting network nodes across {topic_clean}, Unreal Engine 5 render, vertical 9:16"),
         
         ("00:32 ~ 00:40",
-         f"이 팩트를 이해하는 순간 {topic_clean}(이)가 만드는 결과와 변화가 3D 입체 지형 인포그래픽으로 한눈에 정리됩니다.",
+         f"그래서 시선을 살짝 뒤집어보기로 한 겁니다. 핵심 원리를 깨닫는 순간 모든 것이 명쾌해지거든요.",
          f"{topic_clean}의 핵심 수치와 비교 데이터가 3D 입체 파이프 & 홀로그램 인포그래픽으로 정돈되는 시각화.",
          f"3D holographic spatial infographic presenting key statistics of {topic_clean}, futuristic 3D UI graphs floating over terrain, 8k vertical 9:16"),
         
@@ -144,7 +144,7 @@ def generate_video_storyboard(topic, scene_count=7):
          f"Cinematic 3D hero panorama shot of {topic_clean} 3D model rotating 360 degrees under dramatic golden rim lights, masterpiece 3D render, vertical 9:16"),
         
         ("00:48 ~ 00:56",
-         f"{topic_clean}에 관한 명확한 팩트와 진실! 오늘 알게 된 새로운 사실을 꼭 기억해보세요.",
+         f"{topic_clean}에 숨겨진 깊은 진실. 겉모습이 아닌 본질을 알면 세상이 다르게 보입니다.",
          f"{topic_clean}의 입체 3D 공간 위로 따뜻한 아침 일출 햇살이 내리쬐며 묵직한 인사이트와 여운을 전하는 아웃트로.",
          f"Inspiring 3D cinematic outro shot of {topic_clean} digital model at golden hour sunrise, warm sun rays breaking through mist, peaceful 3D environment, 4k 60fps vertical 9:16")
     ]
