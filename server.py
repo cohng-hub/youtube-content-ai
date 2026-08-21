@@ -35,6 +35,8 @@ class StudioHandler(http.server.SimpleHTTPRequestHandler):
             if not topic:
                 topic = "인천공항 지반침하 기술"
             import generator
+            import importlib
+            importlib.reload(generator)
             storyboard = generator.generate_video_storyboard(topic, scene_count=scene_count)
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
