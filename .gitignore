@@ -1,0 +1,15 @@
+# Temporary subtitle and report files
+*.vtt
+*.srt
+*.info.json
+*_리포트.txt
+full_transcript.txt
+콘티_*.json
+sub_test_*
+
+# Logs and system files
+*.log
+__pycache__/
+.DS_Store
+.vscode/
+.idea/
