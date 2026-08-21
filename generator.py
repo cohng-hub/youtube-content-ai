@@ -469,14 +469,29 @@ def generate_video_storyboard(topic, scene_count=7):
         target_scenes = raw_scenes[:7]
         duration_label = "00:56 (유튜브 쇼츠 규격 1분 이내 / 8초 x 7개 씬)"
 
+    camera_moves = [
+        "Drone slow push-in shot",
+        "3D cross-section blueprint camera pan",
+        "Macro 3D structural zoom-in under tension",
+        "Dynamic 3D physics animation orbit",
+        "Sequential motion downward tracking shot",
+        "Dramatic wide searchlight tilt-up shot",
+        "Cinematic golden hour sunrise orbital camera shot",
+        "High-tech studio 360 rotation shot",
+        "Holographic telemetry camera pan",
+        "Channel call-to-action outro graphic motion"
+    ]
+
     scenes = []
     for idx, (time_range, narr, p_kr, p_en) in enumerate(target_scenes, 1):
+        cam = camera_moves[(idx - 1) % len(camera_moves)]
         scenes.append({
             "scene": idx,
             "time": time_range,
             "narration": narr,
             "prompt_kr": p_kr,
-            "prompt_en": p_en
+            "prompt_en": p_en,
+            "camera_movement": cam
         })
 
     # Universal Description Formatting (Full Narration Text without truncation)

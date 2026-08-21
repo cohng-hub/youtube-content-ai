@@ -672,26 +672,40 @@ function renderPlannerStudio(data) {
     }
 
     if (scenesList && data.scenes) {
-        scenesList.innerHTML = data.scenes.map(s => `
-            <div class="scene-card glass-card">
-                <div class="scene-header">
-                    <span class="scene-num-badge">SCENE ${s.scene} (8초 세로 영상)</span>
-                    <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time}</span>
+        scenesList.innerHTML = data.scenes.map(s => {
+            const numStr = s.scene < 10 ? '0' + s.scene : s.scene;
+            const camMove = s.camera_movement || 'Drone slow push-in shot';
+            return `
+                <div class="scene-card glass-card">
+                    <!-- Header Row -->
+                    <div class="scene-header">
+                        <span class="scene-num-badge">SCENE ${numStr}</span>
+                        <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time} (8초)</span>
+                    </div>
+
+                    <!-- Section 1: Narration Script Box -->
+                    <div class="scene-narration-box">
+                        <div class="narration-title-label"><i class="fa-solid fa-microphone text-blue"></i> 나레이션 자막 대본</div>
+                        <div class="narration-text-content">"${s.narration}"</div>
+                    </div>
+
+                    <!-- Section 2: Visual Description & Prompt Box -->
+                    <div class="scene-prompt-box">
+                        <div class="prompt-header-row">
+                            <span class="prompt-title-yellow"><i class="fa-solid fa-compact-disc text-amber"></i> Runway / Kling AI 프롬프트</span>
+                            <button class="copy-scene-btn" data-copy="${escapeHtmlAttr(s.prompt_en)}">
+                                <i class="fa-regular fa-copy"></i> 복사
+                            </button>
+                        </div>
+                        <div class="prompt-code-container">
+                            <div class="prompt-en-code">${s.prompt_en}</div>
+                            <div class="prompt-visual-kr"><i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}</div>
+                            <div class="camera-move-tag"><i class="fa-solid fa-video text-cyan"></i> ${camMove}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="scene-narration">
-                    <i class="fa-solid fa-microphone text-cyan"></i> <strong>자막 대사:</strong> "${s.narration}"
-                </div>
-                <div class="scene-visual-desc">
-                    <i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}
-                </div>
-                <div class="prompt-box">
-                    <div class="prompt-text">🤖 <strong>AI Video Prompt (9:16 Shorts):</strong> ${s.prompt_en}</div>
-                    <button class="copy-scene-btn" data-copy="${escapeHtmlAttr(s.prompt_en)}">
-                        <i class="fa-regular fa-copy"></i> 프롬프트 복사
-                    </button>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 }
 
