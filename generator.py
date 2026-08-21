@@ -172,6 +172,19 @@ def generate_video_storyboard(topic, scene_count=7):
         target_scenes = raw_scenes[:7]
         duration_label = "00:56 (유튜브 쇼츠 규격 1분 이내 / 8초 x 7개 씬)"
 
+    part_configs = [
+        {"part_num": 1, "part_name": "Part 1: 도입부", "part_title": "Part 1: 도입부 (The Setup - 낭만적 기대 & 충격적 반전)", "goal": "시청자의 호기심을 즉각적으로 자극하고, 미지의 세계에 대한 기대감과 반전을 동시에 심어준다.", "emotion": "낭만적 기대 (Hook)"},
+        {"part_num": 1, "part_name": "Part 1: 도입부", "part_title": "Part 1: 도입부 (The Setup - 낭만적 기대 & 충격적 반전)", "goal": "시청자의 호기심을 즉각적으로 자극하고, 미지의 세계에 대한 기대감과 반전을 동시에 심어준다.", "emotion": "충격적 반전"},
+        {"part_num": 2, "part_name": "Part 2: 갈등 심화", "part_title": "Part 2: 갈등 심화 (The Crisis - 스케일의 압도 & 문제의 본질)", "goal": "물리적인 공포와 스케일을 구체적인 수치로 제시하여 시청자에게 압도적인 위기감을 선사한다.", "emotion": "스케일 압도"},
+        {"part_num": 2, "part_name": "Part 2: 갈등 심화", "part_title": "Part 2: 갈등 심화 (The Crisis - 스케일의 압도 & 문제의 본질)", "goal": "물리적인 공포와 스케일을 구체적인 수치로 제시하여 시청자에게 압도적인 위기감을 선사한다.", "emotion": "위기 고조"},
+        {"part_num": 3, "part_name": "Part 3: 난제 제시", "part_title": "Part 3: 난제 제시 (The Dilemma - 왜 해결할 수 없는지 공학적 딜레마)", "goal": "단순한 사고가 아닌, 기술적/물리적 난제라는 깊은 문제를 제시하여 지적 탐구 욕구를 자극한다.", "emotion": "딜레마 직면"},
+        {"part_num": 4, "part_name": "Part 4: 해결 시도", "part_title": "Part 4: 해결 시도 (The Solution - 역발상적 돌파구 & 혁신적 접근)", "goal": "한계를 극복하는 혁신적인 역발상 해법과 대응을 전개한다.", "emotion": "혁신적 해법 & 돌파구"},
+        {"part_num": 5, "part_name": "Part 5: 결론 & 여운", "part_title": "Part 5: 결론 & 여운 (The Resolution - 교훈 & 묵직한 인사이트)", "goal": "지적 충족감과 깊은 메시지를 남기고 구독과 소통을 유도한다.", "emotion": "묵직한 인사이트 & 여운"},
+        {"part_num": 5, "part_name": "Part 5: 결론 & 여운", "part_title": "Part 5: 결론 & 여운 (The Resolution - 교훈 & 묵직한 인사이트)", "goal": "지적 충족감과 깊은 메시지를 남기고 구독과 소통을 유도한다.", "emotion": "심층 데이터 분석"},
+        {"part_num": 5, "part_name": "Part 5: 결론 & 여운", "part_title": "Part 5: 결론 & 여운 (The Resolution - 교훈 & 묵직한 인사이트)", "goal": "지적 충족감과 깊은 메시지를 남기고 구독과 소통을 유도한다.", "emotion": "전문가 결론"},
+        {"part_num": 5, "part_name": "Part 5: 결론 & 여운", "part_title": "Part 5: 결론 & 여운 (The Resolution - 교훈 & 묵직한 인사이트)", "goal": "지적 충족감과 깊은 메시지를 남기고 구독과 소통을 유도한다.", "emotion": "소통 & 구독 유도"}
+    ]
+
     camera_moves = [
         "Drone slow push-in shot",
         "Smooth orbital camera pan",
@@ -188,9 +201,15 @@ def generate_video_storyboard(topic, scene_count=7):
     scenes = []
     for idx, (time_range, narr, p_kr, p_en) in enumerate(target_scenes, 1):
         cam = camera_moves[(idx - 1) % len(camera_moves)]
+        p_info = part_configs[(idx - 1) % len(part_configs)]
         scenes.append({
             "scene": idx,
             "time": time_range,
+            "part_num": p_info["part_num"],
+            "part_name": p_info["part_name"],
+            "part_title": p_info["part_title"],
+            "part_goal": p_info["goal"],
+            "emotion": p_info["emotion"],
             "narration": narr,
             "prompt_kr": p_kr,
             "prompt_en": p_en,

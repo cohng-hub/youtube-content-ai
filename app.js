@@ -672,40 +672,82 @@ function renderPlannerStudio(data) {
     }
 
     if (scenesList && data.scenes) {
-        scenesList.innerHTML = data.scenes.map(s => {
-            const numStr = s.scene < 10 ? '0' + s.scene : s.scene;
-            const camMove = s.camera_movement || 'Drone slow push-in shot';
-            return `
-                <div class="scene-card glass-card">
-                    <!-- Header Row -->
-                    <div class="scene-header">
-                        <span class="scene-num-badge">SCENE ${numStr}</span>
-                        <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time} (8초)</span>
-                    </div>
+        const partsMap = {};
+        const partDefaultTitles = {
+            1: { title: "🌊 Part 1: 도입부 (The Setup - 낭만적 기대 & 충격적 반전)", goal: "시청자의 호기심을 즉각적으로 자극하고, 미지의 세계에 대한 기대감과 반전을 동시에 심어준다." },
+            2: { title: "💥 Part 2: 갈등 심화 (The Crisis - 스케일의 압도 & 문제의 본질)", goal: "물리적인 공포와 스케일을 구체적인 수치로 제시하여 시청자에게 압도적인 위기감을 선사한다." },
+            3: { title: "🚧 Part 3: 난제 제시 (The Dilemma - 왜 해결할 수 없는지 공학적 딜레마)", goal: "단순한 사고가 아닌, 기술적/물리적 난제라는 깊은 문제를 제시하여 지적 탐구 욕구를 자극한다." },
+            4: { title: "🛠️ Part 4: 해결 시도 (The Solution - 역발상적 돌파구 & 혁신적 접근)", goal: "한계를 극복하는 혁신적인 역발상 해법과 대응을 전개한다." },
+            5: { title: "🌅 Part 5: 결론 & 여운 (The Resolution - 교훈 & 묵직한 인사이트)", goal: "지적 충족감과 깊은 메시지를 남기고 구독과 소통을 유도한다." }
+        };
 
-                    <!-- Section 1: Narration Script Box -->
-                    <div class="scene-narration-box">
-                        <div class="narration-title-label"><i class="fa-solid fa-microphone text-blue"></i> 나레이션 자막 대본</div>
-                        <div class="narration-text-content">"${s.narration}"</div>
-                    </div>
+        data.scenes.forEach(s => {
+            const pNum = s.part_num || (s.scene <= 2 ? 1 : s.scene <= 4 ? 2 : s.scene === 5 ? 3 : s.scene === 6 ? 4 : 5);
+            if (!partsMap[pNum]) {
+                partsMap[pNum] = {
+                    title: s.part_title || (partDefaultTitles[pNum] ? partDefaultTitles[pNum].title : `Part ${pNum}`),
+                    goal: s.part_goal || (partDefaultTitles[pNum] ? partDefaultTitles[pNum].goal : ""),
+                    scenes: []
+                };
+            }
+            partsMap[pNum].scenes.push(s);
+        });
 
-                    <!-- Section 2: Visual Description & Prompt Box -->
-                    <div class="scene-prompt-box">
-                        <div class="prompt-header-row">
-                            <span class="prompt-title-yellow"><i class="fa-solid fa-compact-disc text-amber"></i> Runway / Kling AI 프롬프트</span>
-                            <button class="copy-scene-btn" data-copy="${escapeHtmlAttr(s.prompt_en)}">
-                                <i class="fa-regular fa-copy"></i> 복사
-                            </button>
+        let htmlContent = "";
+        Object.keys(partsMap).sort((a, b) => a - b).forEach(pKey => {
+            const pObj = partsMap[pKey];
+            htmlContent += `
+                <div class="part-section-container">
+                    <div class="part-header-banner">
+                        <h3 class="part-header-title">${pObj.title}</h3>
+                        <div class="part-header-goal">🎯 <strong>목표:</strong> ${pObj.goal}</div>
+                    </div>
+                    <div class="planner-scenes-grid">
+            `;
+            pObj.scenes.forEach(s => {
+                const numStr = s.scene < 10 ? '0' + s.scene : s.scene;
+                const camMove = s.camera_movement || 'Drone slow push-in shot';
+                const emotionTag = s.emotion ? `<span class="scene-emotion-badge"><i class="fa-solid fa-heart-pulse text-pink"></i> ${s.emotion}</span>` : '';
+                htmlContent += `
+                    <div class="scene-card glass-card">
+                        <!-- Header Row -->
+                        <div class="scene-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="scene-num-badge">SCENE ${numStr}</span>
+                                ${emotionTag}
+                            </div>
+                            <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time} (8초)</span>
                         </div>
-                        <div class="prompt-code-container">
-                            <div class="prompt-en-code">${s.prompt_en}</div>
-                            <div class="prompt-visual-kr"><i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}</div>
-                            <div class="camera-move-tag"><i class="fa-solid fa-video text-cyan"></i> ${camMove}</div>
+
+                        <!-- Section 1: Narration Script Box -->
+                        <div class="scene-narration-box">
+                            <div class="narration-title-label"><i class="fa-solid fa-microphone text-blue"></i> 나레이션 자막 대본</div>
+                            <div class="narration-text-content">"${s.narration}"</div>
                         </div>
+
+                        <!-- Section 2: Visual Description & Prompt Box -->
+                        <div class="scene-prompt-box">
+                            <div class="prompt-header-row">
+                                <span class="prompt-title-yellow"><i class="fa-solid fa-compact-disc text-amber"></i> Runway / Kling AI 프롬프트</span>
+                                <button class="copy-scene-btn" data-copy="${escapeHtmlAttr(s.prompt_en)}">
+                                    <i class="fa-regular fa-copy"></i> 복사
+                                </button>
+                            </div>
+                            <div class="prompt-code-container">
+                                <div class="prompt-en-code">${s.prompt_en}</div>
+                                <div class="prompt-visual-kr"><i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}</div>
+                                <div class="camera-move-tag"><i class="fa-solid fa-video text-cyan"></i> ${camMove}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            htmlContent += `
                     </div>
                 </div>
             `;
-        }).join('');
+        });
+        scenesList.innerHTML = htmlContent;
     }
 }
 
