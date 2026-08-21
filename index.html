@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>유튜브 영상 완전 분석 AI 스튜디오</title>
+    <title>Insight AI — 유튜브 영상 분석 & 8초 비디오 AI 기획 스튜디오</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,419 +16,391 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Nav -->
+        <!-- Top Nav Header -->
         <header class="top-nav">
             <div class="brand">
                 <div class="logo-icon">
                     <i class="fa-solid fa-play"></i>
                 </div>
                 <div class="logo-text">
-                    <span class="gradient-text">YT Analytics</span> Pro
+                    <span class="gradient-text">Insight AI</span> 영상 시각화
                 </div>
             </div>
-            <div class="header-status">
-                <div class="status-badge pulse-green" id="apiStatusBadge">
-                    <span class="status-dot"></span>
-                    <span id="statusText">분석 엔진 준비 완료</span>
-                </div>
+            
+            <!-- Top Right Mode Navigation Switcher -->
+            <div class="mode-nav-group">
+                <button id="modeAnalyzerBtn" class="mode-nav-btn active">
+                    <i class="fa-solid fa-chart-line"></i> 📊 영상 분석기
+                </button>
+                <button id="modePlannerBtn" class="mode-nav-btn highlight-pink">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ✨ 8초 비디오 기획기
+                </button>
             </div>
         </header>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Hero Search & Analyzer Section -->
-            <section class="hero-section">
-                <div class="hero-badge">0원 로컬 AI 분석 시스템</div>
-                <h1 class="hero-title">유튜브 링크 하나로 <span class="highlight-cyan">완벽 분석</span> & <span class="highlight-purple">시각화</span></h1>
-                <p class="hero-subtitle">메타데이터, 자막 구조, 댓글 여론 트렌드, 훅 알고리즘을 한눈에 파악하세요.</p>
-                
-                <div class="search-box-container">
-                    <div class="search-input-wrapper">
-                        <i class="fa-solid fa-link search-icon"></i>
-                        <input type="text" id="ytUrlInput" placeholder="https://youtu.be/MhPNptU7tyY 또는 영상 ID 입력..." value="https://youtu.be/MhPNptU7tyY">
-                        <button id="analyzeBtn" class="glow-button">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>분석 시작</span>
+            
+            <!-- ===================================================================
+                 MODE 1: 📊 유튜브 영상 분석기 (Analyzer View)
+                 =================================================================== -->
+            <div id="analyzerModeView" class="mode-view-container">
+                <!-- Hero Search & Analyzer Section -->
+                <section class="hero-section">
+                    <div class="hero-badge">0원 로컬 AI 분석 시스템</div>
+                    <h1 class="hero-title">유튜브 링크 하나로 <span class="highlight-cyan">완벽 분석</span> & <span class="highlight-purple">시각화</span></h1>
+                    <p class="hero-subtitle">메타데이터, 자막 구조, 댓글 여론 트렌드, 훅 알고리즘을 한눈에 파악하세요.</p>
+                    
+                    <div class="search-box-container">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-link search-icon"></i>
+                            <input type="text" id="ytUrlInput" placeholder="https://youtu.be/MhPNptU7tyY 또는 영상 ID 입력..." value="https://youtu.be/MhPNptU7tyY">
+                            <button id="analyzeBtn" class="glow-button">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>분석 시작</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="preset-chips">
+                        <span class="preset-label"><i class="fa-solid fa-fire"></i> 최근 분석 템플릿:</span>
+                        <button class="chip active" data-url="https://youtu.be/MhPNptU7tyY">
+                            <i class="fa-brands fa-youtube"></i> 인천공항 지반침하 (신비한 건축사전)
                         </button>
+                        <button class="chip" data-url="https://youtu.be/uo4Ut_RfrRY">
+                            <i class="fa-brands fa-youtube"></i> 도수치료 레전드 (방심짤)
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Loading Overlay -->
+                <div class="loading-container hidden" id="loadingSpinner">
+                    <div class="spinner-ring"></div>
+                    <div class="loading-text" id="loadingStepText">1/4 메타데이터 추출 중...</div>
+                    <div class="loading-progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
                     </div>
                 </div>
 
-                <div class="preset-chips">
-                    <span class="preset-label"><i class="fa-solid fa-fire"></i> 최근 분석 템플릿:</span>
-                    <button class="chip active" data-url="https://youtu.be/MhPNptU7tyY">
-                        <i class="fa-brands fa-youtube"></i> 인천공항 지반침하 (신비한 건축사전)
-                    </button>
-                    <button class="chip" data-url="https://youtu.be/uo4Ut_RfrRY">
-                        <i class="fa-brands fa-youtube"></i> 도수치료 레전드 (방심짤)
-                    </button>
-                </div>
-            </section>
+                <!-- Video Info & Analytics Content -->
+                <section class="dashboard-section" id="dashboardContent">
+                    <div class="video-meta-card glass-panel">
+                        <div class="video-thumbnail-placeholder" id="thumbBox">
+                            <img id="videoThumb" src="https://img.youtube.com/vi/MhPNptU7tyY/hqdefault.jpg" alt="Video Thumbnail">
+                            <div class="duration-badge" id="videoDuration">4:27</div>
+                        </div>
+                        <div class="video-meta-details">
+                            <div class="channel-tag" id="channelName"><i class="fa-solid fa-circle-check"></i> 신비한 건축사전</div>
+                            <h2 class="video-title" id="videoTitle">인천공항은 지금도 가라앉고 있습니다 — 계획대로요</h2>
+                            <p class="video-description" id="videoDesc">
+                                인천공항은 영종도와 용유도 사이 갯벌을 메운 땅 위에 서 있습니다. 갯벌 진흙은 누르면 수십 년에 걸쳐 꺼집니다...
+                            </p>
+                            <div class="video-tags" id="videoTags">
+                                <span class="tag">#인천공항</span>
+                                <span class="tag">#간사이공항</span>
+                                <span class="tag">#갯벌</span>
+                                <span class="tag">#지반침하</span>
+                                <span class="tag">#토목</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Loading Overlay -->
-            <div class="loading-container hidden" id="loadingSpinner">
-                <div class="spinner-ring"></div>
-                <div class="loading-text" id="loadingStepText">1/4 메타데이터 추출 중...</div>
-                <div class="loading-progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                    <!-- KPI Grid -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-icon icon-cyan"><i class="fa-solid fa-eye"></i></div>
+                            <div class="kpi-info">
+                                <span class="kpi-label">조회수 (Views)</span>
+                                <h3 class="kpi-value" id="viewsDisplay">129,735회</h3>
+                            </div>
+                            <span class="kpi-badge badge-up"><i class="fa-solid fa-arrow-trend-up"></i> 인기 급상승</span>
+                        </div>
+
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-icon icon-pink"><i class="fa-solid fa-heart"></i></div>
+                            <div class="kpi-info">
+                                <span class="kpi-label">좋아요 (Likes)</span>
+                                <h3 class="kpi-value" id="likesDisplay">1,806개</h3>
+                            </div>
+                            <span class="kpi-badge badge-gold"><i class="fa-solid fa-thumbs-up"></i> 참여도 우수</span>
+                        </div>
+
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-icon icon-purple"><i class="fa-solid fa-comments"></i></div>
+                            <div class="kpi-info">
+                                <span class="kpi-label">댓글 수 (Comments)</span>
+                                <h3 class="kpi-value" id="commentsDisplay">190개</h3>
+                            </div>
+                            <span class="kpi-badge badge-teal"><i class="fa-solid fa-fire"></i> 반응열기 높음</span>
+                        </div>
+
+                        <div class="kpi-card glass-card">
+                            <div class="kpi-icon icon-yellow"><i class="fa-solid fa-user-group"></i></div>
+                            <div class="kpi-info">
+                                <span class="kpi-label">구독자 (Subscribers)</span>
+                                <h3 class="kpi-value" id="subscribersDisplay">630,000명</h3>
+                            </div>
+                            <span class="kpi-badge badge-blue"><i class="fa-solid fa-award"></i> 대형 채널</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Tab Navigation -->
+                    <div class="tab-navigation-wrapper">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" data-tab="tab-hook">
+                                <i class="fa-solid fa-magnet"></i> 제목 & 훅 구조
+                            </button>
+                            <button class="tab-btn" data-tab="tab-flow">
+                                <i class="fa-solid fa-diagram-project"></i> 단계별 전개 맵
+                            </button>
+                            <button class="tab-btn" data-tab="tab-comments">
+                                <i class="fa-solid fa-comment-dots"></i> 댓글 여론 & 반응
+                            </button>
+                            <button class="tab-btn" data-tab="tab-insights">
+                                <i class="fa-solid fa-lightbulb"></i> 핵심 메시지
+                            </button>
+                            <button class="tab-btn" data-tab="tab-transcript">
+                                <i class="fa-solid fa-file-lines"></i> 자막 전문 스크립트
+                            </button>
+                            <button class="tab-btn" data-tab="tab-benchmark">
+                                <i class="fa-solid fa-rocket"></i> 내 채널 적용점 3가지
+                            </button>
+                        </div>
+
+                        <div class="tab-content-area glass-panel">
+                            <!-- TAB 1: 제목 & 훅 분석 -->
+                            <div class="tab-pane active" id="tab-hook">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-magnet highlight-cyan"></i> 제목 및 초반 훅(Hook) 구조 분석</h3>
+                                    <span class="score-pill">훅 알고리즘 점수 96/100</span>
+                                </div>
+                                <div class="hook-grid" id="hookGrid">
+                                    <div class="hook-card">
+                                        <div class="hook-step-num">01</div>
+                                        <h4>역설적 문제 제기 (Click Trigger)</h4>
+                                        <p class="hook-quote">"인천공항은 지금도 가라앉고 있습니다"</p>
+                                        <p class="hook-desc">국제공항이 가라앉는다는 공포성·호기심 자극 문구로 시청자의 클릭을 즉각 유도.</p>
+                                    </div>
+                                    <div class="hook-card">
+                                        <div class="hook-step-num">02</div>
+                                        <h4>반전 및 불안 해소 (Reassurance)</h4>
+                                        <p class="hook-quote">"— 계획대로요"</p>
+                                        <p class="hook-desc">대시(—) 뒤에 반전 장치를 배치하여 시청자가 의문과 안도감을 동시에 느끼며 본문 시청 유도.</p>
+                                    </div>
+                                    <div class="hook-card">
+                                        <div class="hook-step-num">03</div>
+                                        <h4>타사 랜드마크 비교 대조 (Comparison Hook)</h4>
+                                        <p class="hook-quote">"일본 간사이공항 10m 침하 vs 인천의 사전 침하 기술"</p>
+                                        <p class="hook-desc">타 국가의 실패 사례와 우리나라 공학자들의 기발한 해결책을 대비시켜 자부심과 대중적 흥미 극대화.</p>
+                                    </div>
+                                </div>
+
+                                <div class="chart-box-row">
+                                    <div class="chart-box glass-card">
+                                        <h4>시청자 유지율 예상 곡선 (Audience Retention Score)</h4>
+                                        <div class="chart-container">
+                                            <canvas id="retentionChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="chart-box glass-card">
+                                        <h4>◎ 훅 최적화 핵심 요인</h4>
+                                        <ul class="key-factors-list">
+                                            <li><i class="fa-solid fa-check text-cyan"></i> <strong>반전 구조:</strong> 부정적 팩트 + 긍정적 해석의 극적 결합</li>
+                                            <li><i class="fa-solid fa-check text-cyan"></i> <strong>스토리텔링:</strong> 어려운 엔지니어링 개념을 대중 눈높이에 최적화</li>
+                                            <li><i class="fa-solid fa-check text-cyan"></i> <strong>이탈 방지 장치:</strong> 3초마다 지속되는 질문 던지기와 시각적 대조</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: 단계별 전개 맵 -->
+                            <div class="tab-pane" id="tab-flow">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-diagram-project highlight-purple"></i> 3단계 완독률 전개 파이프라인</h3>
+                                    <span class="score-pill">완독률 예상 82%</span>
+                                </div>
+                                <div class="timeline-pipeline" id="timelinePipeline">
+                                    <!-- Rendered dynamically via JS -->
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: 댓글 여론 & 반응 -->
+                            <div class="tab-pane" id="tab-comments">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-comment-dots highlight-pink"></i> 댓글 반응 및 여론 감성 트렌드</h3>
+                                    <span class="score-pill">긍정 감성 90%</span>
+                                </div>
+                                <div class="comments-layout">
+                                    <div class="comments-list-box glass-card" id="commentsList">
+                                        <!-- Rendered dynamically -->
+                                    </div>
+                                    <div class="sentiment-chart-box glass-card">
+                                        <h4>댓글 키워드 감성 비율</h4>
+                                        <div class="chart-container-sm">
+                                            <canvas id="sentimentChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: 핵심 메시지 -->
+                            <div class="tab-pane" id="tab-insights">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-lightbulb highlight-yellow"></i> 3가지 핵심 성공 인사이트</h3>
+                                </div>
+                                <div class="insights-cards-grid" id="insightsCards">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: 자막 전문 스크립트 -->
+                            <div class="tab-pane" id="tab-transcript">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-file-lines highlight-cyan"></i> 자막 전문 스크립트 (Full Subtitles)</h3>
+                                    <span class="score-pill" id="subLengthBadge">자동 추출 자막 2,705자</span>
+                                </div>
+                                <div class="transcript-box glass-card" id="transcriptText">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- TAB 6: 내 채널 적용점 3가지 -->
+                            <div class="tab-pane" id="tab-benchmark">
+                                <div class="pane-header">
+                                    <h3><i class="fa-solid fa-rocket highlight-pink"></i> 내 채널 콘텐츠 즉시 적용점 3가지</h3>
+                                </div>
+                                <div class="benchmark-list-grid" id="benchmarkList">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export & Action Bar -->
+                    <div class="export-bar glass-card">
+                        <div class="export-info">
+                            <i class="fa-solid fa-file-export text-cyan"></i>
+                            <span>분석 결과 및 프롬프트를 복사하거나 저장할 수 있습니다.</span>
+                        </div>
+                        <div class="export-actions">
+                            <button class="sec-button" id="copyPromptBtn">
+                                <i class="fa-regular fa-copy"></i> AI 분석 프롬프트 복사
+                            </button>
+                            <button class="sec-button" id="downloadTxtBtn">
+                                <i class="fa-solid fa-download"></i> 리포트 TXT 다운로드
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+            <!-- ===================================================================
+                 MODE 2: ✨ 8초 비디오 AI 기획기 (Standalone Studio Mode View)
+                 =================================================================== -->
+            <div id="plannerModeView" class="mode-view-container hidden">
+                <section class="planner-hero-section">
+                    <!-- Studio Badge Pill -->
+                    <div class="studio-badge-pill">
+                        <i class="fa-solid fa-video"></i> 8-Second Scene Video AI Studio
+                    </div>
+
+                    <!-- Main Hero Titles -->
+                    <h1 class="planner-hero-title">
+                        주제 하나로 <span class="highlight-pink">8초 비디오 대본</span> & <span class="highlight-purple">AI 프롬프트</span> 자동 생성
+                    </h1>
+                    <p class="planner-hero-subtitle">
+                        168만 조회수 영상의 훅 공식 · 5단계 딜레마 전개 구조를 100% 반영하여 8초 단위 자막과 Runway/Kling/Luma용 AI 영상 프롬프트를 생성합니다.
+                    </p>
+
+                    <!-- Main Search Input Bar Box -->
+                    <div class="planner-search-container glass-panel">
+                        <div class="planner-search-wrapper">
+                            <i class="fa-solid fa-wand-magic-sparkles search-icon-pink"></i>
+                            <input type="text" id="plannerTopicInput" placeholder="주제를 입력하세요 (예: 지하 50층 비밀 벙커의 진실)" value="지하 50층 비밀 벙커의 진실">
+                            
+                            <!-- Scene Count Select Dropdown -->
+                            <div class="scene-select-box">
+                                <select id="plannerSceneSelect" class="scene-select-dropdown">
+                                    <option value="7" selected>7개 씬 (56초 쇼츠 규격)</option>
+                                    <option value="10">10개 씬 (80초 롱폼 인트로)</option>
+                                    <option value="5">5개 씬 (40초 초스피드 쇼츠)</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-arrow"></i>
+                            </div>
+
+                            <button id="plannerGenerateBtn" class="planner-glow-button">
+                                <i class="fa-solid fa-clapperboard"></i>
+                                <span>비디오 기획 생성</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Preset Topic Chips -->
+                    <div class="planner-preset-chips">
+                        <span class="preset-label-pink"><i class="fa-solid fa-bolt text-yellow"></i> 추천 주제:</span>
+                        <button class="planner-chip active" data-topic="지하 50층 비밀 벙커의 진실">
+                            지하 50층 비밀 벙커
+                        </button>
+                        <button class="planner-chip" data-topic="체르노빌 코끼리의 발">
+                            체르노빌 코끼리의 발
+                        </button>
+                        <button class="planner-chip" data-topic="심해 3,000m 침몰선">
+                            심해 3,000m 침몰선
+                        </button>
+                        <button class="planner-chip" data-topic="삼풍백화점 붕괴 사고">
+                            삼풍백화점 붕괴 사고
+                        </button>
+                        <button class="planner-chip" data-topic="롯데월드타워 내진설계">
+                            롯데월드타워 내진설계
+                        </button>
+                        <button class="planner-chip" data-topic="아이폰 베이퍼 챔버 발열 제어">
+                            아이폰 베이퍼 챔버
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Video Planning Results Area -->
+                <div id="plannerResultsArea" class="planner-results-container">
+                    
+                    <!-- 1. 유튜브 제목 후보 분석 및 추천 -->
+                    <div class="planner-card glass-panel">
+                        <div class="pane-header">
+                            <h3><i class="fa-solid fa-magnet highlight-cyan"></i> 1. 유튜브 제목 후보 분석 및 추천</h3>
+                            <span class="score-pill">AI 훅 점수 분석 완료</span>
+                        </div>
+                        <div class="title-candidates-grid" id="titleCandidatesGrid">
+                            <!-- Rendered dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- 2. 유튜브 설명란 (디스크립션) 기획 -->
+                    <div class="planner-card glass-panel">
+                        <div class="pane-header">
+                            <h3><i class="fa-solid fa-file-lines highlight-pink"></i> 2. 유튜브 설명란 (디스크립션) 기획</h3>
+                            <button class="copy-desc-btn" id="copyDescriptionBtn">
+                                <i class="fa-regular fa-copy"></i> 설명란 전체 복사
+                            </button>
+                        </div>
+                        <div class="description-content-box glass-card" id="descriptionContentBox">
+                            <!-- Rendered dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- 3. 씬별 타임라인 & AI 비디오 생성 프롬프트 목록 -->
+                    <div class="planner-card glass-panel">
+                        <div class="pane-header">
+                            <h3><i class="fa-solid fa-film highlight-purple"></i> 3. 씬별 타임라인 & AI 비디오 생성 프롬프트 목록 (Runway / Kling / Luma / Sora)</h3>
+                            <span class="score-pill" id="plannerDurationBadge">8초 x 7개 씬 = 56초 (1분 이내 완성)</span>
+                        </div>
+                        <div class="planner-scenes-grid" id="plannerScenesList">
+                            <!-- Rendered dynamically via JS -->
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Video Info & Stat KPI Cards -->
-            <section class="dashboard-section" id="dashboardContent">
-                <div class="video-meta-card glass-panel">
-                    <div class="video-thumbnail-placeholder" id="thumbBox">
-                        <img id="videoThumb" src="https://img.youtube.com/vi/MhPNptU7tyY/hqdefault.jpg" alt="Video Thumbnail">
-                        <div class="duration-badge" id="videoDuration">4:27</div>
-                    </div>
-                    <div class="video-meta-details">
-                        <div class="channel-tag" id="channelName"><i class="fa-solid fa-circle-check"></i> 신비한 건축사전</div>
-                        <h2 class="video-title" id="videoTitle">인천공항은 지금도 가라앉고 있습니다 — 계획대로요</h2>
-                        <p class="video-description" id="videoDesc">
-                            인천공항은 영종도와 용유도 사이 갯벌을 메운 땅 위에 서 있습니다. 갯벌 진흙은 누르면 수십 년에 걸쳐 꺼집니다...
-                        </p>
-                        <div class="video-tags" id="videoTags">
-                            <span class="tag">#인천공항</span>
-                            <span class="tag">#간사이공항</span>
-                            <span class="tag">#갯벌</span>
-                            <span class="tag">#지반침하</span>
-                            <span class="tag">#토목</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KPI Grid -->
-                <div class="kpi-grid">
-                    <div class="kpi-card glass-card">
-                        <div class="kpi-icon cyan"><i class="fa-solid fa-eye"></i></div>
-                        <div class="kpi-data">
-                            <div class="kpi-label">조회수 (Views)</div>
-                            <div class="kpi-value" id="kpiViews">129,735회</div>
-                        </div>
-                        <div class="kpi-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> 인기 급상승</div>
-                    </div>
-
-                    <div class="kpi-card glass-card">
-                        <div class="kpi-icon pink"><i class="fa-solid fa-heart"></i></div>
-                        <div class="kpi-data">
-                            <div class="kpi-label">좋아요 (Likes)</div>
-                            <div class="kpi-value" id="kpiLikes">1,806개</div>
-                        </div>
-                        <div class="kpi-trend neutral"><i class="fa-solid fa-thumbs-up"></i> 참여도 우수</div>
-                    </div>
-
-                    <div class="kpi-card glass-card">
-                        <div class="kpi-icon purple"><i class="fa-solid fa-comments"></i></div>
-                        <div class="kpi-data">
-                            <div class="kpi-label">댓글 수 (Comments)</div>
-                            <div class="kpi-value" id="kpiComments">190개</div>
-                        </div>
-                        <div class="kpi-trend positive"><i class="fa-solid fa-fire"></i> 반응열기 높음</div>
-                    </div>
-
-                    <div class="kpi-card glass-card">
-                        <div class="kpi-icon yellow"><i class="fa-solid fa-users"></i></div>
-                        <div class="kpi-data">
-                            <div class="kpi-label">구독자 (Subscribers)</div>
-                            <div class="kpi-value" id="kpiSubs">630,000명</div>
-                        </div>
-                        <div class="kpi-trend positive"><i class="fa-solid fa-award"></i> 대형 채널</div>
-                    </div>
-                </div>
-
-                <!-- Main Analysis Tabs -->
-                <div class="tabs-container">
-                    <div class="tab-buttons">
-                        <button class="tab-btn active" data-tab="tab-hook">
-                            <i class="fa-solid fa-magnet"></i> 제목 & 훅 구조
-                        </button>
-                        <button class="tab-btn" data-tab="tab-flow">
-                            <i class="fa-solid fa-diagram-project"></i> 단계별 전개 맵
-                        </button>
-                        <button class="tab-btn" data-tab="tab-comments">
-                            <i class="fa-solid fa-comment-dots"></i> 댓글 여론 & 반응
-                        </button>
-                        <button class="tab-btn" data-tab="tab-insights">
-                            <i class="fa-solid fa-lightbulb"></i> 핵심 메시지
-                        </button>
-                        <button class="tab-btn" data-tab="tab-transcript">
-                            <i class="fa-solid fa-file-lines"></i> 자막 전문 스크립트
-                        </button>
-                        <button class="tab-btn highlight" data-tab="tab-generator">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> 🎬 8초 AI 영상 생성기
-                        </button>
-                        <button class="tab-btn" data-tab="tab-benchmark">
-                            <i class="fa-solid fa-rocket"></i> 내 채널 적용점 3가지
-                        </button>
-                    </div>
-
-                    <div class="tab-content-area glass-panel">
-                        <!-- TAB 1: 제목 & 훅 분석 -->
-                        <div class="tab-pane active" id="tab-hook">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-magnet highlight-cyan"></i> 제목 및 초반 훅(Hook) 구조 분석</h3>
-                                <span class="score-pill">훅 알고리즘 점수 96/100</span>
-                            </div>
-                            <div class="hook-grid" id="hookGrid">
-                                <div class="hook-card">
-                                    <div class="hook-step-num">01</div>
-                                    <h4>역설적 문제 제기 (Click Trigger)</h4>
-                                    <p class="hook-quote">"인천공항은 지금도 가라앉고 있습니다"</p>
-                                    <p class="hook-desc">국제공항이 가라앉는다는 공포성·호기심 자극 문구로 시청자의 클릭을 즉각 유도.</p>
-                                </div>
-                                <div class="hook-card">
-                                    <div class="hook-step-num">02</div>
-                                    <h4>반전 및 불안 해소 (Reassurance)</h4>
-                                    <p class="hook-quote">"— 계획대로요"</p>
-                                    <p class="hook-desc">대시(—) 뒤에 반전 장치를 배치하여 시청자가 의문과 안도감을 동시에 느끼며 본문 시청 유도.</p>
-                                </div>
-                                <div class="hook-card">
-                                    <div class="hook-step-num">03</div>
-                                    <h4>타사 랜드마크 비교 대조 (Comparison Hook)</h4>
-                                    <p class="hook-quote">"일본 간사이공항 10m 침하 vs 인천의 사전 침하 기술"</p>
-                                    <p class="hook-desc">타 국가의 실패 사례와 우리나라 공학자들의 기발한 해결책을 대비시켜 자부심과 대중적 흥미 극대화.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="chart-box-row">
-                                <div class="chart-card glass-card">
-                                    <h4>시청자 유지율 예상 곡선 (Audience Retention Score)</h4>
-                                    <div class="canvas-container">
-                                        <canvas id="retentionChart"></canvas>
-                                    </div>
-                                </div>
-                                <div class="hook-analysis-notes">
-                                    <h4><i class="fa-solid fa-bullseye"></i> 훅 최적화 핵심 요인</h4>
-                                    <ul>
-                                        <li><i class="fa-solid fa-check text-cyan"></i> <strong>반전 구조:</strong> 부정적 팩트 + 긍정적 해석의 극적 결합</li>
-                                        <li><i class="fa-solid fa-check text-cyan"></i> <strong>스토리텔링:</strong> 어려운 엔지니어링 개념을 대중 눈높이에 최적화</li>
-                                        <li><i class="fa-solid fa-check text-cyan"></i> <strong>시각적 상상력:</strong> 가라앉는 공항의 시각화 프레임 전달</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 2: 단계별 전개 맵 -->
-                        <div class="tab-pane" id="tab-flow">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-diagram-project highlight-purple"></i> 콘텐츠 단계별 전개 파이프라인</h3>
-                            </div>
-                            <div class="timeline-wrapper" id="timelineWrapper">
-                                <div class="timeline-step">
-                                    <div class="step-badge">00:00 - 00:45</div>
-                                    <div class="step-content">
-                                        <div class="step-title"><i class="fa-solid fa-triangle-exclamation"></i> STEP 1: 문제 발생 (갯벌 수직 침하)</div>
-                                        <p>영종도-용유도 매립 지반의 특성 소개. 누르면 수십 년 동안 계속 꺼지는 갯벌 진흙의 위험성 제시.</p>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-step">
-                                    <div class="step-badge">00:45 - 01:40</div>
-                                    <div class="step-content">
-                                        <div class="step-title"><i class="fa-solid fa-globe"></i> STEP 2: 타산지석 사례 (일본 간사이 공항)</div>
-                                        <p>개항 6년 만에 10m 넘게 꺼진 간사이 공항의 붕괴 위기와 막대한 보수비용 문제 조명.</p>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-step highlight">
-                                    <div class="step-badge">01:40 - 03:10</div>
-                                    <div class="step-content">
-                                        <div class="step-title"><i class="fa-solid fa-wand-magic-sparkles"></i> STEP 3: 역발상 해법 (미리 다 꺼뜨려 놓기!)</div>
-                                        <p>모래 기둥(샌드 드레인)으로 물길을 내고 활주로보다 묵직한 흙을 쌓아 개항 전에 물을 다 짜내는 한국 토목의 승리.</p>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-step">
-                                    <div class="step-badge">03:10 - 04:27</div>
-                                    <div class="step-content">
-                                        <div class="step-title"><i class="fa-solid fa-flag-checkered"></i> STEP 4: 정밀 측정 및 결론</div>
-                                        <p>개항 후에도 정밀 계측기로 속도를 측정하며 관리하는 낭만적인 엔지니어링 이야기로 마무리.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 3: 댓글 여론 & 반응 -->
-                        <div class="tab-pane" id="tab-comments">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-comment-dots highlight-pink"></i> 댓글 반응 분석 & 여론 트렌드</h3>
-                            </div>
-                            
-                            <div class="comments-layout">
-                                <div class="sentiment-chart-card glass-card">
-                                    <h4>댓글 감성 반응 비율</h4>
-                                    <div class="canvas-container">
-                                        <canvas id="sentimentChart"></canvas>
-                                    </div>
-                                    <div class="sentiment-legend">
-                                        <span class="leg-item"><i class="dot cyan"></i> 감탄 & 자부심 (65%)</span>
-                                        <span class="leg-item"><i class="dot purple"></i> 채널 밈 & 유머 (25%)</span>
-                                        <span class="leg-item"><i class="dot yellow"></i> 현직자 경험담 (10%)</span>
-                                    </div>
-                                </div>
-
-                                <div class="comments-list-card" id="commentsList">
-                                    <h4><i class="fa-solid fa-crown text-yellow"></i> 베스트 댓글 리더보드</h4>
-                                    <div class="comment-item">
-                                        <div class="comment-likes"><i class="fa-solid fa-heart"></i> 459</div>
-                                        <div class="comment-text">"업무시간에 올라왔습니다. 환장할 노릇이죠. 여기서 발상을 뒤집었습니다. 답은 화장실에 있었던거죠!"</div>
-                                        <span class="comment-badge meme">밈/유머</span>
-                                    </div>
-                                    <div class="comment-item">
-                                        <div class="comment-likes"><i class="fa-solid fa-heart"></i> 197</div>
-                                        <div class="comment-text">"내가 건축토목을 자꾸 공부하고 있으니 환장할 노릇"</div>
-                                        <span class="comment-badge praise">채널팬덤</span>
-                                    </div>
-                                    <div class="comment-item">
-                                        <div class="comment-likes"><i class="fa-solid fa-heart"></i> 60</div>
-                                        <div class="comment-text">"인천공항 만드신 분들은 진짜 대단... 희생 덕분에 지금도 걱정없이 누릴 수 있는 거겠죠."</div>
-                                        <span class="comment-badge pride">감탄/자부심</span>
-                                    </div>
-                                    <div class="comment-item">
-                                        <div class="comment-likes"><i class="fa-solid fa-heart"></i> 44</div>
-                                        <div class="comment-text">"공항건설 감리로 참여했습니다.. 시공사부터 공항공사, 감리사 모두 엄청 수고 많이 했습니다.."</div>
-                                        <span class="comment-badge expert">현직자 인증</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 4: 핵심 메시지 -->
-                        <div class="tab-pane" id="tab-insights">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-lightbulb text-yellow"></i> 영상의 핵심 메시지 & 스토리 가치</h3>
-                            </div>
-                            <div class="insights-cards" id="insightsCards">
-                                <div class="insight-box glass-card">
-                                    <div class="box-icon"><i class="fa-solid fa-brain"></i></div>
-                                    <h4>1. 피할 수 없다면 제어하라</h4>
-                                    <p>지반 침하라는 대자연의 현상을 막으려 하지 않고, 공사 단계에서 선제적으로 유도하고 제어한 '선제적 통제 전략'.</p>
-                                </div>
-                                <div class="insight-box glass-card">
-                                    <div class="box-icon"><i class="fa-solid fa-microscope"></i></div>
-                                    <h4>2. 어렵고 딱딱한 공학의 스토리텔링화</h4>
-                                    <p>'압밀', '샌드 드레인' 같은 어려운 토목 용어를 '진흙 물 짜내기', '미리 꺼뜨리기'처럼 쉬운 직관적 언어로 변환.</p>
-                                </div>
-                                <div class="insight-box glass-card">
-                                    <div class="box-icon"><i class="fa-solid fa-hand-fist"></i></div>
-                                    <h4>3. 은근한 국뽕과 집단적 자부심</h4>
-                                    <p>일본의 간사이 공항 실패 사례와 비교하여 대한민국 기술진의 아이디어와 노고에 절절한 감동을 부여.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB: 자막 전문 스크립트 -->
-                        <div class="tab-pane" id="tab-transcript">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-file-lines highlight-cyan"></i> 자막 전문 스크립트 (Full Subtitles)</h3>
-                                <span class="score-pill" id="subLengthBadge">자동 추출 자막 2,705자</span>
-                            </div>
-                            <div class="transcript-box glass-card" id="transcriptText">
-여기 인천 영종도에는 지금도 조금씩 가라앉고 있는 활주로가 있습니다. 인천 국제공항이죠. 그런데 이 땅 원래 있던 섬이 아닙니다. 영종도와 용유도 두 섬 사이 갯벌을 메워서 만든 땅이죠. 갯벌은 진흙이거든요. 물을 잔뜩 먹은 진흙 위에 여객기가 뜨고 내리는 활주로를 얹은 겁니다. 그리고 바로 옆 나라에는 같은 방식으로 지었다가 개항 몇 년 만에 10m 넘게 가라앉은 공항이 있습니다. 일본 간사이 공항이죠. 이 땅의 문제는 딱 한 줄로 요약됩니다. 진흙은 누르면 꺼진다는 것. 앞으로 나올 이야기는 전부 여기서 출발합니다. 1992년 영종도 갯벌 매립이 시작됩니다. 서울 올림픽 뒤로 해외 여행이 풀리면서 김포 공항이 꽉 찼거든요. 새 공항은 넓어야 했고 밤에도 뜨고 내려야 했고 그러려면 사람 사는 데서 떨어진 바다밖에 답이 없었습니다. 영종도와 용유도 사이 갯벌은 썰물 때 드러나고 밀물 때 잠기는 얕은 바다였습니다. 여기에 흙과 모래를 부어 두 섬을 하나로 이었습니다. 원래 배로 건너던 두 섬이 한 덩어리 땅이 된 겁니다. 그런데 갯벌 진흙에는 태어날 때부터 문제가 있습니다. 진흙 알갱이 사이사이에 물이 꽉 차 있어요. 젖은 스펀지 같은 거죠. 그 위에 흙을 쌓고 활주로를 얹으면 무게에 눌린 물이 아주 천천히 빠져나가면서 땅이 가라앉습니다. 이걸 압밀이라고 합니다. 문제는 이게 몇 년이 아니라 수십 년에 걸쳐 일어난다는 거예요. 진흙은 알갱이가 워낙 고아서 물이 빠져나갈 틈이 거의 없거든요. 그러니 개항하고 나서도 계속 꺼지는 겁니다. 젖은 스펀지를 손바닥으로 누르면 바로 물이 나오지만 진흙은 눌러도 물이 안 나와요. 대신 몇 년, 몇 십년에 걸쳐 아주 조금씩 스며 나옵니다. 간사이 공항이 딱 그랬습니다. 1994년에 문을 연 이 공항은 수심 18m 바다에 섬을 통째로 만들었는데 그 밑층이 두꺼웠거든요. 개항 6년 만에 10m 넘게 가라앉았고 그것도 고르게 안 가라앉아서 이쪽은 높고 저쪽은 낮아졌습니다. 건물이 기울지 않게 기둥마다 높이를 다시 맞추는 장치를 달아야 했고요. 지금도 매년 몇 cm씩 내려앉는 중입니다. 환장할 노릇이죠. 바다를 메우면 땅은 생기는데 그 땅에 앉아 있는 진흙은 계속 꺼집니다. 그럼 활주로 밑에 말뚝을 박아서 단단한 바닥에 얹으면 되지 않냐고요? 그것도 안 됩니다. 활주로는 길이만 몇 km에 폭이 60m입니다. 이걸 통째로 말뚝 위에 얹는 건 다리를 놓는 거예요. 게다가 활주로만 말뚝 위에 있고 주변 땅은 꺼지면 활주로 가장자리에 턱이 생깁니다. 비행기 바퀴에 턱은 치명적이고요. 그래서 발상을 뒤집습니다. 꺼지는 걸 막지 말자. 대신 개항 전에 미리 다 꺼뜨려 놓자. 가라앉을 땅을 일부러 먼저 가라앉히는 공사가 이렇게 시작됩니다. 첫 번째는 모래 기둥입니다. 진흙 속 물이 빠져나가는데 수십 년이 걸리는 건 물이 진흙을 뚫고 지나갈 길이 없어서예요. 그래서 진흙층에 구멍을 촘촘히 뚫고 모래를 채워 넣습니다. 모래는 물이 잘 통하니까 진흙 속 물이 옆에 있는 모래 기둥으로 빠져나와 위로 올라오는 겁니다. 물이 빠져나갈 길을 수천 개 뚫어 준 거죠. 진흙 물 입장에서는 수십m를 뚫고 위로 올라가야 했던 길이 옆으로 몇 미터만 가면 되는 길로 바뀐 겁니다. 수십 년 걸릴 일을 몇 년으로 당기는 겁니다. 두 번째는 무게입니다. 물길만 뚫어 놓고 기다리면 물은 천천히 나옵니다. 그래서 그 위에 흙을 일부러 더 높이 쌓습니다. 활주로 무게보다 더 무겁게요. 그 무게로 진흙을 미리 눌러서 물을 짜냅니다. 땅이 충분히 가라앉으면 그 흙을 걷어내고 그 자리에 활주로를 깝니다. 활주로가 나중에 누를 만큼을 미리 눌러 둔 거죠. 선행제하라고 부릅니다. 꺼질 걸 없앤 게 아니라 꺼질 시점을 개항 앞으로 당겨온 겁니다. 이 두 가지를 섞어서 몇 년을 기다렸습니다. 공항이 세워지기 전에 땅이 먼저 가라앉을 시간을 준 거예요. 세 번째는 계측입니다. 그래도 땅은 조금씩 계속 가라앉습니다. 그래서 활주로 곳곳에 침하를 재는 계측점을 박아두고 지금도 쟙니다. 개항 뒤 확인된 침하는 1년에 몇 mm 수준입니다. 활주로는 지점마다 얼마까지 내려앉아도 되는지 관리 기준이 정해져 있고 그 기준에 닿기 전에 포장을 더 씌우게 되어 있습니다. 비행기 바퀴는 몇 cm 턱에도 예민하니까요. 꺼지는 걸 없앤 게 아니라 꺼지는 속도를 재고 그 안에서 고치는 겁니다. 2001년 3월 인천공항이 문을 엽니다. 처음엔 활주로 두 개였고 2008년에 세 번째, 2021년에 네 번째 활주로가 붙었습니다. 그때마다 갯벌을 더 메우고 모래 기둥을 박고 흙을 얹어 누르고 기다렸습니다. 그런데 이 땅은 완성된 게 아닙니다. 지금도 진흙 속에서 물은 아주 조금씩 빠져나오고 있고 땅은 그만큼 내려앉습니다. 다만 그 속도가 활주로가 견디는 범위 안에 있을 뿐이죠. 간사이와 인천의 차이는 기술의 차이라기보다 진흙의 두께와 물깊이의 차이가 컸다는 지적도 있고요. 인천은 물이 빠지면 바닥이 드러나는 얕은 갯벌이었고 진흙층도 간사이보다 얇았습니다. 그리고 바다 한가운데 섬을 새로 띄운 게 아니라 이미 있던 두 섬 사이를 메운 거라 양쪽에 원래 있던 단단한 땅이 버텨줍니다. 같은 매립 공항이라도 시작점이 달랐던 겁니다. 처음 질문으로 돌아가 볼까요? 누르면 꺼지는 진흙 위에 어떻게 공항을 세웠느냐? 인천은 이 땅이 안 꺼지게 만들지 않았습니다. 물길을 뚫어 진흙 속 물을 빼내고 흙을 더 얹어 미리 눌러놓고 개항 뒤엔 꺼지는 속도를 재고 있습니다. 진흙을 이긴 게 아니라 진흙이 꺼질 시간을 앞으로 당겨온 겁니다. 인천공항의 땅은 이렇게 탄생한 겁니다.
-                            </div>
-                        </div>
-
-                        <!-- TAB: 🎬 8초 AI 영상 생성기 -->
-                        <div class="tab-pane" id="tab-generator">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-wand-magic-sparkles highlight-pink"></i> 8초 AI 영상 쇼츠 프롬프트 콘티 자동 생성기</h3>
-                                <span class="score-pill">📱 쇼츠 규격: 8초 x 7개 씬 = 56초 (1분 이내 완성)</span>
-                            </div>
-
-                            <!-- Generator Topic Input Bar -->
-                            <div class="generator-input-card glass-card">
-                                <label for="topicInput" class="gen-label"><i class="fa-solid fa-lightbulb text-yellow"></i> 새로운 주제(Topic)를 입력하세요:</label>
-                                <div class="gen-input-row">
-                                    <input type="text" id="topicInput" placeholder="예: 롯데월드타워는 왜 바람에 안 흔들릴까?" value="롯데월드타워 지반 안전 기술">
-                                    <button id="generateStoryboardBtn" class="glow-button pink-glow">
-                                        <i class="fa-solid fa-film"></i> 8초 콘티 & 프롬프트 생성
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Generated Title & Description Preview -->
-                            <div class="gen-preview-section">
-                                <div class="gen-meta-preview glass-card">
-                                    <div class="meta-item">
-                                        <span class="m-label"><i class="fa-solid fa-heading text-cyan"></i> 생성된 어그로/훅 제목:</span>
-                                        <h4 id="genTitle" class="m-title">롯데월드타워 지반 안전 기술 — 계획대로요</h4>
-                                    </div>
-                                    <div class="meta-item">
-                                        <span class="m-label"><i class="fa-solid fa-align-left text-purple"></i> 디스크립션:</span>
-                                        <p id="genDesc" class="m-desc">롯데월드타워 지반 안전 기술. 수많은 사람들의 우려와 달라는 고정관념을 뒤집은 역발상 공학 스토리...</p>
-                                    </div>
-                                </div>
-
-                                <!-- 8-Second Storyboard Scenes Grid -->
-                                <div class="scenes-container-title">
-                                    <h4><i class="fa-solid fa-clapperboard text-pink"></i> 8초 단위 자막 & AI 영상 생성 프롬프트 목록 (Runway / Luma / Sora)</h4>
-                                </div>
-
-                                <div class="scenes-list" id="scenesList">
-                                    <!-- Rendered dynamically by app.js -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TAB 5: 내 채널 적용점 3가지 -->
-                        <div class="tab-pane" id="tab-benchmark">
-                            <div class="pane-header">
-                                <h3><i class="fa-solid fa-rocket highlight-pink"></i> 내 채널 콘텐츠에 바로 적용할 점 3가지</h3>
-                            </div>
-                            
-                            <div class="benchmark-list" id="benchmarkList">
-                                <div class="benchmark-card border-cyan">
-                                    <div class="bm-number">ACTION 01</div>
-                                    <div class="bm-body">
-                                        <h4>[제목 훅] '충격적 사실 + 반전 안심' 공식 적용</h4>
-                                        <p class="bm-desc">"~는 무너지고 있습니다 — 문제없도록 만들었거든요"처럼 부정적 이슈로 어그로를 끌고, 대시(—)로 기술적 해결책을 제시해 클릭률(CTR) 높이기.</p>
-                                        <div class="bm-example">
-                                            <span class="ex-label">내 분야 예시:</span> "내 아이폰 배터리가 미친 듯이 닳는 이유 — 설정 1개로 해결"
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="benchmark-card border-purple">
-                                    <div class="bm-number">ACTION 02</div>
-                                    <div class="bm-body">
-                                        <h4>[비교 기법] 해외 유명 실패작 vs 국내 기발한 승리 구도</h4>
-                                        <p class="bm-desc">단순한 정보 전달이 아니라 해외 유명 사례(또는 경쟁사)의 실패와 우리만의 기발한 역발상 해법을 대조하여 시청자의 몰입감 극대화.</p>
-                                        <div class="bm-example">
-                                            <span class="ex-label">내 분야 예시:</span> "대기업도 포기한 알고리즘 문제, 개인이 단 3줄 코드로 풀어낸 방법"
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="benchmark-card border-pink">
-                                    <div class="bm-number">ACTION 03</div>
-                                    <div class="bm-body">
-                                        <h4>[댓글 유도] 유치하거나 솔직한 시청자 밈 커뮤니티화</h4>
-                                        <p class="bm-desc">댓글창에서 "환장할 노릇", "화장실에서 봅니다" 같은 솔직한 유머 밈이 놀이터처럼 형성되도록 지침이나 훅 문구를 영상에 녹이기.</p>
-                                        <div class="bm-example">
-                                            <span class="ex-label">내 분야 예시:</span> 고정 댓글에 "업무 시간에 몰래 보시는 분 손 들기" 같은 이색 유도 배치.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Export & Action Bar -->
-                <div class="export-bar glass-card">
-                    <div class="export-info">
-                        <i class="fa-solid fa-file-export text-cyan"></i>
-                        <span>분석 결과 및 프롬프트를 복사하거나 저장할 수 있습니다.</span>
-                    </div>
-                    <div class="export-actions">
-                        <button class="sec-button" id="copyPromptBtn">
-                            <i class="fa-regular fa-copy"></i> AI 분석 프롬프트 복사
-                        </button>
-                        <button class="sec-button" id="downloadTxtBtn">
-                            <i class="fa-solid fa-download"></i> 리포트 TXT 다운로드
-                        </button>
-                    </div>
-                </div>
-            </section>
         </main>
     </div>
 

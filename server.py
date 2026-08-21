@@ -27,10 +27,15 @@ class StudioHandler(http.server.SimpleHTTPRequestHandler):
         if parsed_path.path == '/api/generate-storyboard':
             query = urllib.parse.parse_qs(parsed_path.query)
             topic = query.get('topic', [''])[0]
+            scene_count_raw = query.get('scene_count', ['7'])[0]
+            try:
+                scene_count = int(scene_count_raw)
+            except ValueError:
+                scene_count = 7
             if not topic:
                 topic = "인천공항 지반침하 기술"
             import generator
-            storyboard = generator.generate_video_storyboard(topic)
+            storyboard = generator.generate_video_storyboard(topic, scene_count=scene_count)
             self.send_response(200)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()

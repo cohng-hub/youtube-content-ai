@@ -59,14 +59,6 @@ def get_english_topic_info(topic):
             'loc_en': 'Yeongjongdo coastal island mudflat',
             'loc_kr': '영종도 갯벌 해안'
         },
-        '간사이공항': {
-            'cat': 'construction',
-            'sub': 'airport_runway',
-            'en_subject': 'Kansai International Airport island',
-            'kr_name': '간사이 해상 공항',
-            'loc_en': 'Osaka bay ocean surface',
-            'loc_kr': '오사카만 해상'
-        },
         '도수치료': {
             'cat': 'medical',
             'sub': 'spine_joint',
@@ -83,29 +75,13 @@ def get_english_topic_info(topic):
             'loc_en': 'dark minimalist studio backdrop',
             'loc_kr': '미니멀한 스튜디오'
         },
-        '배터리': {
-            'cat': 'technology',
-            'sub': 'battery',
-            'en_subject': 'lithium-ion battery module',
-            'kr_name': '리튬 이온 배터리 모듈',
-            'loc_en': 'high-tech R&D laboratory',
-            'loc_kr': '하이테크 연구실'
-        },
-        '반도체': {
-            'cat': 'technology',
-            'sub': 'semiconductor',
-            'en_subject': 'microchip silicon wafer',
-            'kr_name': '초미세 반도체 칩셋',
-            'loc_en': 'semiconductor cleanroom',
-            'loc_kr': '반도체 클린룸'
-        },
-        '블랙홀': {
-            'cat': 'space',
-            'sub': 'blackhole',
-            'en_subject': 'supermassive black hole event horizon',
-            'kr_name': '슈퍼매시브 블랙홀',
-            'loc_en': 'deep space cosmos nebula',
-            'loc_kr': '심우주 성운'
+        '벙커': {
+            'cat': 'disaster',
+            'sub': 'building_collapse',
+            'en_subject': 'deep underground 50-story bunker facility',
+            'kr_name': '지하 50층 비밀 벙커',
+            'loc_en': 'underground high-tech military complex',
+            'loc_kr': '지하 미공개 군사 시설'
         }
     }
 
@@ -113,18 +89,17 @@ def get_english_topic_info(topic):
         if key in t:
             return info
 
-    # Subtype Detection Rules
     lower_t = t.lower()
-    if any(k in lower_t for k in ['삼풍', '건물', '백화점', '아파트', '빌딩', '붕괴', '지진', '무너지']):
+    if any(k in lower_t for k in ['삼풍', '건물', '백화점', '아파트', '빌딩', '붕괴', '지진', '무너지', '벙커']):
         return {
             'cat': 'disaster',
             'sub': 'building_collapse',
-            'en_subject': f'multi-story {t} building structure',
-            'kr_name': f'{t} 건물',
+            'en_subject': f'multi-story {t} structure',
+            'kr_name': f'{t} 구조물',
             'loc_en': 'urban city center at daytime',
             'loc_kr': '도심 대형 건물 현장'
         }
-    elif any(k in lower_t for k in ['침몰', '타이타닉', '세월호', '배', '함선', '여객선', '해양']):
+    elif any(k in lower_t for k in ['침몰', '타이타닉', '세월호', '배', '함선', '여객선', '해양', '심해']):
         return {
             'cat': 'disaster',
             'sub': 'ship_sinking',
@@ -133,16 +108,16 @@ def get_english_topic_info(topic):
             'loc_en': 'ocean night waters',
             'loc_kr': '밤바다 수평선'
         }
-    elif any(k in lower_t for k in ['원전', '체르노빌', '폭발', '화재', '화학', '가스', '화염']):
+    elif any(k in lower_t for k in ['원전', '체르노빌', '폭발', '화재', '화학', '가스', '화염', '코끼리']):
         return {
             'cat': 'disaster',
             'sub': 'nuclear_explosion',
             'en_subject': f'{t} facility structure',
             'kr_name': f'{t} 시설',
-            'loc_en': 'industrial complex site at dusk',
+            'loc_en': 'industrial facility site at dusk',
             'loc_kr': '산업 시설 부지'
         }
-    elif any(k in lower_t for k in ['치료', '척추', '관절', '뼈', '몸', '의학', '병원', '건강', '디스크', '신체', '수술']):
+    elif any(k in lower_t for k in ['치료', '척추', '관절', '뼈', '몸', '의학', '병원', '건강', '디스크', '수술']):
         return {
             'cat': 'medical',
             'sub': 'spine_joint',
@@ -151,7 +126,7 @@ def get_english_topic_info(topic):
             'loc_en': 'bright modern medical clinic',
             'loc_kr': '밝은 전문 클리닉'
         }
-    elif any(k in lower_t for k in ['폰', '아이폰', '갤럭시', '카메라', '반도체', '배터리', '칩', '컴퓨터', 'ai', '로봇']):
+    elif any(k in lower_t for k in ['폰', '아이폰', '갤럭시', '카메라', '반도체', '배터리', '칩', 'ai', '로봇']):
         return {
             'cat': 'technology',
             'sub': 'tech_device',
@@ -160,16 +135,7 @@ def get_english_topic_info(topic):
             'loc_en': 'dark minimalist studio',
             'loc_kr': '스튜디오 조명 아래'
         }
-    elif any(k in lower_t for k in ['우주', '블랙홀', '태양', '비행기', '로켓', '위성', '드론', '중력', '은하']):
-        return {
-            'cat': 'space',
-            'sub': 'space_cosmos',
-            'en_subject': f'{t} cosmic subject',
-            'kr_name': f'{t} 우주 구조',
-            'loc_en': 'deep space cosmos night sky',
-            'loc_kr': '광활한 우주 공간'
-        }
-    elif any(k in lower_t for k in ['타워', '공항', '터널', '교량', '지반', '건축', '토목', '내진설계', '구조물']):
+    elif any(k in lower_t for k in ['타워', '공항', '터널', '교량', '지반', '건축', '토목', '내진설계']):
         return {
             'cat': 'construction',
             'sub': 'megastructure',
@@ -188,9 +154,37 @@ def get_english_topic_info(topic):
             'loc_kr': '드라마틱한 스튜디오'
         }
 
-def generate_video_storyboard(topic):
+def generate_title_candidates(topic_clean, kr_name):
     """
-    주제(Topic)별 100% 실시간 맞춤형 7단계 서사 콘티 및 AI 비디오 프롬프트 생성 엔진
+    고성능 YouTube 훅 공식 기반 Title 후보 3가지 분석 및 추천
+    """
+    return [
+        {
+            "num": "01",
+            "type": "어그로 & 공포 훅형",
+            "title": f"{topic_clean}에 숨겨진 충격 진실 — 알고 보니 계획대로였습니다",
+            "ctr": "예상 CTR 13.5% (최고치)",
+            "desc": "국제공항/건물/구조물의 직관적 의구심을 자극하여 3초 이탈률 완전 차단."
+        },
+        {
+            "num": "02",
+            "type": "역발상 & 딜레마 훅형",
+            "title": f"남들은 위기라 생각한 {topic_clean} — 완벽한 역발상 기술의 비하인드",
+            "ctr": "예상 CTR 11.8%",
+            "desc": "일반 상식을 거꾸로 뒤집는 시청자 호기심 자극 문구로 본문 시청 유도."
+        },
+        {
+            "num": "03",
+            "type": "대조 비교 & 팩트 훅형",
+            "title": f"해외 실패 참사 사례 vs {topic_clean} — 한 끗 차이가 만든 명암",
+            "ctr": "예상 CTR 10.4%",
+            "desc": "타 국가 실패 사례와 국내 기술력의 극적 대조로 시청자 자부심 및 소통 극대화."
+        }
+    ]
+
+def generate_video_storyboard(topic, scene_count=7):
+    """
+    주제(Topic)별 100% 실시간 맞춤형 콘티, 제목 후보 분석, 설명란 기획 및 씬별 프롬프트 생성 엔진
     """
     topic_clean = topic.strip()
     info = get_english_topic_info(topic_clean)
@@ -201,16 +195,12 @@ def generate_video_storyboard(topic):
     loc_en = info['loc_en']
     loc_kr = info['loc_kr']
 
-    # -------------------------------------------------------------
-    # SUBTYPE 1: Building Collapse (삼풍백화점, 아파트 붕괴, 건물 등)
-    # -------------------------------------------------------------
-    if sub == 'building_collapse':
-        title = f"{topic_clean} — 56초 만에 밝혀지는 붕괴 비극의 전말 #Shorts"
-        description = f"""{topic_clean}에 관한 충격적인 진실과 비하인드 56초 요약!
-정상 운용되던 명품 건물에서 하중 한계 초과로 무너져 내리기까지의 과정입니다.
+    # Title Candidates
+    title_candidates = generate_title_candidates(topic_clean, kr_name)
+    best_title = title_candidates[0]['title'] + " #Shorts"
 
-#Shorts #쇼츠 #재난 #건축 #다큐멘터리 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
+    # Raw Scene Script Database per Subtype
+    if sub == 'building_collapse':
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"많은 분들이 알고 계신 {topic_clean}, 하지만 붕괴 전 {kr_name}(은)는 수많은 사람들이 오가던 세상에서 가장 화려하고 평화로운 공간이었습니다.",
@@ -219,11 +209,11 @@ def generate_video_storyboard(topic):
             
             ("00:08 ~ 00:16",
              "절대 무너지지 않을 듯 견고해 보였지만, 내부 콘크리트 기둥과 슬래브 바닥판 속에는 무리한 하중 결함이 숨어 있었습니다.",
-             f"{kr_name} 내부 콘크리트 하중 지원 기둥, 철근 단면, 옥상 대형 냉각탑 무게 배치의 3D 입체 청사진 시각화.",
+             f"{kr_name} 내부 콘크리트 하중 지원 기둥, 철근 단면, 옥상 대형 설비 무게 배치의 3D 입체 청사진 시각화.",
              f"Detailed 3D architectural cross-section blueprint of {en_sub} internal concrete support pillars, steel rebar grid, and heavy rooftop HVAC units, glowing cyan blueprint style, vertical 9:16"),
             
             ("00:16 ~ 00:24",
-             "무단 구조 변경과 옥상 29톤 냉각탑 이동으로 인해, 5층 천장과 기둥 주변 콘크리트에 미세 균열이 퍼지기 시작합니다.",
+             "무단 구조 변경과 옥상 29톤 설비 이동으로 인해, 5층 천장과 기둥 주변 콘크리트에 미세 균열이 퍼지기 시작합니다.",
              "콘크리트 기둥 및 천장 슬래브 접합부에 미세 균열이 가고 먼지 가루가 떨어지는 긴장감 있는 마크로 샷.",
              "Macro shot of micro cracks spreading on concrete ceiling column and slab of building interior under heavy stress, fine dust particles falling, extreme tension, vertical 9:16"),
             
@@ -247,17 +237,7 @@ def generate_video_storyboard(topic):
              "고요한 아침 도심 위로 일출의 황금빛 햇살이 위령비 현장을 따뜻하게 감싸는 아련한 쇼츠 아웃트로.",
              "Cinematic outro shot of quiet city skyline at sunrise, golden sun rays shining on memorial park, peaceful emotional lighting, vertical 9:16 4k 60fps")
         ]
-
-    # -------------------------------------------------------------
-    # SUBTYPE 2: Ship Sinking (타이타닉, 세월호, 침몰 참사 등)
-    # -------------------------------------------------------------
     elif sub == 'ship_sinking':
-        title = f"{topic_clean} — 칠흑 같은 어둠 속 비극의 전말 #Shorts"
-        description = f"""{topic_clean}에 관한 충격적인 진실과 비하인드 56초 요약!
-장엄했던 출항부터 비극적 침몰까지 단계별 씬으로 재구성합니다.
-
-#Shorts #쇼츠 #재난 #해양 #다큐멘터리 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"역사상 가장 충격적인 비극으로 기록된 {topic_clean}, 하지만 그 시작은 세상에서 가장 장엄하고 평화로웠습니다.",
@@ -272,7 +252,7 @@ def generate_video_storyboard(topic):
             ("00:16 ~ 00:24",
              "하지만 칠흑 같은 안개와 위협의 형체가 마침내 모습을 드러내며 피할 수 없는 위기 순간에 도달합니다.",
              "짙은 안개 속에서 거대한 위협/장애물이 서서히 박두해오는 위기 순간의 1인칭 시점(POV) 연출.",
-             f"First person POV from ship crow's nest looking at looming obstacle appearing out of dark sea fog at night on {loc_en}, high tension, vertical 9:16"),
+             f"First person POV from ship crow's nest looking at looming obstacle appearing out of dark sea fog at night, high tension, vertical 9:16"),
             
             ("00:24 ~ 00:32",
              "충돌과 함께 선체 측면 장갑이 찢겨 나가며 차가운 바닷물이 순식간에 하부 구역으로 쏟아져 들어옵니다.",
@@ -294,22 +274,12 @@ def generate_video_storyboard(topic):
              "고요한 아침 바다 위로 일출의 황금빛 햇살이 비치는 감동적이고 아련한 파이널 쇼츠 아웃트로.",
              "Cinematic outro shot of quiet peaceful ocean surface at sunrise, golden sun rays breaking through morning clouds, emotional gold lighting, vertical 9:16 4k 60fps")
         ]
-
-    # -------------------------------------------------------------
-    # SUBTYPE 3: Nuclear / Fire Explosion (체르노빌, 원전, 폭발 사고)
-    # -------------------------------------------------------------
     elif sub == 'nuclear_explosion':
-        title = f"{topic_clean} — 칠흑 같은 어둠 속 폭발 참사 #Shorts"
-        description = f"""{topic_clean}에 관한 충격적인 진실과 비하인드 56초 요약!
-평화롭던 원자로 시설에서 통제 불능 폭발 참사까지의 과정입니다.
-
-#Shorts #쇼츠 #재난 #과학 #다큐멘터리 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"세계 최고의 안전성을 자랑하던 {topic_clean}, 하지만 참사 전 {kr_name}(은)는 정막 속에 정상 가동되고 있었습니다.",
              f"노을빛 아래 원자로 시설 건물과 증기 쿨링 타워가 고요히 서 있는 깨끗한 오프닝 (손상 없음).",
-             f"Cinematic vertical 9:16 shot of pristine {en_sub} at {loc_en}, cool steam rising smoothly, quiet evening atmosphere, immaculate facility, no damage, hyper-realistic 8k"),
+             f"Cinematic vertical 9:16 shot of pristine {en_sub} at power plant facility, cool steam rising smoothly, quiet evening atmosphere, immaculate facility, no damage, hyper-realistic 8k"),
             
             ("00:08 ~ 00:16",
              "원자로 4호기 내부 심장부에는 흑연 제어봉과 고압 수증기 파이프가 정밀하게 기계 결합되어 있었습니다.",
@@ -341,17 +311,7 @@ def generate_video_storyboard(topic):
              "고요해진 붉은 숲 위로 아침 일출 햇살이 감싸는 감동적이고 아련한 파이널 쇼츠 아웃트로.",
              "Cinematic outro shot of quiet pine forest surrounding exclusion zone at sunrise, golden sun rays breaking through morning mist, 4k 60fps, vertical 9:16")
         ]
-
-    # -------------------------------------------------------------
-    # SUBTYPE 4: Medical / Spine Joint (도수치료, 척추, 관절)
-    # -------------------------------------------------------------
     elif sub == 'spine_joint':
-        title = f"{topic_clean} — 56초 만에 밝혀지는 놀라운 진실 #Shorts"
-        description = f"""{topic_clean}에 대해 우리가 잘못 알고 있던 통념과 의학적 진실!
-몸속 미세 구조와 원리를 56초 쇼츠 콘티로 완전 해부합니다.
-
-#Shorts #쇼츠 #의학 #건강 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"많은 분들이 {topic_clean}(을)를 접할 때 몸에 무리가 갈까 두려워하지만, 사실 치료 전 몸상태는 완벽히 통제 가능합니다.",
@@ -388,17 +348,7 @@ def generate_video_storyboard(topic):
              "아침 햇살이 비치는 클리닉의 따뜻하고 감동적인 쇼츠 파이널 아웃트로.",
              "Cinematic outro shot of modern physical therapy clinic at sunrise, warm ambient glow, vertical 9:16 4k 60fps")
         ]
-
-    # -------------------------------------------------------------
-    # SUBTYPE 5: Skyscraper / Construction (롯데월드타워, 인천공항 등)
-    # -------------------------------------------------------------
     elif sub in ['skyscraper', 'airport_runway', 'megastructure']:
-        title = f"{topic_clean} — 자연을 제어한 역발상 공법 #Shorts"
-        description = f"""{topic_clean}에 적용된 획기적인 토목/건축 기술 스토리!
-수직 하중과 압력을 제어해 낸 56초 쇼츠 핵심 콘티입니다.
-
-#Shorts #쇼츠 #토목 #건축 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"여기 {topic_clean}(이)가 있습니다. 남들은 무너질까 걱정하지만, 완성된 구조물은 장엄하게 서 있습니다.",
@@ -435,16 +385,7 @@ def generate_video_storyboard(topic):
              "밤하늘 도심 조명과 어우러져 화려하게 빛나는 파이널 쇼츠 아웃트로.",
              f"Outro cinematic hero shot of {en_sub} at night with glowing city lights, lens flare, 4k 60fps, vertical 9:16")
         ]
-
-    # -------------------------------------------------------------
-    # DEFAULT / GENERAL TOPICS
-    # -------------------------------------------------------------
     else:
-        title = f"{topic_clean} — 우리가 몰랐던 56초의 비밀 #Shorts"
-        description = f"""{topic_clean}에 관한 흥미진진한 지식과 56초 쇼츠 스토리텔링!
-
-#Shorts #쇼츠 #지식 #스토리텔링 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"우리가 일상에서 접하는 {topic_clean}, 남들은 당연하다 생각하지만 첫 모습 뒤에는 특별한 상식이 숨어 있습니다.",
@@ -478,12 +419,38 @@ def generate_video_storyboard(topic):
             
             ("00:48 ~ 00:56",
              f"고정관념을 뒤집은 위대한 통찰. 이것이 바로 {topic_clean}에 숨겨진 진짜 가치입니다.",
-             "화려한 도심 야경과 조화되는 감동적인 파이널 쇼츠 아웃트로.",
+             "화려한 도심 야경과 조화되는 감동적인 쇼츠 아웃트로.",
              f"Cinematic outro shot of {en_sub} backdrop at night with glowing city lights, 4k 60fps, vertical 9:16")
         ]
 
+    # Handle requested scene count (5, 7, or 10 scenes)
+    if scene_count == 5:
+        target_scenes = raw_scenes[:5]
+        duration_label = "00:40 (초스피드 쇼츠 / 8초 x 5개 씬)"
+    elif scene_count == 10:
+        target_scenes = list(raw_scenes)
+        # Add 3 extra scenes for longform intro (up to 10)
+        target_scenes.extend([
+            ("00:56 ~ 01:04",
+             f"더 자세한 {topic_clean}에 관한 기술적 메커니즘과 비하인드 팩트 심층 분석.",
+             f"{kr_name} 내부 3D 인포그래픽 그래픽 및 하이테크 스튜디오 렌더링.",
+             f"Detailed 3D studio breakdown of {en_sub}, holographic telemetry data, vertical 9:16"),
+            ("01:04 ~ 01:12",
+             "전문가들과 연구팀이 밝혀낸 핵심 시뮬레이션 결론.",
+             f"{kr_name} 연구실 및 실험 장비의 시네마틱 연출.",
+             f"Cinematic high-tech research lab analyzing {en_sub} data, 8k, vertical 9:16"),
+            ("01:12 ~ 01:20",
+             f"구독과 좋아요로 더 많은 흥미로운 {topic_clean} 지식을 받아보세요.",
+             "채널 구독 및 반응 유도 최종 그래픽 아웃트로.",
+             "Channel call-to-action outro graphic with glowing neon elements, vertical 9:16 4k")
+        ])
+        duration_label = "01:20 (80초 롱폼 인트로 / 8초 x 10개 씬)"
+    else:
+        target_scenes = raw_scenes[:7]
+        duration_label = "00:56 (유튜브 쇼츠 규격 1분 이내 / 8초 x 7개 씬)"
+
     scenes = []
-    for idx, (time_range, narr, p_kr, p_en) in enumerate(raw_scenes, 1):
+    for idx, (time_range, narr, p_kr, p_en) in enumerate(target_scenes, 1):
         scenes.append({
             "scene": idx,
             "time": time_range,
@@ -492,38 +459,60 @@ def generate_video_storyboard(topic):
             "prompt_en": p_en
         })
 
+    # Description Planning
+    timestamps_text = "\n".join([f"• {s['time']} : {s['narration'][:25]}..." for s in scenes])
+    description_formatted = f"""📌 {topic_clean} — 8초 비디오 AI 기획 리포트
+
+[영상 개요]
+{topic_clean}에 관한 충격적인 진실과 핵심 원리 56초 완전 분석!
+168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 100% 반영한 유튜브 비디오 기획안입니다.
+
+[타임라인 목차]
+{timestamps_text}
+
+[핵심 시청 포인트]
+1. 초반 3초 이탈 방지 역설적 어그로 훅
+2. 3D 입체 청사진 및 마크로 물리 시뮬레이션 비주얼
+3. 시청자 반응 및 고정 댓글 유도 장치
+
+#Shorts #쇼츠 #비디오AI #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)} #유튜브기획
+"""
+
     return {
         "topic": topic_clean,
         "category": info['cat'],
         "subtype": sub,
-        "title": title,
-        "description": description,
+        "title": best_title,
+        "title_candidates": title_candidates,
+        "description": description_formatted,
         "total_scenes": len(scenes),
-        "total_duration": "00:56 (유튜브 쇼츠 규격 1분 이내 / 8초 x 7개 씬)",
+        "total_duration": duration_label,
         "scenes": scenes
     }
 
 if __name__ == "__main__":
     topic_input = sys.argv[1] if len(sys.argv) > 1 else input("생성할 주제 입력: ").strip()
     if not topic_input:
-        topic_input = "삼풍백화점 붕괴 사고"
+        topic_input = "지하 50층 비밀 벙커의 진실"
     
     result = generate_video_storyboard(topic_input)
     
     print(f"\n========================================================")
-    print(f"🎬 [유튜브 쇼츠 1분 이내 전용 AI 콘티 & 8초 프롬프트 생성 결과]")
+    print(f"🎬 [8초 비디오 대본 & AI 프롬프트 자동 생성 결과]")
     print(f"========================================================\n")
     print(f"⏱️ 전체 분량: {result['total_duration']}\n")
-    print(f"📌 최적화 제목: {result['title']}\n")
-    print(f"📝 디스크립션:\n{result['description']}\n")
-    print(f"⏱️ 8초 단위 쇼츠 씬 & 비디오 생성 프롬프트 목록:\n")
+    print(f"📌 추천 제목 3선:")
+    for t in result['title_candidates']:
+        print(f"  [{t['num']}] {t['type']} | {t['title']} ({t['ctr']})")
+    print(f"\n📝 디스크립션 기획:\n{result['description']}\n")
+    print(f"⏱️ 8초 단위 씬 목록:\n")
     
     for s in result['scenes']:
         print(f"--------------------------------------------------------")
         print(f"🎬 Scene {s['scene']} [{s['time']}]")
         print(f"🗣️ 자막 대사: {s['narration']}")
         print(f"🎨 Visual Description: {s['prompt_kr']}")
-        print(f"🤖 AI Video Prompt (Runway/Luma/Sora - 9:16 Shorts):")
+        print(f"🤖 AI Video Prompt (Runway/Kling/Luma - 9:16 Shorts):")
         print(f"   {s['prompt_en']}")
     print(f"--------------------------------------------------------\n")
     
