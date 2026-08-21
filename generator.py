@@ -4,7 +4,12 @@ import json
 import re
 import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
+if not hasattr(sys, '_stdout_utf8_wrapped'):
+    try:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
+        sys._stdout_utf8_wrapped = True
+    except Exception:
+        pass
 
 def get_universal_topic_info(topic):
     t = topic.strip()
