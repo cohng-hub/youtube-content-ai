@@ -7,17 +7,7 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
 
 def detect_category(topic):
-    """
-    주제의 특성을 다각도로 분류하여 최적의 카테고리를 결정
-    - disaster: 재난, 사고, 침몰, 비극, 파괴, 사건, 참사, 역사적 사건
-    - construction: 토목, 건축, 타워, 공항, 터널, 교량, 지반, 구조물
-    - medical: 의학, 치료, 인체, 관절, 척추, 장기, 수술, 질병, 건강
-    - technology: IT, 전자, 반도체, 스마트폰, 배터리, AI, 로봇, 컴퓨터
-    - space: 우주, 천체, 로켓, 비행기, 블랙홀, 물리, 자연
-    - general: 기타 일반 지식 및 비하인드 스토리
-    """
     t = topic.lower()
-    
     if any(k in t for k in ['침몰', '타이타닉', '세월호', '체르노빌', '삼풍', '참사', '폭발', '화재', '사고', '재난', '비극', '파멸', '멸망', '전쟁', '붕괴']):
         return 'disaster'
     elif any(k in t for k in ['치료', '척추', '관절', '뼈', '몸', '의학', '병원', '건강', '디스크', '신체', '의료', '수술', '암', '혈관', '뇌']):
@@ -32,9 +22,6 @@ def detect_category(topic):
         return 'general'
 
 def get_english_topic(topic):
-    """
-    주제 키워드를 영문으로 변환하여 자연스러운 AI 프롬프트에 활용
-    """
     t = topic.strip()
     words_map = {
         '타이타닉': 'Titanic ocean liner',
@@ -65,25 +52,62 @@ def get_english_topic(topic):
             
     clean_en = re.sub(r'[가-힣]', '', translated).strip()
     if not clean_en:
-        clean_en = "dramatic historic event"
+        clean_en = "dramatic historic vessel"
     return clean_en
 
 def generate_video_storyboard(topic):
     """
     유튜브 쇼츠 1분 이내 (56초 = 8초 x 7개 씬) 전용 AI 콘티 & 프롬프트 생성기
+    (각 씬별 타임라인 흐름에 맞춰 조기 파괴/침몰을 방지하는 정밀 프롬프트 조율)
     """
     topic_clean = topic.strip()
     cat = detect_category(topic_clean)
     topic_en = get_english_topic(topic_clean)
 
-    # 1. 쇼츠 전용 훅 제목 & 디스크립션
     if cat == 'disaster':
         title = f"{topic_clean} — 칠흑 같은 어둠 속 비극의 전말 #Shorts"
         description = f"""{topic_clean}에 관한 충격적인 진실과 비하인드 56초 요약!
-작은 경고를 무시해 거대한 재앙으로 이어진 비극적 과정을 쇼츠 콘티로 전해드립니다.
+장엄했던 출발부터 비극적 침몰까지 단계별 씬으로 재구성합니다.
 
 #Shorts #쇼츠 #재난 #다큐멘터리 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
 """
+        raw_scenes = [
+            ("00:00 ~ 00:08",
+             f"역사상 가장 충격적인 비극으로 기록된 {topic_clean}, 하지만 그 시작은 세상에서 가장 장엄하고 평화로웠습니다.",
+             f"어두운 밤바다 위를 유유히 항해하는 웅장한 {topic_clean}의 전경. 잔잔한 수평선, 따뜻한 선실 조명, 침몰 전 완벽한 평화로움 연출.",
+             f"Cinematic vertical 9:16 shot of magnificent {topic_en} sailing smoothly on a calm starry ocean at night, warm glowing cabin lights, peaceful maiden voyage, pristine condition, no damage, hyper-realistic 8k, slow motion 24fps"),
+            
+            ("00:08 ~ 00:16",
+             "절대 가라앉지 않는 불침선이라 불리던 내부에는 강철 장갑판과 리벳의 치밀한 구조가 숨어 있었습니다.",
+             "구조물 강철 장갑판 결합 부위와 리벳의 미세 단면 3D 청사진 시각화.",
+             f"Detailed 3D engineering blueprint cross-section view of {topic_en} sturdy steel plates and rivets, clean structural inspection, dark water ambient glow, vertical 9:16"),
+            
+            ("00:16 ~ 00:24",
+             "하지만 칠흑 같은 안개 속에서 시야 확보가 불가능했던 거대한 빙산의 형체가 마침내 모습을 드러냅니다.",
+             "짙은 안개 속에서 거대한 빙산/장애물이 서서히 박두해오는 위기 순간의 1인칭 시점(POV) 연출.",
+             "First person POV from ship crow's nest looking at giant looming iceberg appearing out of dark ocean sea fog at night, high tension, vertical 9:16"),
+            
+            ("00:24 ~ 00:32",
+             "비상 회피 조타를 시도했지만 늦었습니다. 측면 장갑이 찢겨 나가며 차가운 바닷물이 쏟아져 들어옵니다.",
+             "충돌과 함께 선체 측면 장갑판이 찌그러지며 해수가 격렬하게 밀려드는 수중 액션 샷.",
+             "Action shot of steel ship side hull scraping against iceberg underwater, freezing seawater violently flooding lower compartment, dynamic motion, vertical 9:16"),
+            
+            ("00:32 ~ 00:40",
+             "방수 격벽이 설치되어 있었지만 위쪽이 뚫려있어, 물이 잔에 차오르듯 차례대로 넘쳐 흐르는 결함이 나타납니다.",
+             "3D 청사진으로 격벽 위로 차가운 바닷물이 차례대로 넘어가며 선체가 기울어지기 시작하는 시각화.",
+             "3D architectural animation showing ocean water overflowing top of internal watertight bulkheads inside hold, ship tilting forward slightly, vertical 9:16"),
+            
+            ("00:40 ~ 00:48",
+             "선수가 수면 아래로 숙여지고 거대한 선체 후미가 밤하늘을 향해 높이 들어 올려지며 마침내 파괴적 침몰이 일어납니다.",
+             "선체 뒷부분이 높게 들리고 빨간 조난 신호탄이 밤하늘로 쏘아지며 수중으로 침몰하는 극적인 시네마틱 샷.",
+             "Dramatic wide cinematic shot of colossal ocean liner stern rising high into starry night sky as bow plunges into ocean, red emergency distress flares launching, epic destruction, vertical 9:16"),
+            
+            ("00:48 ~ 00:56",
+             f"완벽하다고 믿었던 오만에 대한 묵직한 경고. 고요해진 바다만이 그날의 비극을 기억하고 있습니다.",
+             "고요한 아침 바다 위로 일출의 황금빛 햇살이 비치는 감동적이고 아련한 파이널 쇼츠 아웃트로.",
+             "Cinematic outro shot of quiet peaceful ocean surface at sunrise, golden sun rays breaking through morning clouds, emotional gold lighting, vertical 9:16 4k 60fps")
+        ]
+
     elif cat == 'medical':
         title = f"{topic_clean} — 56초 만에 밝혀지는 놀라운 진실 #Shorts"
         description = f"""{topic_clean}에 대해 우리가 잘못 알고 있던 통념과 의학적 진실!
@@ -91,67 +115,6 @@ def generate_video_storyboard(topic):
 
 #Shorts #쇼츠 #의학 #건강 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
 """
-    elif cat == 'technology':
-        title = f"{topic_clean} — 한계를 돌파한 56초 혁신 기술 #Shorts"
-        description = f"""{topic_clean} 내부 초미세 나노 회로에 숨겨진 공학의 정수!
-한계를 넘어선 역발상 기술을 56초 쇼츠로 분석합니다.
-
-#Shorts #쇼츠 #IT #테크 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
-    elif cat == 'construction':
-        title = f"{topic_clean} — 자연을 제어한 역발상 공법 #Shorts"
-        description = f"""{topic_clean}에 적용된 획기적인 토목/건축 기술 스토리!
-수직 하중과 압력을 제어해 낸 56초 쇼츠 핵심 콘티입니다.
-
-#Shorts #쇼츠 #토목 #건축 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
-    else:
-        title = f"{topic_clean} — 우리가 몰랐던 56초의 비밀 #Shorts"
-        description = f"""{topic_clean}에 관한 흥미진진한 지식과 56초 쇼츠 스토리텔링!
-
-#Shorts #쇼츠 #지식 #스토리텔링 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
-"""
-
-    # 2. 쇼츠 전용 7개 씬 (56초 = 8초 x 7씬, Vertical 9:16 모바일 비율 반영)
-    if cat == 'disaster':
-        raw_scenes = [
-            ("00:00 ~ 00:08",
-             f"역사상 가장 충격적인 비극으로 기록된 {topic_clean}, 그 장엄했던 시작 뒤에는 차가운 오만이 숨어 있었습니다.",
-             f"어두운 밤바다 속 웅장하게 떠 있는 {topic_clean}의 실체. 수평선과 차가운 달빛, 세로 9:16 쇼츠 구도.",
-             f"Cinematic vertical 9:16 shot of magnificent {topic_en} under dark starry ocean night, cold moonlight rays, 8k, mobile shorts scale"),
-            
-            ("00:08 ~ 00:16",
-             "겉보기엔 완벽해 보였지만, 내부의 미세한 결함과 경고 무시가 비극의 불씨가 되기 시작합니다.",
-             "구조물 강철 장갑판 결합 부위의 미세 단면 3D 그래픽 시각화.",
-             f"Detailed 3D cross-section view of {topic_en} steel plates under pressure, dark water ambient glow, vertical 9:16"),
-            
-            ("00:16 ~ 00:24",
-             "짙은 안개 속에서 거대한 위협의 형체가 마침내 모습을 드러내며 피할 수 없는 충돌이 일어납니다.",
-             "안개 속에서 거대한 빙산/장애물이 박두해오는 위기 순간의 1인칭 POV 연출.",
-             "First person POV looking at massive terrifying iceberg appearing out of sea fog, extreme tension, vertical 9:16"),
-            
-            ("00:24 ~ 00:32",
-             "격벽이 설치되어 있었지만 위쪽이 뚫려있어, 바닷물이 잔에 차오르듯 차례대로 넘쳐 흐르는 결함이 노출됩니다.",
-             "3D 청사진으로 차가운 바닷물이 격벽을 차례로 넘어가 선체가 기울어지는 모션.",
-             "3D blueprint animation of ocean water overflowing watertight bulkheads in ship hold, vertical 9:16 shot"),
-            
-            ("00:32 ~ 00:40",
-             "거대한 선체 후미가 어두운 하늘을 향해 들어 올려지며, 응력을 견디지 못하고 중앙에서 두 동강 파단됩니다.",
-             "선체가 바다 아래로 기울고 중앙이 두 동강 나는 극적인 destruction 파괴 씬.",
-             "Epic dramatic destruction shot of ocean liner breaking in half, ocean splash, red flares, vertical 9:16 mobile format"),
-            
-            ("00:40 ~ 00:48",
-             "칠흑 같이 차가운 심해 4,000m 바닥을 향해 수만 톤의 잔해들이 어둠 속으로 가라앉아 멈춥니다.",
-             "심해 어둠 속으로 잔해들이 가라앉는 해저 카메라 시점 연출.",
-             "Underwater camera shot following ship stern plunging down into abyssal dark ocean floor, bioluminescent depth, vertical 9:16"),
-            
-            ("00:48 ~ 00:56",
-             f"완벽하다고 믿었던 인간의 오만에 대한 경고. 이것이 오늘날까지 우리가 {topic_clean}(을)를 기억하는 이유입니다.",
-             "고요한 아침 바다 위로 일출의 황금빛 햇살이 비치는 감동적인 파이널 쇼츠 아웃트로.",
-             "Cinematic outro shot of quiet ocean surface at sunrise, golden sun rays, emotional lighting, vertical 9:16 4k 60fps")
-        ]
-
-    elif cat == 'medical':
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"많은 분들이 {topic_clean}(을)를 접할 때 몸에 무리가 갈까 두려워하지만, 사실 이건 완벽히 통제된 원리입니다.",
@@ -190,6 +153,12 @@ def generate_video_storyboard(topic):
         ]
 
     elif cat == 'technology':
+        title = f"{topic_clean} — 한계를 돌파한 56초 혁신 기술 #Shorts"
+        description = f"""{topic_clean} 내부 초미세 나노 회로에 숨겨진 공학의 정수!
+한계를 넘어선 역발상 기술을 56초 쇼츠로 분석합니다.
+
+#Shorts #쇼츠 #IT #테크 #{re.sub(r'[^a-zA-Z0-9가-힣]', '', topic_clean)}
+"""
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"우리가 매일 사용하는 {topic_clean}, 남들은 마술이라 부르지만 사실 완벽히 설계된 팩트입니다.",
@@ -304,7 +273,6 @@ def generate_video_storyboard(topic):
         ]
 
     else:
-        # General / Business / History
         raw_scenes = [
             ("00:00 ~ 00:08",
              f"우리가 일상에서 접하는 {topic_clean}, 남들은 당연하다 생각하지만 사실 상식을 깨부순 팩트입니다.",
