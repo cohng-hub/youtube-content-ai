@@ -474,8 +474,8 @@ def generate_video_storyboard(topic, scene_count=7):
             "prompt_en": p_en
         })
 
-    # Universal Description Formatting
-    timestamps_text = "\n".join([f"• {s['time']} : {s['narration'][:25]}..." for s in scenes])
+    # Universal Description Formatting (Full Narration Text without truncation)
+    timestamps_text = "\n".join([f"• {s['time']} : {s['narration']}" for s in scenes])
     description_formatted = f"""📌 {topic_clean} — 8초 비디오 AI 기획 리포트
 
 [영상 개요]
