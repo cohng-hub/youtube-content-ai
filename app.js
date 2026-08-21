@@ -833,31 +833,50 @@ function generateFallbackData(topic, sceneCount) {
         ];
     }
 
+    const fallbackScenes = [
+        {
+            scene: 1,
+            time: "00:00 ~ 00:08",
+            narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
+            prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
+            prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
+        },
+        {
+            scene: 2,
+            time: "00:08 ~ 00:16",
+            narration: `외관 속 지반 및 3D 내부 청사진 구조에는 숨겨진 메커니즘이 존재합니다.`,
+            prompt_kr: `${cleanTopic} 내부 3D 입체 청사진 및 레이어 분리 시각화.`,
+            prompt_en: `Detailed 3D architectural cross-section blueprint of ${cleanTopic}, glowing cyan grid, vertical 9:16`
+        },
+        {
+            scene: 3,
+            time: "00:16 ~ 00:24",
+            narration: `하지만 피할 수 없는 한계와 과부하 상황이 밀려오며 미세 변화가 나타납니다.`,
+            prompt_kr: `핵심 구조 접합부에 미세 반응이 가고 긴장감이 감도는 3D 클로즈업.`,
+            prompt_en: `Macro shot of component under stress, extreme tension, vertical 9:16`
+        },
+        {
+            scene: 4,
+            time: "00:24 ~ 00:32",
+            narration: `역발상 기술을 적용해 내부 하중과 전력 배분을 순식간에 분산 안정화합니다.`,
+            prompt_kr: `3D 모션 그래픽으로 푸른 레이저 파형이 시스템을 안착시키는 시각화.`,
+            prompt_en: `3D physics animation of energy dissipation wave, vertical 9:16`
+        },
+        {
+            scene: 5,
+            time: "00:32 ~ 00:40",
+            narration: `시대를 100년 앞선 지혜로 완벽하게 완성된 랜드마크 자태.`,
+            prompt_kr: `일출 햇살 아래 빛나는 완성 구조물의 시네마틱 샷.`,
+            prompt_en: `Smooth orbital camera shot revealing completed ${cleanTopic}, golden hour light, vertical 9:16`
+        }
+    ];
+
+    const timestampsText = fallbackScenes.map(s => `• ${s.time} : ${s.narration}`).join('\n');
+
     return {
         title_candidates: titleCandidates,
-        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트
-
-[영상 개요]
-${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!
-168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.
-
-#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/[^a-zA-Z0-9가-힣]/g, '')} #유튜브기획`,
+        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n[타임라인 목차]\n${timestampsText}\n\n[핵심 시청 포인트]\n1. 초반 3초 이탈 방지 직관적 어그로 훅\n2. 3D 입체 청사진 및 시네마틱 샷 시각화\n3. 시청자 반응 및 고정 댓글 소통 유도 장치\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/[^a-zA-Z0-9가-힣]/g, '')} #유튜브기획`,
         total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
-        scenes: [
-            {
-                scene: 1,
-                time: "00:00 ~ 00:08",
-                narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
-                prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
-                prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
-            },
-            {
-                scene: 2,
-                time: "00:08 ~ 00:16",
-                narration: `외관 속 지반 및 3D 내부 청사진 구조에는 숨겨진 메커니즘이 존재합니다.`,
-                prompt_kr: `${cleanTopic} 내부 3D 입체 청사진 및 레이어 분리 시각화.`,
-                prompt_en: `Detailed 3D architectural cross-section blueprint of ${cleanTopic}, glowing cyan grid, vertical 9:16`
-            }
-        ]
+        scenes: fallbackScenes
     };
 }
