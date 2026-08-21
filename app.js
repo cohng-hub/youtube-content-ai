@@ -740,58 +740,58 @@ function generateFallbackData(topic, sceneCount) {
         {
             scene: 1,
             time: "00:00 ~ 00:08",
-            narration: `우리가 일상에서 접하거나 궁금해했던 ${cleanTopic}, 하지만 그 첫 모습 뒤에는 아무도 몰랐던 핵심 원리가 숨어 있습니다.`,
-            prompt_kr: `${cleanTopic}의 상징적인 메인 시각적 연출이 시네마틱 조명과 함께 세로 9:16 오프닝으로 펼쳐지는 장면 (손상/왜곡 없음).`,
-            prompt_en: `Cinematic vertical 9:16 opening shot introducing pristine ${cleanTopic}, dramatic studio lighting, masterpiece, hyper-realistic 8k, slow motion 24fps`,
+            narration: `${cleanTopic}, 다들 한 번쯤 들어보셨죠? 하지만 우리가 대수롭지 않게 여겼던 이 사실 속에는 놀라운 반전이 숨어 있습니다.`,
+            prompt_kr: `${cleanTopic}의 상징적인 시각적 비주얼이 시네마틱 조명과 함께 강렬하게 펼쳐지는 오프닝 장면.`,
+            prompt_en: `Cinematic vertical 9:16 opening shot introducing ${cleanTopic}, dramatic lighting, hyper-realistic 8k, slow motion 24fps`,
             camera_movement: "Drone slow push-in shot"
         },
         {
             scene: 2,
             time: "00:08 ~ 00:16",
-            narration: `겉보기에는 단순해 보이지만, 실제 3D 입체 단면과 내부 메커니즘 속에서는 정밀하게 계산된 구조가 작동하고 있죠.`,
-            prompt_kr: `${cleanTopic}의 내부 3D 입체 청사진 단면과 인포그래픽 레이어가 정밀하게 조명 속에 펼쳐지는 시각화 연출.`,
-            prompt_en: `Detailed 3D cross-section blueprint animation showcasing internal structure of ${cleanTopic}, glowing cyan blueprint style, vertical 9:16`,
-            camera_movement: "3D cross-section blueprint camera pan"
+            narration: `실제 ${cleanTopic}(을)를 자세히 들여다보면, 겉으로 보이는 현상 뒤에서 전혀 생각지도 못한 원리가 작동하고 있죠.`,
+            prompt_kr: `${cleanTopic}의 핵심 요소와 원리가 화면 전체에 선명하고 감각적으로 강조되는 연출.`,
+            prompt_en: `Detailed visual breakdown showcasing the core principle of ${cleanTopic}, clear dynamic motion, photorealistic, vertical 9:16`,
+            camera_movement: "Smooth orbital camera pan"
         },
         {
             scene: 3,
             time: "00:16 ~ 00:24",
-            narration: `하지만 조건이나 상황에 미세한 변수가 생겼을 때, 내부에서는 긴장감과 예기치 못한 반응이 일어나기 시작합니다.`,
-            prompt_kr: `${cleanTopic}의 핵심 상호작용 지점에 긴장감이 감돌며 변화가 발생하는 3D 마크로 클로즈업 연출.`,
-            prompt_en: `Extreme macro 3D simulation shot of central mechanism of ${cleanTopic} under dynamic physical tension, hyper-detailed, vertical 9:16`,
-            camera_movement: "Macro 3D structural zoom-in under tension"
+            narration: `하지만 의외로 많은 사람들이 잘못 알고 있거나, 예상치 못한 오해가 시작되는 결정적 지점이 있습니다.`,
+            prompt_kr: `${cleanTopic}의 핵심 상호작용 순간에 긴장감이 감돌며 인상적으로 클로즈업되는 장면.`,
+            prompt_en: `Macro close-up shot revealing key turning point of ${cleanTopic}, extreme detail, dramatic lighting, vertical 9:16`,
+            camera_movement: "Macro detail zoom-in shot"
         },
         {
             scene: 4,
             time: "00:24 ~ 00:32",
-            narration: `여기서 발상을 완전히 뒤집습니다. 남들이 보지 못한 역발상 해법과 조절 기술을 통해 원인을 정밀하게 관락한 것입니다.`,
-            prompt_kr: `${cleanTopic}의 핵심 해법이 3D 특수효과 파형과 푸른 빛의 흐름으로 뻗어가며 교정되는 모션 그래픽 샷.`,
-            prompt_en: `Dynamic 3D physics animation of energy flow resolving conflict in ${cleanTopic}, glowing blue waves, vertical 9:16`,
-            camera_movement: "Dynamic 3D physics animation orbit"
+            narration: `핵심은 바로 이것입니다! 시각과 시점을 살짝만 뒤집어보면 왜 이런 현상이 생기는지 명확해집니다.`,
+            prompt_kr: `${cleanTopic}의 비밀과 해법이 빛의 흐름과 함께 극적으로 풀려나가는 비주얼 전환.`,
+            prompt_en: `Dynamic transformation scene highlighting key revelation of ${cleanTopic}, vivid visual effects, vertical 9:16`,
+            camera_movement: "Dynamic transformation tilt-up"
         },
         {
             scene: 5,
             time: "00:32 ~ 00:40",
-            narration: `단 몇 분 만에 내부의 모든 변수가 일정하게 안착되며, 본래 원하고자 했던 압도적인 효율을 완성해 냅니다.`,
-            prompt_kr: `${cleanTopic}의 핵심 수치와 가치 지표가 녹색 안정권 그래프로 정돈되는 3D 인포그래픽 시각화.`,
-            prompt_en: `3D motion graphics showing core metrics of ${cleanTopic} balancing smoothly into green safe zone, vertical 9:16`,
-            camera_movement: "Sequential motion downward tracking shot"
+            narration: `이 원리를 이해하는 순간, ${cleanTopic}(이)가 만드는 변화와 결과가 한눈에 깔끔하게 정리되죠.`,
+            prompt_kr: `${cleanTopic}의 핵심 포인트와 수치가 감각적인 그래픽으로 정돈되어 시선이 집중되는 시각화.`,
+            prompt_en: `Sleek motion graphics summarizing key insight of ${cleanTopic}, clean modern visual layout, vertical 9:16`,
+            camera_movement: "Sleek downward tracking shot"
         },
         {
             scene: 6,
             time: "00:40 ~ 00:48",
-            narration: `단순한 운이 아니라, 원인을 직관적으로 파악하고 전환한 선택이 만든 탁월하고 명확한 결과물입니다.`,
-            prompt_kr: `${cleanTopic}의 완성된 자태가 드라마틱한 림 조명 아래 매끄럽게 회전하며 드러나는 시네마틱 하이라이트 샷.`,
-            prompt_en: `Cinematic hero reveal shot of completed ${cleanTopic} under dramatic lighting, golden hour illumination, vertical 9:16`,
-            camera_movement: "Dramatic wide searchlight tilt-up shot"
+            narration: `결국 차이를 만든 건 아주 작은 관심이었고, 그 결과는 생각했던 것보다 훨씬 명확했습니다.`,
+            prompt_kr: `${cleanTopic}의 완성된 모습이 스튜디오 조명 아래 웅장하고 아름답게 회전하는 하이라이트 쇼츠 샷.`,
+            prompt_en: `Cinematic highlight hero shot showcasing completed ${cleanTopic}, beautiful illumination, dramatic camera push, vertical 9:16`,
+            camera_movement: "Dramatic wide searchlight shot"
         },
         {
             scene: 7,
             time: "00:48 ~ 00:56",
-            narration: `고정관념을 파괴하고 본질을 바라보는 지혜. 이것이 오늘날 우리가 ${cleanTopic}(을)를 정확히 알아야 할 이유입니다.`,
-            prompt_kr: `일출 햇살의 따뜻한 광원이 배경을 감싸 안으며 깊은 인사이트와 여운을 전하는 파이널 아웃트로.`,
-            prompt_en: `Cinematic outro shot of ${cleanTopic} backdrop at sunrise with golden sun rays breaking through mist, emotional peaceful lighting, 4k 60fps, vertical 9:16`,
-            camera_movement: "Cinematic golden hour sunrise orbital camera shot"
+            narration: `${cleanTopic}에 대해 알고 나면 보이는 완전히 새로운 시각! 오늘부터 꼭 기억해두세요.`,
+            prompt_kr: `일출 햇살의 따뜻한 빛이 배경을 감싸 안으며 묵직한 인사이트와 여운을 남기는 아웃트로.`,
+            prompt_en: `Inspiring cinematic outro shot for ${cleanTopic}, warm sunrise glow, peaceful atmosphere, 4k 60fps, vertical 9:16`,
+            camera_movement: "Cinematic golden hour orbital camera shot"
         }
     ];
 

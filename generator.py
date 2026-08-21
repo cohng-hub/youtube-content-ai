@@ -13,77 +13,77 @@ if not hasattr(sys, '_stdout_utf8_wrapped'):
 
 def generate_title_candidates(topic_clean):
     """
-    그 어떤 주제(Universal Any Topic)를 입력해도 100% 어울리는 고성능 YouTube 훅 공식 Title 후보 3가지 생성
+    입력된 주제에 100% 매칭되는 자연스러운 유튜브 쇼츠 훅 제목 3선
     """
     return [
         {
             "num": "01",
             "type": "핵심 팩트 & 훅형",
-            "title": f"{topic_clean} — 56초 만에 밝혀지는 뜻밖의 핵심 진실",
+            "title": f"{topic_clean} — 56초 만에 밝혀지는 놀라운 진실",
             "ctr": "예상 CTR 13.9% (최고치)",
-            "desc": f"{topic_clean}에 숨겨진 메커니즘과 원인을 직관적으로 해부하여 초반 3초 시청 고정."
+            "desc": f"{topic_clean}에 숨겨진 비밀과 원인을 직관적으로 풀어서 초반 3초 시청자 시선 고정."
         },
         {
             "num": "02",
             "type": "고정관념 파괴 훅형",
-            "title": f"우리가 당연하다 생각한 {topic_clean} 속 완전히 거꾸로 된 사실",
+            "title": f"우리가 당연하다 생각한 {topic_clean} 속 뜻밖의 팩트",
             "ctr": "예상 CTR 12.4%",
-            "desc": "일반 상식을 뒤집는 시청자 호기심 자극 문구로 이탈 방지 및 완독 유도."
+            "desc": "일반 상식을 뒤집는 호기심 자극 문구로 시청자 완독 유도."
         },
         {
             "num": "03",
             "type": "가치 재발견 훅형",
-            "title": f"{topic_clean} — 알고 보면 10배 유용한 3가지 핵심 포인트",
+            "title": f"{topic_clean} — 알고 보면 10배 흥미진진한 핵심 정리",
             "ctr": "예상 CTR 11.0%",
-            "desc": "시청자의 공감과 실생활 흥미를 끌어내어 댓글 참여와 소통 유도."
+            "desc": "시청자의 공감과 실생활 흥미를 끌어내어 댓글 참여 유도."
         }
     ]
 
 def generate_video_storyboard(topic, scene_count=7):
     """
-    그 어떤 주제를 입력하더라도 단어 오인식이나 불필요한 카테고리 문구가 섞이지 않는 100% 범용 유니버설 비디오 엔진
+    기계적인 로봇 문구(3D 단면, 조절 기술, 운 어쩌고)를 완전히 제거하고
+    사람이 말하는 것처럼 매끄럽고 자연스러운 100% 맞춤형 유튜브 쇼츠 대본 & 프롬프트 생성 엔진
     """
     topic_clean = topic.strip()
-    topic_en = re.sub(r'[^a-zA-Z0-9\s]', '', topic_clean) or topic_clean
     
     title_candidates = generate_title_candidates(topic_clean)
     best_title = title_candidates[0]['title'] + " #Shorts"
 
     raw_scenes = [
         ("00:00 ~ 00:08",
-         f"우리가 일상에서 접하거나 궁금해했던 {topic_clean}, 하지만 그 첫 모습 뒤에는 아무도 몰랐던 핵심 원리가 숨어 있습니다.",
-         f"{topic_clean}의 상징적인 메인 시각적 연출이 시네마틱 조명과 함께 세로 9:16 오프닝으로 펼쳐지는 장면 (손상/왜곡 없음).",
-         f"Cinematic vertical 9:16 opening shot introducing pristine {topic_clean}, dramatic studio lighting, masterpiece, hyper-realistic 8k, slow motion 24fps"),
+         f"{topic_clean}, 다들 한 번쯤 들어보셨죠? 하지만 우리가 대수롭지 않게 여겼던 이 사실 속에는 놀라운 반전이 숨어 있습니다.",
+         f"{topic_clean}의 상징적인 시각적 비주얼이 시네마틱 조명과 함께 강렬하게 펼쳐지는 오프닝 장면.",
+         f"Cinematic vertical 9:16 opening shot introducing {topic_clean}, dramatic lighting, hyper-realistic 8k, slow motion 24fps"),
         
         ("00:08 ~ 00:16",
-         "겉보기에는 단순해 보이지만, 실제 3D 입체 단면과 내부 메커니즘 속에서는 정밀하게 계산된 구조가 작동하고 있죠.",
-         f"{topic_clean}의 내부 3D 입체 청사진 단면과 인포그래픽 레이어가 정밀하게 조명 속에 펼쳐지는 시각화 연출.",
-         f"Detailed 3D cross-section blueprint animation showcasing internal structure of {topic_clean}, glowing cyan blueprint style, vertical 9:16"),
+         f"실제 {topic_clean}(을)를 자세히 들여다보면, 겉으로 보이는 현상 뒤에서 전혀 생각지도 못한 원리가 작동하고 있죠.",
+         f"{topic_clean}의 핵심 요소와 원리가 화면 전체에 선명하고 감각적으로 강조되는 연출.",
+         f"Detailed visual breakdown showcasing the core principle of {topic_clean}, clear dynamic motion, photorealistic, vertical 9:16"),
         
         ("00:16 ~ 00:24",
-         "하지만 조건이나 상황에 미세한 변수가 생겼을 때, 내부에서는 긴장감과 예기치 못한 반응이 일어나기 시작합니다.",
-         f"{topic_clean}의 핵심 상호작용 지점에 긴장감이 감돌며 변화가 발생하는 3D 마크로 클로즈업 연출.",
-         f"Extreme macro 3D simulation shot of central mechanism of {topic_clean} under dynamic physical tension, hyper-detailed, vertical 9:16"),
+         "하지만 의외로 많은 사람들이 잘못 알고 있거나, 예상치 못한 오해가 시작되는 결정적 지점이 있습니다.",
+         f"{topic_clean}의 핵심 상호작용 순간에 긴장감이 감돌며 인상적으로 클로즈업되는 장면.",
+         f"Macro close-up shot revealing key turning point of {topic_clean}, extreme detail, dramatic lighting, vertical 9:16"),
         
         ("00:24 ~ 00:32",
-         "여기서 발상을 완전히 뒤집습니다. 남들이 보지 못한 역발상 해법과 조절 기술을 통해 원인을 정밀하게 관락한 것입니다.",
-         f"{topic_clean}의 핵심 해법이 3D 특수효과 파형과 푸른 빛의 흐름으로 뻗어가며 교정되는 모션 그래픽 샷.",
-         f"Dynamic 3D physics animation of energy flow resolving conflict in {topic_clean}, glowing blue waves, vertical 9:16"),
+         "핵심은 바로 이것입니다! 시각과 시점을 살짝만 뒤집어보면 왜 이런 현상이 생기는지 명확해집니다.",
+         f"{topic_clean}의 비밀과 해법이 빛의 흐름과 함께 극적으로 풀려나가는 비주얼 전환.",
+         f"Dynamic transformation scene highlighting key revelation of {topic_clean}, vivid visual effects, vertical 9:16"),
         
         ("00:32 ~ 00:40",
-         "단 몇 분 만에 내부의 모든 변수가 일정하게 안착되며, 본래 원하고자 했던 압도적인 효율을 완성해 냅니다.",
-         f"{topic_clean}의 핵심 수치와 가치 지표가 녹색 안정권 그래프로 정돈되는 3D 인포그래픽 시각화.",
-         f"3D motion graphics showing core metrics of {topic_clean} balancing smoothly into green safe zone, vertical 9:16"),
+         f"이 원리를 이해하는 순간, {topic_clean}(이)가 만드는 변화와 결과가 한눈에 깔끔하게 정리되죠.",
+         f"{topic_clean}의 핵심 포인트와 수치가 감각적인 그래픽으로 정돈되어 시선이 집중되는 시각화.",
+         f"Sleek motion graphics summarizing key insight of {topic_clean}, clean modern visual layout, vertical 9:16"),
         
         ("00:40 ~ 00:48",
-         "단순한 운이 아니라, 원인을 직관적으로 파악하고 전환한 선택이 만든 탁월하고 명확한 결과물입니다.",
-         f"{topic_clean}의 완성된 자태가 드라마틱한 림 조명 아래 매끄럽게 회전하며 드러나는 시네마틱 하이라이트 샷.",
-         f"Cinematic hero reveal shot of completed {topic_clean} under dramatic lighting, golden hour illumination, vertical 9:16"),
+         "결국 차이를 만든 건 아주 작은 관심이었고, 그 결과는 생각했던 것보다 훨씬 명확했습니다.",
+         f"{topic_clean}의 완성된 모습이 스튜디오 조명 아래 웅장하고 아름답게 회전하는 하이라이트 쇼츠 샷.",
+         f"Cinematic highlight hero shot showcasing completed {topic_clean}, beautiful illumination, dramatic camera push, vertical 9:16"),
         
         ("00:48 ~ 00:56",
-         f"고정관념을 파괴하고 본질을 바라보는 지혜. 이것이 오늘날 우리가 {topic_clean}(을)를 정확히 알아야 할 이유입니다.",
-         "일출 햇살의 따뜻한 광원이 배경을 감싸 안으며 깊은 인사이트와 여운을 전하는 파이널 아웃트로.",
-         f"Cinematic outro shot of {topic_clean} backdrop at sunrise with golden sun rays breaking through mist, emotional peaceful lighting, 4k 60fps, vertical 9:16")
+         f"{topic_clean}에 대해 알고 나면 보이는 완전히 새로운 시각! 오늘부터 꼭 기억해두세요.",
+         "일출 햇살의 따뜻한 빛이 배경을 감싸 안으며 묵직한 인사이트와 여운을 남기는 아웃트로.",
+         f"Inspiring cinematic outro shot for {topic_clean}, warm sunrise glow, peaceful atmosphere, 4k 60fps, vertical 9:16")
     ]
 
     # Handle scene count (5, 7, 10)
@@ -94,17 +94,17 @@ def generate_video_storyboard(topic, scene_count=7):
         target_scenes = list(raw_scenes)
         target_scenes.extend([
             ("00:56 ~ 01:04",
-             f"더 자세한 {topic_clean}에 관한 메커니즘과 심층 분석 데이터.",
-             f"{topic_clean} 내부 3D 인포그래픽 그래픽 및 하이테크 스튜디오 렌더링.",
-             f"Detailed 3D studio breakdown of {topic_clean}, holographic telemetry data, vertical 9:16"),
+             f"더 자세한 {topic_clean}에 관한 비밀과 심층 비하인드 스토리.",
+             f"{topic_clean}의 정밀 분석 그래픽 연출.",
+             f"Detailed visual breakdown of {topic_clean}, vertical 9:16"),
             ("01:04 ~ 01:12",
-             f"전문 연구진과 분석팀이 밝혀낸 {topic_clean}의 핵심 결론.",
-             f"{topic_clean} 데이터 연구소의 시네마틱 연출.",
-             f"Cinematic high-tech research lab analyzing {topic_clean} data, 8k, vertical 9:16"),
+             f"전문가들이 밝혀낸 {topic_clean}의 결론과 적용법.",
+             f"{topic_clean} 관련 하이테크 연구소 샷.",
+             f"Cinematic high-tech research lab analyzing {topic_clean}, 8k, vertical 9:16"),
             ("01:12 ~ 01:20",
              f"구독과 좋아요로 더 많은 흥미로운 {topic_clean} 지식을 받아보세요.",
-             "채널 구독 및 반응 유도 최종 그래픽 아웃트로.",
-             "Channel call-to-action outro graphic with glowing neon elements, vertical 9:16 4k")
+             "채널 구독 및 소통 유도 아웃트로.",
+             "Channel call-to-action outro graphic, vertical 9:16 4k")
         ])
         duration_label = "01:20 (80초 롱폼 인트로 / 8초 x 10개 씬)"
     else:
@@ -113,12 +113,12 @@ def generate_video_storyboard(topic, scene_count=7):
 
     camera_moves = [
         "Drone slow push-in shot",
-        "3D cross-section blueprint camera pan",
-        "Macro 3D structural zoom-in under tension",
-        "Dynamic 3D physics animation orbit",
-        "Sequential motion downward tracking shot",
-        "Dramatic wide searchlight tilt-up shot",
-        "Cinematic golden hour sunrise orbital camera shot",
+        "Smooth orbital camera pan",
+        "Macro detail zoom-in shot",
+        "Dynamic transformation tilt-up",
+        "Sleek downward tracking shot",
+        "Dramatic wide searchlight shot",
+        "Cinematic golden hour orbital camera shot",
         "High-tech studio 360 rotation shot",
         "Holographic telemetry camera pan",
         "Channel call-to-action outro graphic motion"
@@ -150,7 +150,7 @@ def generate_video_storyboard(topic, scene_count=7):
 
 [핵심 시청 포인트]
 1. 초반 3초 이탈 방지 직관적 어그로 훅
-2. 3D 입체 청사진 및 시네마틱 샷 시각화
+2. 감각적 시네마틱 샷 & 화면 시각화
 3. 시청자 반응 및 고정 댓글 소통 유도 장치
 
 #Shorts #쇼츠 #비디오AI #{tag_clean} #유튜브기획
@@ -158,8 +158,8 @@ def generate_video_storyboard(topic, scene_count=7):
 
     return {
         "topic": topic_clean,
-        "category": "universal",
-        "subtype": "universal_any_topic",
+        "category": "natural",
+        "subtype": "human_natural_script",
         "title": best_title,
         "title_candidates": title_candidates,
         "description": description_formatted,
@@ -176,7 +176,7 @@ if __name__ == "__main__":
     result = generate_video_storyboard(topic_input)
     
     print(f"\n========================================================")
-    print(f"🎬 [8초 비디오 대본 & AI 프롬프트 범용 유니버설 생성 결과]")
+    print(f"🎬 [자연스러운 유튜브 쇼츠 대본 & AI 프롬프트 생성 결과]")
     print(f"========================================================\n")
     print(f"📌 주제: {result['topic']}")
     print(f"⏱️ 전체 분량: {result['total_duration']}\n")
