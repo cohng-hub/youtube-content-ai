@@ -711,185 +711,96 @@ function renderPlannerStudio(data) {
 
 function generateFallbackData(topic, sceneCount) {
     const cleanTopic = topic.trim();
-    const t = cleanTopic.toLowerCase();
     
-    let cat = "general";
-    if (t.includes("붕괴") || t.includes("침몰") || t.includes("폭발") || t.includes("참사") || t.includes("사고") || t.includes("재난") || t.includes("비극") || t.includes("삼풍") || t.includes("타이타닉") || t.includes("세월호") || t.includes("체르노빌")) {
-        cat = "disaster";
-    } else if (t.includes("기술") || t.includes("원리") || t.includes("치료") || t.includes("공학") || t.includes("배터리") || t.includes("반도체") || t.includes("아이폰") || t.includes("ai") || t.includes("과학") || t.includes("우주") || t.includes("블랙홀") || t.includes("뇌") || t.includes("의학")) {
-        cat = "technology";
-    } else if (t.includes("타워") || t.includes("공항") || t.includes("터널") || t.includes("교량") || t.includes("지반") || t.includes("건축") || t.includes("내진") || t.includes("인천공항") || t.includes("롯데월드타워")) {
-        cat = "construction";
-    } else if (t.includes("역사") || t.includes("조선") || t.includes("왕") || t.includes("비밀") || t.includes("벙커") || t.includes("유적") || t.includes("피라미드") || t.includes("미스터리")) {
-        cat = "history";
-    }
-
-    let titleCandidates = [];
-    if (cat === 'disaster') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "경각심 & 비극 훅형",
-                title: `${cleanTopic} — 56초 만에 밝혀지는 참사의 전말`,
-                ctr: "예상 CTR 13.8% (최고치)",
-                desc: "비극적 사건의 전말과 원인을 정밀 시각화하여 초반 3초 시청 고정."
-            },
-            {
-                num: "02",
-                type: "원인 규명 훅형",
-                title: `아무도 예상치 못한 ${cleanTopic} 속 숨겨진 결정적 원인`,
-                ctr: "예상 CTR 12.2%",
-                desc: "구조적 결함과 피할 수 없었던 충돌 순간의 비하인드 해부."
-            },
-            {
-                num: "03",
-                type: "묵직한 경고 훅형",
-                title: `${cleanTopic}(이)가 오늘날 인류에게 남긴 묵직한 메시지`,
-                ctr: "예상 CTR 10.9%",
-                desc: "재발 방지와 안전 경각심으로 진정성 있는 댓글 반응 유도."
-            }
-        ];
-    } else if (cat === 'technology') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "혁신 메커니즘 훅형",
-                title: `${cleanTopic} — 초미세 나노 원리에 숨겨진 놀라운 진실`,
-                ctr: "예상 CTR 13.6% (최고치)",
-                desc: "일상 제품 뒤에 숨겨진 반도체/의학/AI 공학 원리 시각화."
-            },
-            {
-                num: "02",
-                type: "역발상 기술 훅형",
-                title: `한계를 돌파한 ${cleanTopic} 속 숨겨진 핵심 원리 56초 해부`,
-                ctr: "예상 CTR 12.1%",
-                desc: "고정관념을 깨부수는 3D 슬로우모션 공학 연출로 완독 유도."
-            },
-            {
-                num: "03",
-                type: "실용 팩트 훅형",
-                title: `${cleanTopic} — 알고 쓰면/알고 보면 10배 유용한 핵심 포인트`,
-                ctr: "예상 CTR 10.7%",
-                desc: "시청자가 즉시 활용할 수 있는 핵심 이점 전달."
-            }
-        ];
-    } else if (cat === 'construction') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "토목 공학 훅형",
-                title: `${cleanTopic} — 수십 톤 하중을 견뎌낸 역발상 공법의 비하인드`,
-                ctr: "예상 CTR 13.5% (최고치)",
-                desc: "거대한 구조물 아래 설치된 3D 지반/댐퍼 공학 구조 해부."
-            },
-            {
-                num: "02",
-                type: "랜드마크 비밀 훅형",
-                title: `남들은 몰랐던 ${cleanTopic} 속 숨겨진 건축적 안정성의 진실`,
-                ctr: "예상 CTR 12.0%",
-                desc: "사전 침하 및 내진 설계를 통한 완벽한 안정성 증명."
-            },
-            {
-                num: "03",
-                type: "대조 팩트 훅형",
-                title: `해외 실패 사례 vs ${cleanTopic} — 한 끗 차이가 만든 명암`,
-                ctr: "예상 CTR 10.5%",
-                desc: "해외 참사 사례와 국내 엔지니어링의 극적 대조."
-            }
-        ];
-    } else if (cat === 'history') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "역사 미스터리 훅형",
-                title: `${cleanTopic} — 역사 기록 뒤에 숨겨진 56초의 비밀`,
-                ctr: "예상 CTR 13.7% (최고치)",
-                desc: "기록물 속 잘 알려지지 않은 흥미진진한 비하인드 공개."
-            },
-            {
-                num: "02",
-                type: "발굴 팩트 훅형",
-                title: `아무도 말해주지 않았던 ${cleanTopic} 속 충격적 사실 3가지`,
-                ctr: "예상 CTR 12.3%",
-                desc: "고대/조선/현대 역사 속 반전 요소를 배치해 이탈 차단."
-            },
-            {
-                num: "03",
-                type: "유산 인사이트 훅형",
-                title: `${cleanTopic}(이)가 시대를 넘어 오늘날 우리에게 주는 유산`,
-                ctr: "예상 CTR 10.8%",
-                desc: "깊은 여운과 소통을 자극하는 감동적인 아웃트로."
-            }
-        ];
-    } else {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "호기심 자극 훅형",
-                title: `${cleanTopic} — 남들은 지나쳤지만 알고 보면 흥미진진한 팩트`,
-                ctr: "예상 CTR 13.0% (최고치)",
-                desc: "일상 주제 고유의 상징적 메인 비주얼 뒤에 숨겨진 뜻밖의 사실 전달."
-            },
-            {
-                num: "02",
-                type: "고정관념 파괴 훅형",
-                title: `우리가 당연하다 생각한 ${cleanTopic} 속 완전히 거꾸로 된 사실`,
-                ctr: "예상 CTR 11.5%",
-                desc: "일반 상식을 뒤집는 시청자 호기심 자극 문구로 완독 유도."
-            },
-            {
-                num: "03",
-                type: "가치 재발견 훅형",
-                title: `${cleanTopic}에 숨겨진 3가지 핵심 포인트`,
-                ctr: "예상 CTR 10.2%",
-                desc: "시청자의 공감과 실생활 흥미를 끌어내는 정리."
-            }
-        ];
-    }
+    const titleCandidates = [
+        {
+            num: "01",
+            type: "핵심 팩트 & 훅형",
+            title: `${cleanTopic} — 56초 만에 밝혀지는 뜻밖의 핵심 진실`,
+            ctr: "예상 CTR 13.9% (최고치)",
+            desc: `${cleanTopic}에 숨겨진 메커니즘과 원인을 직관적으로 해부하여 초반 3초 시청 고정.`
+        },
+        {
+            num: "02",
+            type: "고정관념 파괴 훅형",
+            title: `우리가 당연하다 생각한 ${cleanTopic} 속 완전히 거꾸로 된 사실`,
+            ctr: "예상 CTR 12.4%",
+            desc: "일반 상식을 뒤집는 시청자 호기심 자극 문구로 이탈 방지 및 완독 유도."
+        },
+        {
+            num: "03",
+            type: "가치 재발견 훅형",
+            title: `${cleanTopic} — 알고 보면 10배 유용한 3가지 핵심 포인트`,
+            ctr: "예상 CTR 11.0%",
+            desc: "시청자의 공감과 실생활 흥미를 끌어내어 댓글 참여와 소통 유도."
+        }
+    ];
 
     const fallbackScenes = [
         {
             scene: 1,
             time: "00:00 ~ 00:08",
-            narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
-            prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
-            prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
+            narration: `우리가 일상에서 접하거나 궁금해했던 ${cleanTopic}, 하지만 그 첫 모습 뒤에는 아무도 몰랐던 핵심 원리가 숨어 있습니다.`,
+            prompt_kr: `${cleanTopic}의 상징적인 메인 시각적 연출이 시네마틱 조명과 함께 세로 9:16 오프닝으로 펼쳐지는 장면 (손상/왜곡 없음).`,
+            prompt_en: `Cinematic vertical 9:16 opening shot introducing pristine ${cleanTopic}, dramatic studio lighting, masterpiece, hyper-realistic 8k, slow motion 24fps`,
+            camera_movement: "Drone slow push-in shot"
         },
         {
             scene: 2,
             time: "00:08 ~ 00:16",
-            narration: `외관 속 지반 및 3D 내부 청사진 구조에는 숨겨진 메커니즘이 존재합니다.`,
-            prompt_kr: `${cleanTopic} 내부 3D 입체 청사진 및 레이어 분리 시각화.`,
-            prompt_en: `Detailed 3D architectural cross-section blueprint of ${cleanTopic}, glowing cyan grid, vertical 9:16`
+            narration: `겉보기에는 단순해 보이지만, 실제 3D 입체 단면과 내부 메커니즘 속에서는 정밀하게 계산된 구조가 작동하고 있죠.`,
+            prompt_kr: `${cleanTopic}의 내부 3D 입체 청사진 단면과 인포그래픽 레이어가 정밀하게 조명 속에 펼쳐지는 시각화 연출.`,
+            prompt_en: `Detailed 3D cross-section blueprint animation showcasing internal structure of ${cleanTopic}, glowing cyan blueprint style, vertical 9:16`,
+            camera_movement: "3D cross-section blueprint camera pan"
         },
         {
             scene: 3,
             time: "00:16 ~ 00:24",
-            narration: `하지만 피할 수 없는 한계와 과부하 상황이 밀려오며 미세 변화가 나타납니다.`,
-            prompt_kr: `핵심 구조 접합부에 미세 반응이 가고 긴장감이 감도는 3D 클로즈업.`,
-            prompt_en: `Macro shot of component under stress, extreme tension, vertical 9:16`
+            narration: `하지만 조건이나 상황에 미세한 변수가 생겼을 때, 내부에서는 긴장감과 예기치 못한 반응이 일어나기 시작합니다.`,
+            prompt_kr: `${cleanTopic}의 핵심 상호작용 지점에 긴장감이 감돌며 변화가 발생하는 3D 마크로 클로즈업 연출.`,
+            prompt_en: `Extreme macro 3D simulation shot of central mechanism of ${cleanTopic} under dynamic physical tension, hyper-detailed, vertical 9:16`,
+            camera_movement: "Macro 3D structural zoom-in under tension"
         },
         {
             scene: 4,
             time: "00:24 ~ 00:32",
-            narration: `역발상 기술을 적용해 내부 하중과 전력 배분을 순식간에 분산 안정화합니다.`,
-            prompt_kr: `3D 모션 그래픽으로 푸른 레이저 파형이 시스템을 안착시키는 시각화.`,
-            prompt_en: `3D physics animation of energy dissipation wave, vertical 9:16`
+            narration: `여기서 발상을 완전히 뒤집습니다. 남들이 보지 못한 역발상 해법과 조절 기술을 통해 원인을 정밀하게 관락한 것입니다.`,
+            prompt_kr: `${cleanTopic}의 핵심 해법이 3D 특수효과 파형과 푸른 빛의 흐름으로 뻗어가며 교정되는 모션 그래픽 샷.`,
+            prompt_en: `Dynamic 3D physics animation of energy flow resolving conflict in ${cleanTopic}, glowing blue waves, vertical 9:16`,
+            camera_movement: "Dynamic 3D physics animation orbit"
         },
         {
             scene: 5,
             time: "00:32 ~ 00:40",
-            narration: `시대를 100년 앞선 지혜로 완벽하게 완성된 랜드마크 자태.`,
-            prompt_kr: `일출 햇살 아래 빛나는 완성 구조물의 시네마틱 샷.`,
-            prompt_en: `Smooth orbital camera shot revealing completed ${cleanTopic}, golden hour light, vertical 9:16`
+            narration: `단 몇 분 만에 내부의 모든 변수가 일정하게 안착되며, 본래 원하고자 했던 압도적인 효율을 완성해 냅니다.`,
+            prompt_kr: `${cleanTopic}의 핵심 수치와 가치 지표가 녹색 안정권 그래프로 정돈되는 3D 인포그래픽 시각화.`,
+            prompt_en: `3D motion graphics showing core metrics of ${cleanTopic} balancing smoothly into green safe zone, vertical 9:16`,
+            camera_movement: "Sequential motion downward tracking shot"
+        },
+        {
+            scene: 6,
+            time: "00:40 ~ 00:48",
+            narration: `단순한 운이 아니라, 원인을 직관적으로 파악하고 전환한 선택이 만든 탁월하고 명확한 결과물입니다.`,
+            prompt_kr: `${cleanTopic}의 완성된 자태가 드라마틱한 림 조명 아래 매끄럽게 회전하며 드러나는 시네마틱 하이라이트 샷.`,
+            prompt_en: `Cinematic hero reveal shot of completed ${cleanTopic} under dramatic lighting, golden hour illumination, vertical 9:16`,
+            camera_movement: "Dramatic wide searchlight tilt-up shot"
+        },
+        {
+            scene: 7,
+            time: "00:48 ~ 00:56",
+            narration: `고정관념을 파괴하고 본질을 바라보는 지혜. 이것이 오늘날 우리가 ${cleanTopic}(을)를 정확히 알아야 할 이유입니다.`,
+            prompt_kr: `일출 햇살의 따뜻한 광원이 배경을 감싸 안으며 깊은 인사이트와 여운을 전하는 파이널 아웃트로.`,
+            prompt_en: `Cinematic outro shot of ${cleanTopic} backdrop at sunrise with golden sun rays breaking through mist, emotional peaceful lighting, 4k 60fps, vertical 9:16`,
+            camera_movement: "Cinematic golden hour sunrise orbital camera shot"
         }
     ];
 
     const timestampsText = fallbackScenes.map(s => `• ${s.time} : ${s.narration}`).join('\n');
+    const tagClean = cleanTopic.replace(/[^a-zA-Z0-9가-힣]/g, '') || "유튜브";
 
     return {
         title_candidates: titleCandidates,
-        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n[타임라인 목차]\n${timestampsText}\n\n[핵심 시청 포인트]\n1. 초반 3초 이탈 방지 직관적 어그로 훅\n2. 3D 입체 청사진 및 시네마틱 샷 시각화\n3. 시청자 반응 및 고정 댓글 소통 유도 장치\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/[^a-zA-Z0-9가-힣]/g, '')} #유튜브기획`,
+        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 핵심 분석과 56초 비디오 콘티!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 100% 반영한 비디오 기획안입니다.\n\n[타임라인 목차]\n${timestampsText}\n\n[핵심 시청 포인트]\n1. 초반 3초 이탈 방지 직관적 어그로 훅\n2. 3D 입체 청사진 및 시네마틱 샷 시각화\n3. 시청자 반응 및 고정 댓글 소통 유도 장치\n\n#Shorts #쇼츠 #비디오AI #${tagClean} #유튜브기획`,
         total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
         scenes: fallbackScenes
     };
