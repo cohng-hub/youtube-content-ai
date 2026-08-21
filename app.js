@@ -1,4 +1,4 @@
-// YouTube Content Studio & 8-Second Video AI Studio Main Application JS
+// Insight AI — Full YouTube Analyzer & Standalone 8-Second Video AI Studio Application JS
 
 let currentVideoId = "MhPNptU7tyY";
 let currentMode = "analyzer"; // "analyzer" or "planner"
@@ -85,7 +85,22 @@ const demoData = {
     }
 };
 
-// Initial Setup
+// Global Event Delegation for Copy Buttons
+document.addEventListener('click', (e) => {
+    const copyTarget = e.target.closest('[data-copy]');
+    if (copyTarget) {
+        const textToCopy = copyTarget.getAttribute('data-copy');
+        if (textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('클립보드에 성공적으로 복사되었습니다!');
+            }).catch(err => {
+                console.error('Copy error:', err);
+            });
+        }
+    }
+});
+
+// Initialization
 document.addEventListener("DOMContentLoaded", () => {
     initModeSwitcher();
     initTabs();
@@ -107,7 +122,8 @@ function initModeSwitcher() {
     const viewPlanner = document.getElementById('plannerModeView');
 
     if (btnAnalyzer && btnPlanner) {
-        btnAnalyzer.addEventListener('click', () => {
+        btnAnalyzer.addEventListener('click', (e) => {
+            e.preventDefault();
             currentMode = "analyzer";
             btnAnalyzer.classList.add('active');
             btnPlanner.classList.remove('active');
@@ -115,7 +131,8 @@ function initModeSwitcher() {
             if (viewPlanner) viewPlanner.classList.add('hidden');
         });
 
-        btnPlanner.addEventListener('click', () => {
+        btnPlanner.addEventListener('click', (e) => {
+            e.preventDefault();
             currentMode = "planner";
             btnPlanner.classList.add('active');
             btnAnalyzer.classList.remove('active');
@@ -153,7 +170,8 @@ function initPresetChips() {
     const ytUrlInput = document.getElementById('ytUrlInput');
 
     chips.forEach(chip => {
-        chip.addEventListener('click', () => {
+        chip.addEventListener('click', (e) => {
+            e.preventDefault();
             chips.forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
 
@@ -175,7 +193,8 @@ function initUrlAnalyzer() {
 
     if (!analyzeBtn || !ytUrlInput) return;
 
-    analyzeBtn.addEventListener('click', () => {
+    analyzeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         const url = ytUrlInput.value.trim();
         if (!url) {
             alert('유튜브 영상 URL을 입력해주세요.');
@@ -212,14 +231,13 @@ function parsePythonReport(report, vid) {
     const subsMatch = report.match(/구독자:\s*(.+)/);
     const viewsMatch = report.match(/조회수:\s*(.+)/);
     const durationMatch = report.match(/길이:\s*(.+)/);
-    const subTextMatch = report.match(/==== \[자막 스크립트 전문\] ====\n([\s\S]+)/);
+    const transcript = report.includes('[자막 스크립트 전문]') ? report.split('[자막 스크립트 전문]')[1].trim() : '(자막 정보 없음)';
 
     const title = titleMatch ? titleMatch[1].trim() : "분석된 유튜브 영상";
     const channel = channelMatch ? channelMatch[1].trim() : "분석 채널";
     const subs = subsMatch ? subsMatch[1].trim() : "정보 없음";
     const views = viewsMatch ? viewsMatch[1].trim() : "정보 없음";
     const duration = durationMatch ? durationMatch[1].trim() : "00:00";
-    const transcript = subTextMatch ? subTextMatch[1].trim() : "(자막 정보 없음)";
 
     return {
         title: title,
@@ -393,7 +411,7 @@ function loadCustomData(url, vid) {
         hooks: [
             { num: "01", title: "기대감 유발 초반 훅", quote: '"알고리즘을 사로잡는 강력한 오프닝"', desc: "시청자의 주의를 끌고 이탈율을 방지하는 효과적 오프닝 구조." },
             { num: "02", title: "몰입도 유지 스토리 전개", quote: '"문제 제시와 흥미로운 사례 대조"', desc: "정보의 밀도를 높여 지속 시청 시간을 증대시킴." },
-            { num: "03", title: "행동 유도 결론 장치", quote: '"댓글 작성 및 구독 유도 메시지"', desc: "시청자의 자발적 참여를 유도하는 훅." }
+            { num: "03", title: "행동 유도 결론 장치", quote: '"댓글 작성 및 구독 유도 메시지"', desc: "시청자의 반응과 참여를 이끄는 장치" }
         ],
         timeline: [
             { time: "00:00 - 00:30", title: "STEP 1: 오프닝 훅 및 토픽 바인딩", desc: "시청자의 관심을 끄는 강렬한 메시지 배치." },
@@ -401,7 +419,7 @@ function loadCustomData(url, vid) {
             { time: "02:00 - 03:45", title: "STEP 3: 요약 결론 및 행동 촉구", desc: "구독과 댓글 참여를 자연스럽게 이끄는 마무리." }
         ],
         commentsList: [
-            { likes: 120, text: '"이 영상 분석 진짜 유익하네요! 바로 적용해봅니다."', badge: "praise", badgeText: "칭찬/공감" },
+            { likes: 120, text: '"이 내용 진짜 흥미롭네요! 설명이 완전 찰떡임."', badge: "praise", badgeText: "칭찬/공감" },
             { likes: 85, text: '"제목 어그로가 기가 막혀서 들어옴 ㅋㅋㅋ"', badge: "meme", badgeText: "유머/밈" }
         ],
         insights: [
@@ -410,8 +428,8 @@ function loadCustomData(url, vid) {
             { icon: "fa-heart", title: "3. 공감대 중심 댓글 반응", desc: "시청자와의 소통 여백 확보." }
         ],
         benchmarks: [
-            { num: "ACTION 01", title: "[오프닝] 3초 이내 핵심 가치 전달", desc: "시청자가 얻을 수 있는 이점을 영상 시작 직후 명확히 언급.", ex: '"오늘 영상 하나로 유튜브 훅 만드는 법 알아가세요."', border: "border-cyan" },
-            { num: "ACTION 02", title: "[중반부] 대조와 반전 시각화", desc: "지루할 수 있는 설명 구간에 극적인 비교 사례 제시.", ex: "비포/애프터 성과 수치 비교 시각화", border: "border-purple" },
+            { num: "ACTION 01", title: "[오프닝] 쇼츠 규격 3초 이내 훅 던지기", desc: "질문이나 반전 팩트로 시인성 확보.", ex: '"남들은 모르는 비밀!"', border: "border-cyan" },
+            { num: "ACTION 02", title: "[중반부] 3D 비주얼/마크로 샷 활용", desc: "시각적 몰입감을 높여 반응률 극대화.", ex: "3D 단면 시뮬레이션 연출", border: "border-purple" },
             { num: "ACTION 03", title: "[댓글] 시청자 의견 묻는 오픈 질문", desc: "고정 댓글로 영상 관련 질문을 남겨 반응 유도.", ex: '"여러분이라면 1번과 2번 중 어떤 걸 선택하시겠어요?"', border: "border-pink" }
         ]
     };
@@ -491,7 +509,8 @@ function updateCharts(retentionData, sentimentData) {
 function initActions() {
     const copyBtn = document.getElementById('copyPromptBtn');
     if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
+        copyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             const data = demoData[currentVideoId] || demoData["MhPNptU7tyY"];
             const promptText = `아래 유튜브 영상을 분석해줘.
 [메타데이터] ${JSON.stringify({ title: data.title, channel: data.channel, views: data.views })}
@@ -512,9 +531,15 @@ function initActions() {
 
     const downloadBtn = document.getElementById('downloadTxtBtn');
     if (downloadBtn) {
-        downloadBtn.addEventListener('click', () => {
+        downloadBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             const data = demoData[currentVideoId] || demoData["MhPNptU7tyY"];
-            const blob = new Blob([`${data.title}\n\n${data.desc}\n\n[자막]\n${data.transcript || ''}`], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([`${data.title}
+
+${data.desc}
+
+[자막]
+${data.transcript || ''}`], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -537,8 +562,140 @@ function initPlannerStudio() {
 
     // Preset Chips Click Event
     chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            chips.forEach(c => c.clfunction generateFallbackData(topic, sceneCount) {
+        chip.addEventListener('click', (e) => {
+            e.preventDefault();
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            const topic = chip.getAttribute('data-topic');
+            if (topic) {
+                topicInput.value = topic;
+                executeVideoPlanning(topic, sceneSelect ? sceneSelect.value : 7);
+            }
+        });
+    });
+
+    // Generate Button Click Event
+    genBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const topic = topicInput.value.trim();
+        const count = sceneSelect ? sceneSelect.value : 7;
+        if (!topic) {
+            alert('생성할 주제를 입력하세요.');
+            return;
+        }
+        executeVideoPlanning(topic, count);
+    });
+
+    // Enter Key Support on Input Bar
+    topicInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const topic = topicInput.value.trim();
+            const count = sceneSelect ? sceneSelect.value : 7;
+            if (topic) {
+                executeVideoPlanning(topic, count);
+            }
+        }
+    });
+
+    // Initial Default Render
+    executeVideoPlanning("지하 50층 비밀 벙커의 진실", 7);
+}
+
+function executeVideoPlanning(topic, sceneCount) {
+    const genBtn = document.getElementById('plannerGenerateBtn');
+    if (genBtn) {
+        genBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 비디오 기획 중...`;
+    }
+
+    fetch(`/api/generate-storyboard?topic=${encodeURIComponent(topic)}&scene_count=${sceneCount}`)
+        .then(res => res.json())
+        .then(data => {
+            if (genBtn) genBtn.innerHTML = `<i class="fa-solid fa-clapperboard"></i> <span>비디오 기획 생성</span>`;
+            renderPlannerStudio(data);
+        })
+        .catch(() => {
+            if (genBtn) genBtn.innerHTML = `<i class="fa-solid fa-clapperboard"></i> <span>비디오 기획 생성</span>`;
+            renderPlannerStudio(generateFallbackData(topic, sceneCount));
+        });
+}
+
+function escapeHtmlAttr(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function renderPlannerStudio(data) {
+    // 1. Render Title Candidates
+    const candidatesGrid = document.getElementById('titleCandidatesGrid');
+    if (candidatesGrid && data.title_candidates) {
+        candidatesGrid.innerHTML = data.title_candidates.map(t => `
+            <div class="title-candidate-card glass-card">
+                <div>
+                    <div class="candidate-header">
+                        <span class="candidate-tag">${t.type}</span>
+                        <span class="candidate-ctr-badge">${t.ctr}</span>
+                    </div>
+                    <h4 class="candidate-title-text">${t.title}</h4>
+                    <p class="candidate-desc">${t.desc}</p>
+                </div>
+                <button class="copy-candidate-btn" data-copy="${escapeHtmlAttr(t.title)}">
+                    <i class="fa-regular fa-copy"></i> 제목 복사
+                </button>
+            </div>
+        `).join('');
+    }
+
+    // 2. Render YouTube Description Planning
+    const descContentBox = document.getElementById('descriptionContentBox');
+    const copyDescBtn = document.getElementById('copyDescriptionBtn');
+
+    if (descContentBox && data.description) {
+        descContentBox.innerText = data.description;
+    }
+    if (copyDescBtn && data.description) {
+        copyDescBtn.setAttribute('data-copy', data.description);
+    }
+
+    // 3. Render Scenes & Prompts List
+    const scenesList = document.getElementById('plannerScenesList');
+    const durationBadge = document.getElementById('plannerDurationBadge');
+
+    if (durationBadge && data.total_duration) {
+        durationBadge.innerText = data.total_duration;
+    }
+
+    if (scenesList && data.scenes) {
+        scenesList.innerHTML = data.scenes.map(s => `
+            <div class="scene-card glass-card">
+                <div class="scene-header">
+                    <span class="scene-num-badge">SCENE ${s.scene} (8초 세로 영상)</span>
+                    <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time}</span>
+                </div>
+                <div class="scene-narration">
+                    <i class="fa-solid fa-microphone text-cyan"></i> <strong>자막 대사:</strong> "${s.narration}"
+                </div>
+                <div class="scene-visual-desc">
+                    <i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}
+                </div>
+                <div class="prompt-box">
+                    <div class="prompt-text">🤖 <strong>AI Video Prompt (9:16 Shorts):</strong> ${s.prompt_en}</div>
+                    <button class="copy-scene-btn" data-copy="${escapeHtmlAttr(s.prompt_en)}">
+                        <i class="fa-regular fa-copy"></i> 프롬프트 복사
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function generateFallbackData(topic, sceneCount) {
     const cleanTopic = topic.trim();
     const t = cleanTopic.toLowerCase();
     
@@ -678,7 +835,13 @@ function initPlannerStudio() {
 
     return {
         title_candidates: titleCandidates,
-        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/\s+/g, '')} #유튜브기획`,
+        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트
+
+[영상 개요]
+${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!
+168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.
+
+#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/[^a-zA-Z0-9가-힣]/g, '')} #유튜브기획`,
         total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
         scenes: [
             {
@@ -697,156 +860,4 @@ function initPlannerStudio() {
             }
         ]
     };
-}��으로 깊은 감동 전파."
-            }
-        ];
-    } else if (sub === 'nuclear_explosion') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "재난 참사 훅형",
-                title: `${cleanTopic} — 칠흑 같은 밤 1,000톤 원자로가 폭발한 이유`,
-                ctr: "예상 CTR 14.2% (최고치)",
-                desc: "평화롭던 원전에서 발생한 1차·2차 폭발의 순간을 시네마틱으로 선사."
-            },
-            {
-                num: "02",
-                type: "과학 원인 훅형",
-                title: `세계 최강 안전성이라 자랑하던 ${cleanTopic} — 제어봉의 치명적 비극`,
-                ctr: "예상 CTR 12.5%",
-                desc: "흑연 제어봉과 고압 수증기 폭증의 과학적 원인을 요약 해부."
-            },
-            {
-                num: "03",
-                type: "역사적 경고 훅형",
-                title: `${cleanTopic} 폭발이 증명한 보이지 않는 방사능의 위험성`,
-                ctr: "예상 CTR 11.0%",
-                desc: "소방대원들의 헌신과 환경적 비극 메시지로 묵직한 진정성 전달."
-            }
-        ];
-    } else if (sub === 'spine_joint') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "의학 진실 훅형",
-                title: `${cleanTopic} — 뚝! 소리에 숨겨진 놀라운 의학적 진실 56초 해부`,
-                ctr: "예상 CTR 13.5% (최고치)",
-                desc: "몸에 무리가 갈까 봐 두려워하는 시청자 호기심을 즉시 해소하는 직관적 훅."
-            },
-            {
-                num: "02",
-                type: "인체 메커니즘 훅형",
-                title: `남들은 무섭다는 ${cleanTopic} — 관절 캡슐 기포가 터지는 원리`,
-                ctr: "예상 CTR 12.1%",
-                desc: "관절액 속 질소 기포 압력이 순간 파열 해소되는 3D 슬로우모션 연출."
-            },
-            {
-                num: "03",
-                type: "건강 상식 훅형",
-                title: `${cleanTopic} 받을 때 뼈 소리 안 나면 효과가 없는 걸까?`,
-                ctr: "예상 CTR 10.6%",
-                desc: "대중이 가장 궁금해하는 건강 상식 질문으로 댓글 참여 폭발 유도."
-            }
-        ];
-    } else if (sub === 'tech_device') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "테크 혁신 훅형",
-                title: `${cleanTopic} — 극심한 발열 폭주를 억제한 나노 공학의 정수`,
-                ctr: "예상 CTR 13.6% (최고치)",
-                desc: "손끝에 닿는 완제품 뒤에 숨겨진 실리콘 반도체와 냉각 기술 해부."
-            },
-            {
-                "num": "02",
-                type: "역발상 기술 훅형",
-                title: `0.1mm 구리 챔버로 칩셋 온도를 잡아낸 ${cleanTopic} 역발상 공법`,
-                ctr: "예상 CTR 12.3%",
-                desc: "냉매 기화 원리와 AI 뉴럴 엔진 전력 제어의 3D 챔버 비주얼 연출."
-            },
-            {
-                num: "03",
-                type: "성능 팩트 훅형",
-                title: `${cleanTopic} — 작고 얇은 폼팩터에서 성능이 3배 폭발한 이유`,
-                ctr: "예상 CTR 10.7%",
-                desc: "제품 림 조명 리빌과 압도적 안정성의 기술 집념 강조."
-            }
-        ];
-    } else if (sub === 'megastructure') {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "토목 공학 훅형",
-                title: `${cleanTopic} — 남들은 불안해하지만 알고 보면 완벽한 역발상 공법`,
-                ctr: "예상 CTR 13.5% (최고치)",
-                desc: "거대한 구조물이 수십 톤 하중을 견뎌내는 지하 모래기둥/내진 댐퍼 해부."
-            },
-            {
-                num: "02",
-                type: "지반 침하 해부 훅형",
-                title: `수십 년간 꺼지던 진흙 땅 위 서 있는 ${cleanTopic}의 기술적 비밀`,
-                ctr: "예상 CTR 12.2%",
-                desc: "목표 하중보다 더 무거운 흙을 올려 사전 침하를 미리 당겨놓은 3D 모션."
-            },
-            {
-                num: "03",
-                type: "대조 비교 훅형",
-                title: `해외 실패 참사 사례 vs ${cleanTopic} — 한 끗 차이가 만든 명암`,
-                ctr: "예상 CTR 10.4%",
-                desc: "타국 실패 공법과 국내 랜드마크 지반 공학의 극적 대조."
-            }
-        ];
-    } else {
-        titleCandidates = [
-            {
-                num: "01",
-                type: "비하인드 팩트 훅형",
-                title: `${cleanTopic} — 우리가 몰랐던 흥미진진한 56초의 비밀`,
-                ctr: "예상 CTR 13.0% (최고치)",
-                desc: "주제 고유의 상징적 메인 비주얼 뒤에 숨겨진 뜻밖의 사실 전달."
-            },
-            {
-                num: "02",
-                type: "고정관념 파괴 훅형",
-                title: `남들은 당연하다 여긴 ${cleanTopic} — 완전히 거꾸로 뒤집은 발상`,
-                ctr: "예상 CTR 11.5%",
-                desc: "초기 한계를 극복하고 핵심 효율을 10배 끌어올린 역발상 스토리."
-            },
-            {
-                num: "03",
-                type: "가치 재발견 훅형",
-                title: `${cleanTopic}에 숨겨진 3가지 핵심 성공 포인트`,
-                ctr: "예상 CTR 10.2%",
-                desc: "시대를 앞서간 선택이 만든 명확한 결실과 묵직한 인사이트."
-            }
-        ];
-    }
-
-    return {
-        title_candidates: titleCandidates,
-        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/\s+/g, '')} #유튜브기획`,
-        total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
-        scenes: [
-            {
-                scene: 1,
-                time: "00:00 ~ 00:08",
-                narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
-                prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
-                prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
-            },
-            {
-                scene: 2,
-                time: "00:08 ~ 00:16",
-                narration: `외관 속 지반 및 3D 내부 청사진 구조에는 숨겨진 메커니즘이 존재합니다.`,
-                prompt_kr: `${cleanTopic} 내부 3D 입체 청사진 및 레이어 분리 시각화.`,
-                prompt_en: `Detailed 3D architectural cross-section blueprint of ${cleanTopic}, glowing cyan grid, vertical 9:16`
-            }
-        ]
-    };
-}
-
-function copyText(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('내용이 클립보드에 복사되었습니다!');
-    });
 }
