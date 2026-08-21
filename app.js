@@ -538,184 +538,166 @@ function initPlannerStudio() {
     // Preset Chips Click Event
     chips.forEach(chip => {
         chip.addEventListener('click', () => {
-            chips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            const topic = chip.getAttribute('data-topic');
-            if (topic) {
-                topicInput.value = topic;
-                executeVideoPlanning(topic, sceneSelect ? sceneSelect.value : 7);
-            }
-        });
-    });
-
-    // Generate Button Click Event
-    genBtn.addEventListener('click', () => {
-        const topic = topicInput.value.trim();
-        const count = sceneSelect ? sceneSelect.value : 7;
-        if (!topic) {
-            alert('생성할 주제를 입력하세요.');
-            return;
-        }
-        executeVideoPlanning(topic, count);
-    });
-
-    // Initial Default Render
-    executeVideoPlanning("지하 50층 비밀 벙커의 진실", 7);
-}
-
-function executeVideoPlanning(topic, sceneCount) {
-    const genBtn = document.getElementById('plannerGenerateBtn');
-    if (genBtn) {
-        genBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 비디오 기획 중...`;
-    }
-
-    fetch(`/api/generate-storyboard?topic=${encodeURIComponent(topic)}&scene_count=${sceneCount}`)
-        .then(res => res.json())
-        .then(data => {
-            if (genBtn) genBtn.innerHTML = `<i class="fa-solid fa-clapperboard"></i> <span>비디오 기획 생성</span>`;
-            renderPlannerStudio(data);
-        })
-        .catch(() => {
-            if (genBtn) genBtn.innerHTML = `<i class="fa-solid fa-clapperboard"></i> <span>비디오 기획 생성</span>`;
-            renderPlannerStudio(generateFallbackData(topic, sceneCount));
-        });
-}
-
-function renderPlannerStudio(data) {
-    // 1. Render Title Candidates
-    const candidatesGrid = document.getElementById('titleCandidatesGrid');
-    if (candidatesGrid && data.title_candidates) {
-        candidatesGrid.innerHTML = data.title_candidates.map(t => `
-            <div class="title-candidate-card glass-card">
-                <div>
-                    <div class="candidate-header">
-                        <span class="candidate-tag">${t.type}</span>
-                        <span class="candidate-ctr-badge">${t.ctr}</span>
-                    </div>
-                    <h4 class="candidate-title-text">${t.title}</h4>
-                    <p class="candidate-desc">${t.desc}</p>
-                </div>
-                <button class="copy-candidate-btn" onclick="copyText('${t.title.replace(/'/g, "\\'")}')">
-                    <i class="fa-regular fa-copy"></i> 제목 복사
-                </button>
-            </div>
-        `).join('');
-    }
-
-    // 2. Render YouTube Description Planning
-    const descContentBox = document.getElementById('descriptionContentBox');
-    const copyDescBtn = document.getElementById('copyDescriptionBtn');
-
-    if (descContentBox && data.description) {
-        descContentBox.innerText = data.description;
-    }
-    if (copyDescBtn && data.description) {
-        copyDescBtn.onclick = () => {
-            navigator.clipboard.writeText(data.description).then(() => {
-                alert('유튜브 설명란 기획안이 전체 복사되었습니다!');
-            });
-        };
-    }
-
-    // 3. Render Scenes & Prompts List
-    const scenesList = document.getElementById('plannerScenesList');
-    const durationBadge = document.getElementById('plannerDurationBadge');
-
-    if (durationBadge && data.total_duration) {
-        durationBadge.innerText = data.total_duration;
-    }
-
-    if (scenesList && data.scenes) {
-        scenesList.innerHTML = data.scenes.map(s => `
-            <div class="scene-card glass-card">
-                <div class="scene-header">
-                    <span class="scene-num-badge">SCENE ${s.scene} (8초 세로 영상)</span>
-                    <span class="scene-time-badge"><i class="fa-regular fa-clock"></i> ${s.time}</span>
-                </div>
-                <div class="scene-narration">
-                    <i class="fa-solid fa-microphone text-cyan"></i> <strong>자막 대사:</strong> "${s.narration}"
-                </div>
-                <div class="scene-visual-desc">
-                    <i class="fa-solid fa-clapperboard text-purple"></i> <strong>화면 묘사:</strong> ${s.prompt_kr}
-                </div>
-                <div class="prompt-box">
-                    <div class="prompt-text">🤖 <strong>AI Video Prompt (9:16 Shorts):</strong> ${s.prompt_en}</div>
-                    <button class="copy-scene-btn" onclick="copyText('${s.prompt_en.replace(/'/g, "\\'")}')">
-                        <i class="fa-regular fa-copy"></i> 프롬프트 복사
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-}
-
-function generateFallbackData(topic, sceneCount) {
+            chips.forEach(c => c.clfunction generateFallbackData(topic, sceneCount) {
     const cleanTopic = topic.trim();
     const t = cleanTopic.toLowerCase();
     
-    let sub = "general";
-    if (t.includes("삼풍") || t.includes("백화점") || t.includes("붕괴") || t.includes("아파트") || t.includes("건물") || t.includes("빌딩")) {
-        sub = "building_collapse";
-    } else if (t.includes("침몰") || t.includes("타이타닉") || t.includes("세월호") || t.includes("배") || t.includes("함선")) {
-        sub = "ship_sinking";
-    } else if (t.includes("체르노빌") || t.includes("원전") || t.includes("폭발") || t.includes("화재") || t.includes("가스")) {
-        sub = "nuclear_explosion";
-    } else if (t.includes("치료") || t.includes("척추") || t.includes("관절") || t.includes("몸") || t.includes("의학") || t.includes("디스크")) {
-        sub = "spine_joint";
-    } else if (t.includes("폰") || t.includes("아이폰") || t.includes("카메라") || t.includes("배터리") || t.includes("반도체") || t.includes("ai")) {
-        sub = "tech_device";
-    } else if (t.includes("타워") || t.includes("공항") || t.includes("터널") || t.includes("교량") || t.includes("지반") || t.includes("건축")) {
-        sub = "megastructure";
+    let cat = "general";
+    if (t.includes("붕괴") || t.includes("침몰") || t.includes("폭발") || t.includes("참사") || t.includes("사고") || t.includes("재난") || t.includes("비극") || t.includes("삼풍") || t.includes("타이타닉") || t.includes("세월호") || t.includes("체르노빌")) {
+        cat = "disaster";
+    } else if (t.includes("기술") || t.includes("원리") || t.includes("치료") || t.includes("공학") || t.includes("배터리") || t.includes("반도체") || t.includes("아이폰") || t.includes("ai") || t.includes("과학") || t.includes("우주") || t.includes("블랙홀") || t.includes("뇌") || t.includes("의학")) {
+        cat = "technology";
+    } else if (t.includes("타워") || t.includes("공항") || t.includes("터널") || t.includes("교량") || t.includes("지반") || t.includes("건축") || t.includes("내진") || t.includes("인천공항") || t.includes("롯데월드타워")) {
+        cat = "construction";
+    } else if (t.includes("역사") || t.includes("조선") || t.includes("왕") || t.includes("비밀") || t.includes("벙커") || t.includes("유적") || t.includes("피라미드") || t.includes("미스터리")) {
+        cat = "history";
     }
 
     let titleCandidates = [];
-    if (sub === 'building_collapse') {
+    if (cat === 'disaster') {
         titleCandidates = [
             {
                 num: "01",
                 type: "경각심 & 비극 훅형",
-                title: `${cleanTopic} — 56초 만에 밝혀지는 붕괴 비극의 전말`,
+                title: `${cleanTopic} — 56초 만에 밝혀지는 참사의 전말`,
                 ctr: "예상 CTR 13.8% (최고치)",
-                desc: "도심 속 붕괴 비극의 참사와 원인을 직관적으로 제시하여 초반 3초 시청 고정."
+                desc: "비극적 사건의 전말과 원인을 정밀 시각화하여 초반 3초 시청 고정."
             },
             {
                 num: "02",
-                type: "구조 결함 & 원인 훅형",
-                title: `절대 무너지지 않는다던 건물 — ${cleanTopic}에 숨겨진 하중 결함의 순간`,
+                type: "원인 규명 훅형",
+                title: `아무도 예상치 못한 ${cleanTopic} 속 숨겨진 결정적 원인`,
                 ctr: "예상 CTR 12.2%",
-                desc: "콘크리트 기둥 및 슬래브 구조 결함의 치명적 비하인드를 해부하여 완독 유도."
+                desc: "구조적 결함과 피할 수 없었던 충돌 순간의 비하인드 해부."
             },
             {
                 num: "03",
-                type: "안전 경각심 & 교훈 훅형",
-                title: `${cleanTopic} 참사가 오늘날 우리에게 남긴 묵직한 경고`,
+                type: "묵직한 경고 훅형",
+                title: `${cleanTopic}(이)가 오늘날 인류에게 남긴 묵직한 메시지`,
                 ctr: "예상 CTR 10.9%",
-                desc: "인재(人災)에 대한 안전 경각심과 재발 방지 메시지로 진정성 및 댓글 소통 유도."
+                desc: "재발 방지와 안전 경각심으로 진정성 있는 댓글 반응 유도."
             }
         ];
-    } else if (sub === 'ship_sinking') {
+    } else if (cat === 'technology') {
         titleCandidates = [
             {
                 num: "01",
-                type: "해양 비극 & 오프닝 훅형",
-                title: `${cleanTopic} — 칠흑 같은 어둠 속 침몰 참사의 전말`,
-                ctr: "예상 CTR 14.0% (최고치)",
-                desc: "장엄했던 항해부터 비극적 침몰까지 56초 씬으로 구성하여 시청 몰입 유도."
+                type: "혁신 메커니즘 훅형",
+                title: `${cleanTopic} — 초미세 나노 원리에 숨겨진 놀라운 진실`,
+                ctr: "예상 CTR 13.6% (최고치)",
+                desc: "일상 제품 뒤에 숨겨진 반도체/의학/AI 공학 원리 시각화."
             },
             {
                 num: "02",
-                type: "구조적 결함 훅형",
-                title: `불침선이라 불리던 ${cleanTopic} — 방수 격벽의 치명적 결함`,
-                ctr: "예상 CTR 12.4%",
-                desc: "격벽 위로 바닷물이 차오르는 구조적 한계를 3D로 보여주며 지속 시청 유도."
+                type: "역발상 기술 훅형",
+                title: `한계를 돌파한 ${cleanTopic} 속 숨겨진 핵심 원리 56초 해부`,
+                ctr: "예상 CTR 12.1%",
+                desc: "고정관념을 깨부수는 3D 슬로우모션 공학 연출로 완독 유도."
             },
             {
                 num: "03",
-                type: "인간의 오만 & 경고 훅형",
-                title: `${cleanTopic} 참사가 남긴 묵직한 경고 — 바다는 알고 있다`,
+                type: "실용 팩트 훅형",
+                title: `${cleanTopic} — 알고 쓰면/알고 보면 10배 유용한 핵심 포인트`,
                 ctr: "예상 CTR 10.7%",
-                desc: "완벽에 대한 인간 오만의 비극적 결과와 아련한 여운으로 깊은 감동 전파."
+                desc: "시청자가 즉시 활용할 수 있는 핵심 이점 전달."
+            }
+        ];
+    } else if (cat === 'construction') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "토목 공학 훅형",
+                title: `${cleanTopic} — 수십 톤 하중을 견뎌낸 역발상 공법의 비하인드`,
+                ctr: "예상 CTR 13.5% (최고치)",
+                desc: "거대한 구조물 아래 설치된 3D 지반/댐퍼 공학 구조 해부."
+            },
+            {
+                num: "02",
+                type: "랜드마크 비밀 훅형",
+                title: `남들은 몰랐던 ${cleanTopic} 속 숨겨진 건축적 안정성의 진실`,
+                ctr: "예상 CTR 12.0%",
+                desc: "사전 침하 및 내진 설계를 통한 완벽한 안정성 증명."
+            },
+            {
+                num: "03",
+                type: "대조 팩트 훅형",
+                title: `해외 실패 사례 vs ${cleanTopic} — 한 끗 차이가 만든 명암`,
+                ctr: "예상 CTR 10.5%",
+                desc: "해외 참사 사례와 국내 엔지니어링의 극적 대조."
+            }
+        ];
+    } else if (cat === 'history') {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "역사 미스터리 훅형",
+                title: `${cleanTopic} — 역사 기록 뒤에 숨겨진 56초의 비밀`,
+                ctr: "예상 CTR 13.7% (최고치)",
+                desc: "기록물 속 잘 알려지지 않은 흥미진진한 비하인드 공개."
+            },
+            {
+                num: "02",
+                type: "발굴 팩트 훅형",
+                title: `아무도 말해주지 않았던 ${cleanTopic} 속 충격적 사실 3가지`,
+                ctr: "예상 CTR 12.3%",
+                desc: "고대/조선/현대 역사 속 반전 요소를 배치해 이탈 차단."
+            },
+            {
+                num: "03",
+                type: "유산 인사이트 훅형",
+                title: `${cleanTopic}(이)가 시대를 넘어 오늘날 우리에게 주는 유산`,
+                ctr: "예상 CTR 10.8%",
+                desc: "깊은 여운과 소통을 자극하는 감동적인 아웃트로."
+            }
+        ];
+    } else {
+        titleCandidates = [
+            {
+                num: "01",
+                type: "호기심 자극 훅형",
+                title: `${cleanTopic} — 남들은 지나쳤지만 알고 보면 흥미진진한 팩트`,
+                ctr: "예상 CTR 13.0% (최고치)",
+                desc: "일상 주제 고유의 상징적 메인 비주얼 뒤에 숨겨진 뜻밖의 사실 전달."
+            },
+            {
+                num: "02",
+                type: "고정관념 파괴 훅형",
+                title: `우리가 당연하다 생각한 ${cleanTopic} 속 완전히 거꾸로 된 사실`,
+                ctr: "예상 CTR 11.5%",
+                desc: "일반 상식을 뒤집는 시청자 호기심 자극 문구로 완독 유도."
+            },
+            {
+                num: "03",
+                type: "가치 재발견 훅형",
+                title: `${cleanTopic}에 숨겨진 3가지 핵심 포인트`,
+                ctr: "예상 CTR 10.2%",
+                desc: "시청자의 공감과 실생활 흥미를 끌어내는 정리."
+            }
+        ];
+    }
+
+    return {
+        title_candidates: titleCandidates,
+        description: `📌 ${cleanTopic} — 8초 비디오 AI 기획 리포트\n\n[영상 개요]\n${cleanTopic}에 관한 충격적인 진실과 핵심 원리 완전 분석!\n168만 조회수 바이럴 훅 공식과 5단계 딜레마 전개 구조를 반영한 기획안입니다.\n\n#Shorts #쇼츠 #비디오AI #${cleanTopic.replace(/\s+/g, '')} #유튜브기획`,
+        total_duration: `${sceneCount}개 씬 (${sceneCount * 8}초 분량)`,
+        scenes: [
+            {
+                scene: 1,
+                time: "00:00 ~ 00:08",
+                narration: `우리가 몰랐던 ${cleanTopic}, 하지만 첫 시작은 완벽하게 웅장하고 평화로웠습니다.`,
+                prompt_kr: `맑은 도심 속 웅장하게 서 있는 ${cleanTopic}의 시네마틱 세로 9:16 오프닝 (손상 없음).`,
+                prompt_en: `Cinematic vertical 9:16 shot of pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, slow motion 24fps`
+            },
+            {
+                scene: 2,
+                time: "00:08 ~ 00:16",
+                narration: `외관 속 지반 및 3D 내부 청사진 구조에는 숨겨진 메커니즘이 존재합니다.`,
+                prompt_kr: `${cleanTopic} 내부 3D 입체 청사진 및 레이어 분리 시각화.`,
+                prompt_en: `Detailed 3D architectural cross-section blueprint of ${cleanTopic}, glowing cyan grid, vertical 9:16`
+            }
+        ]
+    };
+}��으로 깊은 감동 전파."
             }
         ];
     } else if (sub === 'nuclear_explosion') {
