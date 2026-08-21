@@ -565,49 +565,49 @@ function clientFallbackStoryboard(topic) {
         title = `${cleanTopic} — 56초 만에 밝혀지는 놀라운 진실 #Shorts`;
         description = `${cleanTopic}에 대해 우리가 잘못 알고 있던 통념과 의학적 진실!\n몸속 미세 구조와 원리를 56초 쇼츠 콘티로 완전 해부합니다.\n\n#Shorts #쇼츠 #의학 #건강 #${cleanTopic.replace(/\s+/g, '')}`;
         rawScenes = [
-            ["00:00 ~ 00:08", `많은 분들이 ${cleanTopic}(을)를 접할 때 몸에 무리가 갈까 두려워하지만, 사실 이건 완벽히 통제된 원리입니다.`, `환자가 클리닉에서 ${cleanTopic}(을)를 받으며 편안해하는 시네마틱 세로 9:16 오프닝.`, `Cinematic vertical 9:16 shot of professional ${cleanTopic}, modern medical clinic background, volumetric studio lighting`],
-            ["00:08 ~ 00:16", `피부 아래 관절 마디 속에서는 3D 단면처럼 놀라운 물리 반응이 일어납니다.`, `신체 내부 관절 마디 캡슐의 정밀 3D 입체 단면 비주얼 연출.`, `3D medical animation showing joint capsule cross-section of ${cleanTopic}, glowing cyan lighting, vertical 9:16`],
-            ["00:16 ~ 00:24", `핵심 원인은 좁아진 공간 속 압축 질소 가스의 기포 폭발 압력 때문이었습니다.`, `관절액 속 미세 질소 기포가 터지는 초슬로우 모션 마크로 샷.`, `Extreme macro 3D simulation of nitrogen gas microbubbles bursting in joint fluid, slow motion 1000fps, vertical 9:16`],
-            ["00:24 ~ 00:32", `그래서 전문의들은 발상을 전환합니다. '억지로 꺾지 말고, 근막과 인대의 길을 먼저 터주자!'`, `전문의가 골격 모델을 설명하며 새로운 방향을 제시하는 영웅적 연출.`, `Professional doctor explaining spine medical model in futuristic clinic, heroic angle, vertical 9:16`],
-            ["00:32 ~ 00:40", `굳어있던 심층 근육을 이완시키고 수직 압력을 분산시켜 신체 회복력을 끌어올립니다.`, `근육 마디가 풀리고 혈류가 신속히 도는 3D 이펙트 모션.`, `3D visualization of muscle fibers relaxing and blood circulation flowing rapidly, vertical 9:16 format`],
-            ["00:40 ~ 00:48", `통증을 참게 한 것이 아니라 굳어있던 가동 범위를 자연스럽게 되찾아준 결과입니다.`, `치료 후 환자가 몸을 펴며 미소 짓는 햇살 가득한 클리닉 샷.`, `Happy patient standing up straight with perfect posture in bright sunny medical center, vertical 9:16`],
-            ["00:48 ~ 00:56", `몸의 원리를 이해하고 안전하게 교정하는 의학의 지혜. 이것이 바로 ${cleanTopic}의 진짜 진실입니다.`, `아침 햇살이 비치는 클리닉의 따뜻하고 감동적인 쇼츠 아웃트로.`, `Cinematic outro shot of modern physical therapy center at sunrise, warm ambient glow, vertical 9:16 4k`]
+            ["00:00 ~ 00:08", `많은 분들이 ${cleanTopic}(을)를 접할 때 몸에 무리가 갈까 두려워하지만, 사실 치료 전 몸상태는 완벽히 통제 가능합니다.`, `환자가 밝고 편안한 전문 클리닉에 들어서며 안정된 미소를 지어 보이는 깨끗한 오프닝.`, `Cinematic vertical 9:16 shot of modern bright medical clinic, patient walking in comfortably, healthy environment, no pain, warm ambient studio lighting, hyper-realistic 8k`],
+            ["00:08 ~ 00:16", `피부 아래 관절 마디 속에서는 정밀 3D 단면처럼 관절액과 캡슐이 정밀하게 배치되어 있습니다.`, `신체 내부 척추 및 관절 마디 캡슐의 정밀 3D 입체 단면 비주얼 연출.`, `Detailed 3D medical cross-section animation of healthy joint capsule and cartilage of ${cleanTopic}, glowing cyan blueprint style, Octane render, vertical 9:16`],
+            ["00:16 ~ 00:24", `하지만 잘못된 자세나 무리한 마찰이 지속되면 캡슐 공간 내부의 기포 압력이 상승하게 됩니다.`, `관절 마디 사이 좁아진 공간과 질소 가스 기포가 압축되는 긴장감 있는 마크로 연출.`, `Macro shot of nitrogen gas microbubbles building up pressure inside joint capsule fluid under physical stress, vertical 9:16`],
+            ["00:24 ~ 00:32", `전문의가 순간적인 수직 교정을 가하면, 캡슐 속 기포가 기분 좋게 터지며 마침내 압력이 파열 해소됩니다.`, `관절액 속 미세 질소 기포가 터지며 시원한 인체 파형 이펙트가 퍼지는 초슬로우 모션 마크로 샷.`, `Extreme macro 3D simulation of nitrogen gas microbubbles bursting in joint fluid, releasing pressure, cyan energy wave, slow motion 1000fps, vertical 9:16`],
+            ["00:32 ~ 00:40", `굳어있던 근막과 수직 압력이 순식간에 이완되며 주변 신경과 혈관의 순환이 재개됩니다.`, `근육 마디가 유연하게 풀어지며 혈관 속 혈류가 푸르고 붉게 신속히 도는 3D 이펙트 모션.`, `3D visualization of muscle fibers relaxing smoothly and blood circulation flowing rapidly, bio-mechanical simulation, vertical 9:16`],
+            ["00:40 ~ 00:48", `통증을 참고 참던 가동 범위를 회복하여 신체 불균형이 완벽하게 가벼워집니다.`, `교정을 마친 환자가 가볍게 허리와 어깨를 펴며 시원해하는 클리닉 샷.`, `Happy patient standing up straight with perfect aligned posture in bright sunny medical center, cinematic flare, vertical 9:16`],
+            ["00:48 ~ 00:56", `몸의 원리를 이해하고 안전하게 교정하는 의학의 지혜. 이것이 바로 ${cleanTopic}의 진짜 진실입니다.`, `아침 햇살이 비치는 클리닉의 따뜻하고 감동적인 쇼츠 파이널 아웃트로.`, `Cinematic outro shot of modern physical therapy clinic at sunrise, warm ambient glow, vertical 9:16 4k 60fps`]
         ];
     } else if (cat === "tech") {
         title = `${cleanTopic} — 한계를 돌파한 56초 혁신 기술 #Shorts`;
         description = `${cleanTopic} 내부 초미세 나노 회로에 숨겨진 공학의 정수!\n한계를 넘어선 역발상 기술을 56초 쇼츠로 분석합니다.\n\n#Shorts #쇼츠 #IT #테크 #${cleanTopic.replace(/\s+/g, '')}`;
         rawScenes = [
-            ["00:00 ~ 00:08", `우리가 매일 사용하는 ${cleanTopic}, 남들은 마술이라 부르지만 사실 완벽히 설계된 팩트입니다.`, `최신 기술이 적용된 ${cleanTopic}의 매끄러운 바디와 빛나는 세로 9:16 시네마틱 오프닝.`, `Cinematic macro studio shot of ${cleanTopic}, dark minimalist backdrop, sleek glass reflection, vertical 9:16`],
-            ["00:08 ~ 00:16", `외관 속 미세 나노 회로에는 상상을 초월하는 기술적 배치가 숨어 있습니다.`, `실리콘 반도체 내부로 카메라가 줌인하는 3D 비주얼.`, `Extreme macro 3D flythrough inside semiconductor silicon chip of ${cleanTopic}, glowing circuit traces, vertical 9:16`],
-            ["00:16 ~ 00:24", `문제의 원인은 나노 단위 회로에서 발생하는 극심한 발열과 저항의 한계 때문이었죠.`, `열화상 카메라 시점으로 칩셋 위 열이 퍼지는 시뮬레이션.`, `Thermal camera POV showing intense heat distribution on microchip, glowing heat map, vertical 9:16`],
-            ["00:24 ~ 00:32", `엔지니어들은 발상을 전환합니다. '열을 막지 말고, 베이퍼 챔버로 순식간에 방출하자!'`, `연구원들이 회로도를 혁신하는 하이테크 영웅적 장면.`, `Engineers in tech R&D lab examining 3D holographic circuit diagrams, heroic lighting, vertical 9:16`],
-            ["00:32 ~ 00:40", `초미세 구리 챔버 내부 냉매 액체 증발과 AI 뉴럴 엔진 전력 제어로 한계를 극복했습니다.`, `구리 냉각 파이프 내부에서 액체가 증발하며 퍼지는 3D 이펙트.`, `3D animation of liquid coolant evaporating inside copper vapor chamber, blue fluid motion, vertical 9:16`],
-            ["00:40 ~ 00:48", `한 손에 들어오는 얇은 크기에도 전작 대비 3배 이상의 압도적 성능을 완성해 냈습니다.`, `어둠 속에서 매끄럽게 드러나는 기술 제품의 프레임 연출.`, `Sleek product reveal shot of ${cleanTopic} illuminated by dramatic studio rim lights, vertical 9:16`],
-            ["00:48 ~ 00:56", `한계를 넘어선 인간의 집념이 만든 혁신. 이것이 바로 ${cleanTopic}의 진짜 정체입니다.`, `도심 속 화려한 조명과 조화되는 하이테크 쇼츠 아웃트로.`, `Cinematic outro shot of ${cleanTopic} with futuristic neon city lights background, vertical 9:16 4k`]
+            ["00:00 ~ 00:08", `우리가 매일 사용하는 ${cleanTopic}, 손끝에 닿는 매끈한 외관 뒤에는 완벽하게 계산된 공학이 존재합니다.`, `최신 기술이 적용된 ${cleanTopic}의 깨끗하고 매끄러운 완제품 바디가 빛나는 세로 9:16 스튜디오 오프닝 (손상 없음).`, `Cinematic macro studio shot of pristine ${cleanTopic}, perfect condition, sleek glass metallic reflection, dark minimalist studio, hyper-realistic 8k, vertical 9:16`],
+            ["00:08 ~ 00:16", `얇은 외관 속 실리콘 반도체 내부에는 나노 단위 회로와 트랜지스터가 치밀하게 늘어서 있습니다.`, `실리콘 반도체 칩셋 내부로 카메라가 정밀하게 줌인하는 3D 입체 청사진 연출.`, `Extreme macro 3D flythrough inside semiconductor silicon chip of ${cleanTopic}, glowing blue circuit traces, Octane render, vertical 9:16`],
+            ["00:16 ~ 00:24", `하지만 고성능 작업 시 나노 회로에 전류가 집중되면 극심한 발열과 전력 저항의 한계에 부딪히게 됩니다.`, `열화상 카메라 시점으로 칩셋 중심부에 열기가 붉게 오르는 과부하 시뮬레이션 연출.`, `Thermal camera POV showing intense heat map building up on electronic microchip core, glowing yellow and red heat, vertical 9:16`],
+            ["00:24 ~ 00:32", `엔지니어들은 발상을 전환합니다. 두께 0.1mm 구리 베이퍼 챔버 내부에서 냉매 액체가 열을 뺏어 기화되게 만든 거죠.`, `구리 냉각 파이프 내부에서 냉매 액체가 끓어오르며 열을 방출하고 퍼지는 3D 액션 샷.`, `3D liquid physics animation of refrigerant fluid evaporating inside copper vapor chamber, cool blue wave absorbing heat, vertical 9:16`],
+            ["00:32 ~ 00:40", `동시에 AI 뉴럴 엔진 알고리즘이 초당 60회 전력을 분산 제어하여 과열을 순식간에 억제합니다.`, `AI 칩셋 중심부에서 푸른 에너지 벡터가 발산되며 전체 회로 온도를 내려놓는 3D 이펙트 모션.`, `Glowing AI processor core pulsating with blue light vectors, rerouting power across circuit board, temperature dropping, vertical 9:16`],
+            ["00:40 ~ 00:48", `덕분에 작고 얇은 폼팩터에서도 전작 대비 3배 이상의 압도적이고 안정적인 성능을 완성해 냅니다.`, `스튜디오 림 조명 아래 매끄럽게 돌아가며 완벽한 성능을 과시하는 제품 리빌 샷.`, `Sleek product reveal shot of ${cleanTopic} rotating smoothly under dramatic studio rim lights, vertical 9:16`],
+            ["00:48 ~ 00:56", `한계를 넘어선 인간의 집념이 만든 혁신. 이것이 바로 ${cleanTopic}의 진짜 정체입니다.`, `도심 속 화려한 네온 조명과 조화되는 하이테크 감성 쇼츠 파이널 아웃트로.`, `Cinematic outro shot of ${cleanTopic} backdrop at night with glowing neon city lights, 4k 60fps, vertical 9:16`]
         ];
     } else if (cat === "construction") {
         title = `${cleanTopic} — 자연을 제어한 역발상 공법 #Shorts`;
         description = `${cleanTopic}에 적용된 획기적인 토목/건축 기술 스토리!\n수직 하중과 압력을 제어해 낸 56초 쇼츠 핵심 콘티입니다.\n\n#Shorts #쇼츠 #토목 #건축 #${cleanTopic.replace(/\s+/g, '')}`;
         rawScenes = [
-            ["00:00 ~ 00:08", `여기 ${cleanTopic}(이)가 있습니다. 남들은 무너질까 걱정하지만 사실 완벽한 계획입니다.`, `웅장한 ${cleanTopic}의 전경이 서서히 모습을 드러내는 세로 9:16 시네마틱 샷.`, `Cinematic epic wide drone shot of ${cleanTopic}, hyper-realistic 8k, dramatic sunset lighting, vertical 9:16`],
-            ["00:08 ~ 00:16", `거친 외부 속 바닥 아래에는 상상 못 한 역발상 토목 공법이 숨어 있습니다.`, `${cleanTopic}의 거대한 지반 단면 3D 청사진 오버레이.`, `Detailed 3D cross-section architecture blueprint animation of ${cleanTopic}, glowing cyan grid, vertical 9:16`],
-            ["00:16 ~ 00:24", `문제의 원인은 자연의 묵직한 수직 하중과 물의 압력을 무작정 막으려 했기 때문이었죠.`, `무게 압력이 지반을 누르고 입자가 찌그러지는 물리 시뮬레이션.`, `Extreme macro shot of heavy pressure weight crushing down on soil foundation, vertical 9:16`],
-            ["00:24 ~ 00:32", `엔지니어들은 발상을 완전히 뒤집습니다. '막지 말고, 사전에 미리 다 꺼뜨려 놓자!'`, `거대 현장에서 공학자들이 청사진을 펼치는 영웅적 각도.`, `Engineers working on mega construction site at sunset, blueprints expanding, vertical 9:16`],
-            ["00:32 ~ 00:40", `수천 개의 모래 기둥을 박아 물길을 터주고, 사전 하중을 올려 갇힌 물을 바싹 짜냈습니다.`, `지하 모래 관을 따라 갇혀 있던 수분과 압력이 상승하는 3D 이펙트.`, `3D visualization of underground water streams flowing rapidly through sand drain pillars, vertical 9:16`],
-            ["00:40 ~ 00:48", `자연을 억지로 굴복시킨 게 아니라 수십 년 걸릴 침하 시점을 사전으로 당겨온 것입니다.`, `드론이 상승하며 완벽히 완성된 웅장한 랜드마크가 빛나는 장면.`, `Smooth orbital drone camera shot revealing completed magnificent ${cleanTopic}, golden hour, vertical 9:16`],
-            ["00:48 ~ 00:56", `자연의 흐름을 예측하고 제어한 인간의 지혜. 이것이 바로 ${cleanTopic}의 진짜 비밀입니다.`, `밤하늘 도심 빛과 어우러져 화려하게 빛나는 파이널 쇼츠 아웃트로.`, `Outro cinematic hero shot of ${cleanTopic} at night with glowing city lights, vertical 9:16 4k`]
+            ["00:00 ~ 00:08", `여기 ${cleanTopic}(이)가 있습니다. 남들은 무너질까 걱정하지만, 완성된 구조물은 장엄하게 서 있습니다.`, `노을빛 아래 웅장하게 스카이라인을 이루고 있는 ${cleanTopic}의 시네마틱 세로 9:16 드론 오프닝 (손상 없음).`, `Cinematic epic wide drone shot of magnificent ${cleanTopic}, perfect standing condition, hyper-realistic 8k, dramatic sunset lighting, vertical 9:16`],
+            ["00:08 ~ 00:16", `거친 외부 속 바닥 아래 지반에는 우리가 몰랐던 치밀한 토목 3D 구조가 설치되어 있습니다.`, `${cleanTopic}의 거대한 지반 단면과 지하 모래 기둥/내진 댐퍼의 3D 청사진 오버레이.`, `Detailed 3D cross-section architecture blueprint animation of ${cleanTopic} ground foundation, glowing cyan grid, vertical 9:16`],
+            ["00:16 ~ 00:24", `원래 이 땅은 수십 톤의 하중을 누르면 물이 천천히 빠져나가며 수십 년간 꺼지는 치명적 진흙 지반이었죠.`, `수직 무게 하축에 의해 지반 입자가 눌리며 물이 차오르는 물리 시뮬레이션 연출.`, `Extreme macro physics simulation shot of heavy weight pressure pushing down on soft mud foundation, vertical 9:16`],
+            ["00:24 ~ 00:32", `엔지니어들은 발상을 전환합니다. 지하 수천 개 모래관을 뚫어 물길을 터주고 사전 하중으로 물을 먼저 짜낸 겁니다.`, `지하 모래 기둥을 따라 갇혀 있던 수분과 압력이 신속하게 상승하는 3D 특수효과 샷.`, `3D visualization of underground water streams flowing rapidly through sand drain pillars, glowing blue lines, vertical 9:16`],
+            ["00:32 ~ 00:40", `목표 하중보다 더 무거운 흙을 올려 개항 전에 침하를 미리 당겨놓아 완성 후 변형을 봉쇄했습니다.`, `덤프트럭과 압착 장비가 흙을 미리 쌓고 지반을 단단히 고정시키는 3D 타임랩스 모션.`, `Time-lapse of construction preloading soil layers squeezing water out of ground, dust rising, vertical 9:16`],
+            ["00:40 ~ 00:48", `자연에 대항한 것이 아니라 침하 시점을 사전으로 앞당겨 완벽하게 안정적인 랜드마크를 완성했습니다.`, `드론이 지면에서 상승하며 일출 속에서 빛나는 거대 랜드마크의 시네마틱 샷.`, `Smooth orbital drone camera shot revealing completed magnificent ${cleanTopic}, golden hour light, vertical 9:16`],
+            ["00:48 ~ 00:56", `자연의 흐름을 예측하고 제어한 인간의 지혜. 이것이 바로 ${cleanTopic}의 진짜 비밀입니다.`, `밤하늘 도심 조명과 어우러져 화려하게 빛나는 파이널 쇼츠 아웃트로.`, `Outro cinematic hero shot of ${cleanTopic} at night with glowing city lights, lens flare, 4k 60fps, vertical 9:16`]
         ];
     } else {
         title = `${cleanTopic} — 우리가 몰랐던 56초의 비밀 #Shorts`;
         description = `${cleanTopic}에 관한 흥미진진한 지식과 56초 쇼츠 스토리텔링!\n\n#Shorts #쇼츠 #지식 #스토리텔링 #${cleanTopic.replace(/\s+/g, '')}`;
         rawScenes = [
-            ["00:00 ~ 00:08", `우리가 일상에서 접하는 ${cleanTopic}, 남들은 당연하다 생각하지만 사실 상식을 깨부순 팩트입니다.`, `상징적인 ${cleanTopic} 비주얼이 드라마틱한 조명 속에 드러나는 세로 9:16 오프닝.`, `Cinematic opening shot introducing ${cleanTopic}, dramatic lighting, hyper-realistic 8k, vertical 9:16`],
-            ["00:08 ~ 00:16", `화려한 전면 뒤에는 아무도 몰랐던 치밀한 전략과 구조적 비밀이 존재합니다.`, `인포그래픽 청사진 애니메이션이 3D 오버레이로 펼쳐지는 모션.`, `3D infographic motion graphics revealing hidden mechanics of ${cleanTopic}, vertical 9:16`],
-            ["00:16 ~ 00:24", `문제의 원인은 기존 법칙과 고정관념만을 고집하려 했기 때문이었죠.`, `복잡하게 뒤얽힌 타래가 찌그러지는 개념적 3D 시뮬레이션.`, `Macro conceptual 3D render showing complex network breaking apart, vertical 9:16`],
-            ["00:24 ~ 00:32", `주인공들은 발상을 완전히 뒤집습니다. '남들이 안 가본 거꾸로 길을 가자!'`, `전략가들이 회의실에서 새로운 구상을 시각화하는 장면.`, `Strategists working in high-tech boardroom, holographic ideas expanding, vertical 9:16`],
-            ["00:32 ~ 00:40", `핵심 효율을 10배 올린 구조와 장기적 가치를 사전에 확보해 냈습니다.`, `네온 라인이 효율적 경로를 그리는 3D 모션 그래픽.`, `3D motion graphics showing glowing neon lines connecting key efficiency nodes, vertical 9:16`],
-            ["00:40 ~ 00:48", `단순한 운이 아니라, 시대를 앞서간 역발상 선택이 만든 압도적 결과물입니다.`, `상승하며 완성된 위업이 빛나는 시네마틱 샷.`, `Smooth orbital camera shot revealing completed successful achievement of ${cleanTopic}, vertical 9:16`],
-            ["00:48 ~ 00:56", `고정관념을 뒤집은 위대한 통찰. 이것이 바로 ${cleanTopic}에 숨겨진 진짜 가치입니다.`, `화려한 도심 조명과 조화되는 감동적인 쇼츠 아웃트로.`, `Cinematic outro shot of ${cleanTopic} backdrop at night with glowing city lights, vertical 9:16 4k`]
+            ["00:00 ~ 00:08", `우리가 일상에서 접하는 ${cleanTopic}, 남들은 당연하다 생각하지만 첫 모습 뒤에는 특별한 상식이 숨어 있습니다.`, `상징적인 ${cleanTopic}의 메인 비주얼이 드라마틱한 조명 속에 완벽하게 드러나는 세로 9:16 오프닝 (손상 없음).`, `Cinematic opening shot introducing pristine ${cleanTopic}, dramatic studio lighting, perfect condition, hyper-realistic 8k, vertical 9:16`],
+            ["00:08 ~ 00:16", `그 화려한 겉모습 뒤에는 아무도 몰랐던 치밀한 전략과 3D 청사진 구조가 존재합니다.`, `인포그래픽 청사진 애니메이션이 3D 오버레이로 레이어별 펼쳐지는 연출.`, `3D infographic motion graphics revealing hidden mechanics and internal layers of ${cleanTopic}, glowing lines, vertical 9:16`],
+            ["00:16 ~ 00:24", `하지만 초기 방식대로 진행했을 땐 뜻밖의 고정관념과 한계라는 거대한 벽에 직면했었죠.`, `복잡하게 뒤얽힌 타래와 장애물이 시각적으로 압박을 가하는 개념적 3D 시뮬레이션.`, `Macro conceptual 3D render showing complex network breaking apart under structural limit, vertical 9:16`],
+            ["00:24 ~ 00:32", `주인공들은 발상을 완전히 뒤집습니다. '남들이 안 가본 거꾸로 길을 파고들자!'`, `전략가들이 하이테크 회로도/홀로그램 청사진을 뒤집어 새로운 해법을 시각화하는 영웅적 장면.`, `Strategists working in high-tech boardroom, holographic ideas expanding, heroic lighting, vertical 9:16`],
+            ["00:32 ~ 00:40", `핵심 효율을 10배 올린 구조와 장기적 가치를 사전에 미리 확보해 낸 것입니다.`, `네온 레이저 라인이 효율적 경로를 따라 순식간에 연결되는 3D 모션 그래픽.`, `3D motion graphics showing glowing neon lines connecting key efficiency nodes, blue laser flow, vertical 9:16`],
+            ["00:40 ~ 00:48", `단순한 운이 아니라, 시대를 앞서간 역발상 선택이 만든 압도적이고 명확한 결과물입니다.`, `카메라가 상승하며 완벽하게 완성된 위업의 랜드마크가 일출 속에서 빛나는 시네마틱 샷.`, `Smooth orbital camera shot revealing completed successful achievement of ${cleanTopic}, golden hour light, vertical 9:16`],
+            ["00:48 ~ 00:56", `고정관념을 뒤집은 위대한 통찰. 이것이 바로 ${cleanTopic}에 숨겨진 진짜 가치입니다.`, `화려한 도심 야경과 조화되는 감동적인 파이널 쇼츠 아웃트로.`, `Cinematic outro shot of ${cleanTopic} backdrop at night with glowing city lights, 4k 60fps, vertical 9:16`]
         ];
     }
 
